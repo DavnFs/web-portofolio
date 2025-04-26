@@ -4,6 +4,7 @@ import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import Link from "next/link"
 import { ThemeProvider } from "@/components/theme-provider"
+import { Analytics } from '@vercel/analytics/next';
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -11,7 +12,6 @@ export const metadata: Metadata = {
   title: "Davin | Web, Mobile, IoT & Data Science Portfolio",
   description: "Explore the portfolio of Davin, a computer engineering student with experience in full-stack web development, mobile apps, IoT systems, and data science.",
 }
-
 
 export default function RootLayout({
   children,
@@ -47,7 +47,10 @@ export default function RootLayout({
               <div className="md:hidden">{/* Mobile menu button would go here */}</div>
             </div>
           </header>
-          <main>{children}</main>
+          <main>
+            {children}
+            <Analytics />
+          </main>
           <footer className="border-t">
             <div className="max-w-screen-xl mx-auto px-4 py-6">
               <p className="text-sm text-muted-foreground text-center">
