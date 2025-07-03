@@ -8,6 +8,8 @@ import { Analytics } from '@vercel/analytics/next';
 
 const inter = Inter({ subsets: ["latin"] })
 
+const currentYear = 2025;
+
 export const metadata: Metadata = {
   title: "Davin | Web, Mobile, IoT & Data Science Portfolio",
   description: "Explore the portfolio of Davin, a computer engineering student with experience in full-stack web development, mobile apps, IoT systems, and data science.",
@@ -18,6 +20,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+
   return (
     <html lang="en">
       <body className={inter.className}>
@@ -37,6 +40,9 @@ export default function RootLayout({
                 <Link href="#about" className="text-sm hover:text-primary transition-colors">
                   About
                 </Link>
+               <Link href="#skills" className="text-sm hover:text-primary transition-colors">
+                 Skills
+               </Link>
                 <Link href="#education" className="text-sm hover:text-primary transition-colors">
                   Education
                 </Link>
@@ -54,7 +60,7 @@ export default function RootLayout({
           <footer className="border-t">
             <div className="max-w-screen-xl mx-auto px-4 py-6">
               <p className="text-sm text-muted-foreground text-center">
-                © {new Date().getFullYear()} Dsupriyadi. All rights reserved.
+                © {currentYear} Dsupriyadi. All rights reserved.
               </p>
             </div>
           </footer>
