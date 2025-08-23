@@ -1,6 +1,5 @@
 "use client"
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
 import { Brain, Database, BarChart3, Code } from "lucide-react"
@@ -70,44 +69,61 @@ export default function SkillsSection() {
       {skillCategories.map((category, index) => {
         const Icon = category.icon
         return (
-          <Card key={index} className="group hover:shadow-lg transition-all duration-300">
-            <CardHeader className="pb-4">
-              <CardTitle className="flex items-center gap-3">
-                <div className={`p-2 rounded-lg ${category.bgColor} group-hover:scale-110 transition-transform`}>
-                  <Icon className={`h-5 w-5 ${category.color}`} />
+          <div key={index} className="group relative">
+            {/* Glassmorphism Card */}
+            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-full">
+              <div className="absolute top-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent rounded-full" />
+              
+              {/* Header */}
+              <div className="flex items-center gap-3 mb-6">
+                <div className={`p-3 rounded-xl ${category.bgColor} group-hover:scale-110 transition-transform backdrop-blur-sm border border-white/10`}>
+                  <Icon className={`h-6 w-6 ${category.color}`} />
                 </div>
-                <span className="text-lg">{category.title}</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
+                <h3 className="text-lg font-medium text-foreground">{category.title}</h3>
+              </div>
+
               {/* Skills with Progress */}
-              <div className="space-y-3">
+              <div className="space-y-4 mb-6">
                 {category.skills.map((skill, skillIndex) => (
                   <div key={skillIndex} className="space-y-2">
                     <div className="flex justify-between items-center">
-                      <span className="text-sm font-medium">{skill.name}</span>
-                      <span className="text-xs text-muted-foreground">{skill.level}%</span>
+                      <span className="text-sm font-medium text-foreground">{skill.name}</span>
+                      <span className="text-xs text-muted-foreground/80 bg-primary/10 px-2 py-1 rounded-full">
+                        {skill.level}%
+                      </span>
                     </div>
-                    <Progress 
-                      value={skill.level} 
-                      className="h-2" 
-                    />
+                    <div className="relative">
+                      <div className="w-full bg-white/10 rounded-full h-2 backdrop-blur-sm border border-white/10">
+                        <div 
+                          className={`h-2 rounded-full bg-gradient-to-r ${category.color === 'text-purple-500' ? 'from-purple-500 to-purple-400' : 
+                            category.color === 'text-blue-500' ? 'from-blue-500 to-blue-400' :
+                            category.color === 'text-green-500' ? 'from-green-500 to-green-400' :
+                            'from-orange-500 to-orange-400'} shadow-sm`}
+                          style={{ width: `${skill.level}%` }}
+                        />
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>
+
               {/* Tools & Technologies */}
-              <div className="pt-3 border-t">
-                <p className="text-xs font-medium text-muted-foreground mb-2">Tools & Technologies:</p>
-                <div className="flex flex-wrap gap-1">
+              <div className="pt-4 border-t border-white/10">
+                <p className="text-xs font-medium text-muted-foreground/90 mb-3">Tools & Technologies:</p>
+                <div className="flex flex-wrap gap-2">
                   {category.tools.map((tool, toolIndex) => (
-                    <Badge key={toolIndex} variant="secondary" className="text-xs">
+                    <Badge 
+                      key={toolIndex} 
+                      variant="secondary" 
+                      className="text-xs bg-white/10 text-muted-foreground border-white/20 hover:bg-white/20 transition-colors backdrop-blur-sm"
+                    >
                       {tool}
                     </Badge>
                   ))}
                 </div>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         )
       })}
     </div>
