@@ -2,7 +2,7 @@
 
 # dependencies
 /node_modules
-
+/commandcode
 # next.js
 /.next/
 /out/
