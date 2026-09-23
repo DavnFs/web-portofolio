@@ -22,17 +22,6 @@ export default function HeroContent() {
       className="relative z-20 flex min-h-dvh items-center justify-center px-6 pb-16 pt-28 no-dm"
     >
       <div className="w-full max-w-3xl text-center">
-        <p
-          className={`inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs sm:text-sm font-medium tracking-wide transition-colors duration-300 ${
-            isDark
-              ? "border-white/20 bg-white/5 text-white/80"
-              : "border-gray-900/15 bg-white/50 text-gray-700"
-          }`}
-        >
-          <MapPin className="h-3.5 w-3.5" aria-hidden="true" />
-          {profile.headline}
-        </p>
-
         <h1
           className={`mt-6 text-4xl sm:text-5xl md:text-6xl leading-tight tracking-tight font-light transition-colors duration-300 ${
             isDark ? "text-white" : "text-gray-900"
