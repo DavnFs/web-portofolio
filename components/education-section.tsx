@@ -80,7 +80,7 @@ export default function EducationSection() {
           <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {certifications.map((cert) => (
               <li key={cert.title}>
-                <Panel className="p-5 sm:p-6">
+                <Panel className="h-full p-5 sm:p-6">
                   <div className="flex items-start gap-3">
                     <span className="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg border border-primary/20 bg-primary/10">
                       <Award className="h-4 w-4 text-primary" aria-hidden="true" />

@@ -21,7 +21,7 @@ export default function SkillsSection() {
 
         return (
           <li key={group.title}>
-            <Panel className="p-5 sm:p-6">
+            <Panel className="h-full p-5 sm:p-6">
               <div className="flex items-center gap-3 mb-5">
                 <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-primary/20 bg-primary/10">
                   <Icon className="h-5 w-5 text-primary" aria-hidden="true" />

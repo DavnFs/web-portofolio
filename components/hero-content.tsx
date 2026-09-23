@@ -19,7 +19,7 @@ export default function HeroContent() {
   return (
     <section
       aria-label="Introduction"
-      className="absolute inset-0 z-20 flex items-center justify-center px-6 py-24 no-dm overflow-y-auto"
+      className="relative z-20 flex min-h-dvh items-center justify-center px-6 pb-16 pt-28 no-dm"
     >
       <div className="w-full max-w-3xl text-center">
         <p

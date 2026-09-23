@@ -11,7 +11,7 @@ export function Panel({ children, className, as: Tag = "div" }: PanelProps) {
   return (
     <Tag
       className={cn(
-        "relative h-full rounded-2xl border border-border backdrop-blur-sm shadow-sm",
+        "relative rounded-2xl border border-border backdrop-blur-sm shadow-sm",
         "bg-white/70 dark:bg-white/[0.04]",
         "transition-all duration-300 hover:shadow-lg hover:border-foreground/20",
         className

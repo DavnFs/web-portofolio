@@ -30,3 +30,6 @@ next-env.d.ts
 /app/projects/
 .docx*
 .docs*
+.commandcode/taste/taste.md
+docs/Davin_Supriyadi_Resume.docx
+public/Davin-Supriyadi-CV.docx

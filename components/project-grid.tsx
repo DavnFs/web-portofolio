@@ -91,7 +91,7 @@ export default function ProjectGrid() {
 
           return (
             <li key={project.name} className="group">
-              <Panel as="article" className="flex flex-col overflow-hidden group-hover:-translate-y-1">
+              <Panel as="article" className="h-full flex flex-col overflow-hidden group-hover:-translate-y-1">
                 <div
                   className={`relative flex h-32 items-center justify-center bg-gradient-to-br ${accent.surface} to-transparent`}
                 >

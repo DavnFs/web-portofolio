@@ -15,7 +15,7 @@ export default function ShaderBackground({ children }: ShaderBackgroundProps) {
   const darkColors = ["#021024", "#034694", "#4A90E2", "#BFDFFF", "#03132A"]
   
   return (
-    <div className={`min-h-screen relative overflow-hidden transition-colors duration-500 ${
+    <div className={`min-h-dvh relative overflow-hidden transition-colors duration-500 ${
       theme === "dark" ? "bg-black" : "bg-white"
     }`}>
       <svg className="absolute inset-0 w-0 h-0">
