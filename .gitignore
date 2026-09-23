@@ -28,3 +28,5 @@ next-env.d.ts
 
 # Project pages (temporary exclusion)
 /app/projects/
+.docx*
+.docs*

@@ -1,136 +1,157 @@
-import Link from "next/link"
-import Image from "next/image"
-import { Badge } from "@/components/ui/badge"
-import { ExternalLink, Star, MapPin, Calendar } from "lucide-react"
+import {
+  Droplets,
+  HeartPulse,
+  MapPinned,
+  Network,
+  Receipt,
+  ScanEye,
+  ShieldCheck,
+  Store,
+  Trophy,
+  Wallet,
+  ArrowUpRight,
+} from "lucide-react"
+import { Panel } from "@/components/ui/panel"
+import SectionHeading from "@/components/section-heading"
+import { projects } from "@/lib/portfolio-data"
+
+const icons: Record<string, typeof Store> = {
+  store: Store,
+  "heart-pulse": HeartPulse,
+  shield: ShieldCheck,
+  "scan-eye": ScanEye,
+  droplets: Droplets,
+  wallet: Wallet,
+  network: Network,
+  receipt: Receipt,
+  "map-pinned": MapPinned,
+}
+
+const accents: Record<string, { icon: string; surface: string; chip: string }> = {
+  amber: {
+    icon: "text-amber-600 dark:text-amber-400",
+    surface: "from-amber-500/20 via-amber-500/5",
+    chip: "bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-500/25",
+  },
+  emerald: {
+    icon: "text-emerald-600 dark:text-emerald-400",
+    surface: "from-emerald-500/20 via-emerald-500/5",
+    chip: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-500/25",
+  },
+  violet: {
+    icon: "text-violet-600 dark:text-violet-400",
+    surface: "from-violet-500/20 via-violet-500/5",
+    chip: "bg-violet-500/10 text-violet-700 dark:text-violet-300 border-violet-500/25",
+  },
+  sky: {
+    icon: "text-sky-600 dark:text-sky-400",
+    surface: "from-sky-500/20 via-sky-500/5",
+    chip: "bg-sky-500/10 text-sky-700 dark:text-sky-300 border-sky-500/25",
+  },
+  cyan: {
+    icon: "text-cyan-600 dark:text-cyan-400",
+    surface: "from-cyan-500/20 via-cyan-500/5",
+    chip: "bg-cyan-500/10 text-cyan-700 dark:text-cyan-300 border-cyan-500/25",
+  },
+  rose: {
+    icon: "text-rose-600 dark:text-rose-400",
+    surface: "from-rose-500/20 via-rose-500/5",
+    chip: "bg-rose-500/10 text-rose-700 dark:text-rose-300 border-rose-500/25",
+  },
+  indigo: {
+    icon: "text-indigo-600 dark:text-indigo-400",
+    surface: "from-indigo-500/20 via-indigo-500/5",
+    chip: "bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 border-indigo-500/25",
+  },
+  lime: {
+    icon: "text-lime-600 dark:text-lime-400",
+    surface: "from-lime-500/20 via-lime-500/5",
+    chip: "bg-lime-500/10 text-lime-700 dark:text-lime-300 border-lime-500/25",
+  },
+  teal: {
+    icon: "text-teal-600 dark:text-teal-400",
+    surface: "from-teal-500/20 via-teal-500/5",
+    chip: "bg-teal-500/10 text-teal-700 dark:text-teal-300 border-teal-500/25",
+  },
+}
 
 export default function ProjectGrid() {
-  const projects = [
-    {
-      id: 1,
-      title: "GDD GameplayPedia",
-      subtitle: "Modern Warfare Wiki",
-      description: "A responsive Website GDD of COD 4: Modern Warfare Inspired by Wikipedia with comprehensive game documentation.",
-      image: "/images/cod-gdd.png?height=400&width=600",
-      tags: ["Next.js", "React", "Tailwind CSS"],
-      duration: "2 Month Project",
-      category: "Web Development",
-      url: "https://gameplaypedia.web.id",
-    },
-    {
-      id: 2,
-      title: "Entertainment Recommender",
-      subtitle: "Recommender App",
-      description: "A web-based entertainment recommendation system built with Next.js, featuring both song and movie recommendations using cosine similarity. The system uses Spotify audio features for songs and curated real movie data for movies.",
-      image: "/images/song.png?height=400&width=600",
-      tags: ["Next.js", "React", "Cosine Similarity"],
-      duration: "1 Month Project",
-      category: "Web Development",
-      url: "https://music-recommender-eight.vercel.app/",
-    },
-    {
-      id: 3,
-      title: "Catat Uang",
-      subtitle: "Expense Tracker.",
-      description: "A serverless Telegram bot for automatic expense tracking with AI-powered financial insights.",
-      image: "/images/catat-uang.png?height=400&width=600",
-      tags: ["Python", "AI", "Telegram Bot"],
-      duration: "1 Month Project",
-      category: "Software Development",
-      url: "https://catat-uang-nu.vercel.app",
-    },
-    {
-      id: 4,
-      title: "WOTIC System",
-      subtitle: "Tourism Platform", 
-      description: "Tourism information system for Wonosobo featuring detailed updates, promotional content, and location services.",
-      image: "/images/wotic.png?height=400&width=600",
-      tags: ["Laravel", "JavaScript", "MySQL"],
-      rating: 4.7,
-      duration: "4 Month Project",
-      category: "Web Development",
-      url: "https://web.wotic.id",
-    },
-  ]
-
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
-      {projects.map((project) => (
-        <div key={project.id} className="group relative">
-          {/* Card Container with Glassmorphism */}
-          <div className="bg-white/5 backdrop-blur-sm rounded-xl sm:rounded-2xl border border-white/10 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 overflow-hidden h-full">
-            
-            {/* Image Section */}
-            <div className="relative h-40 sm:h-48 overflow-hidden">
-              <Image
-                src={project.image || "/placeholder.svg"}
-                alt={project.title}
-                fill
-                className="object-cover transition-transform duration-500 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-              
-              {/* Category Badge */}
-              <div className="absolute top-3 sm:top-4 left-3 sm:left-4">
-                <Badge className="bg-white/20 backdrop-blur-sm text-white border-white/30 text-xs">
-                  {project.category}
-                </Badge>
-              </div>
+    <div>
+      <SectionHeading
+        title="Featured"
+        accent="Projects"
+        description="Backend platforms, applied AI/ML systems, and embedded tooling — from hackathon builds to thesis research."
+      />
 
-            </div>
+      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+        {projects.map((project) => {
+          const Icon = icons[project.icon] ?? Store
+          const accent = accents[project.accent] ?? accents.sky
 
-            {/* Content Section */}
-            <div className="p-4 sm:p-6 flex flex-col flex-1">
-              
-              {/* Title & Subtitle */}
-              <div className="mb-3">
-                <h3 className="text-base sm:text-lg font-medium text-foreground group-hover:text-primary transition-colors leading-tight">
-                  {project.title}
-                </h3>
-                <p className="text-xs sm:text-sm text-muted-foreground/80 mt-1">
-                  {project.subtitle}
-                </p>
-              </div>
+          return (
+            <li key={project.name} className="group">
+              <Panel as="article" className="flex flex-col overflow-hidden group-hover:-translate-y-1">
+                <div
+                  className={`relative flex h-32 items-center justify-center bg-gradient-to-br ${accent.surface} to-transparent`}
+                >
+                  <Icon className={`h-12 w-12 ${accent.icon}`} aria-hidden="true" strokeWidth={1.5} />
 
-              {/* Description */}
-              <p className="text-xs sm:text-sm text-muted-foreground/90 leading-relaxed mb-3 sm:mb-4 line-clamp-3 flex-1">
-                {project.description}
-              </p>
+                  <span className="absolute left-4 top-4">
+                    <span
+                      className={`inline-flex items-center rounded-full border px-2.5 py-1 text-[0.7rem] font-medium ${accent.chip}`}
+                    >
+                      {project.category}
+                    </span>
+                  </span>
+                </div>
 
-              {/* Duration */}
-              <div className="flex items-center gap-2 mb-3 sm:mb-4 text-xs text-muted-foreground/70">
-                <Calendar className="h-3 w-3" />
-                {project.duration}
-              </div>
+                <div className="flex flex-1 flex-col p-5 sm:p-6">
+                  <h3 className="text-base sm:text-lg font-medium text-foreground leading-tight">
+                    {project.name}
+                  </h3>
+                  <p className="mt-1 text-xs sm:text-sm text-muted-foreground">{project.tagline}</p>
 
-              {/* Tags */}
-              <div className="flex flex-wrap gap-1 mb-3 sm:mb-4">
-                {project.tags.slice(0, 3).map((tag) => (
-                  <Badge 
-                    key={tag} 
-                    variant="secondary" 
-                    className="text-xs bg-primary/10 text-primary border-primary/20 hover:bg-primary/20 transition-colors"
+                  <p className="mt-3 text-xs sm:text-sm text-muted-foreground leading-relaxed line-clamp-3">
+                    {project.description}
+                  </p>
+
+                  {project.award && (
+                    <p className="mt-4 flex items-start gap-2 rounded-xl border border-border bg-muted/50 px-3 py-2">
+                      <Trophy className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-primary" aria-hidden="true" />
+                      <span className="text-xs leading-snug">
+                        <span className="font-medium text-foreground">{project.award}</span>
+                        <span className="block text-muted-foreground">{project.awardDetail}</span>
+                      </span>
+                    </p>
+                  )}
+
+                  <ul className="mt-4 mb-5 flex flex-wrap gap-1.5">
+                    {project.stack.slice(0, 4).map((tool) => (
+                      <li
+                        key={tool}
+                        className="rounded-full border border-border bg-muted/50 px-2.5 py-1 text-[0.7rem] text-muted-foreground"
+                      >
+                        {tool}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <a
+                    href={project.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-auto inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full border border-border bg-foreground px-4 text-sm font-medium text-background transition-colors duration-300 hover:bg-foreground/90"
                   >
-                    {tag}
-                  </Badge>
-                ))}
-              </div>
-
-              {/* Action Button */}
-              <Link
-                href={project.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full"
-              >
-                <button className="w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-full bg-white text-black font-medium text-xs sm:text-sm transition-all duration-200 hover:bg-white/90 flex items-center justify-center gap-2 group/btn">
-                  View Project
-                  <ExternalLink className="h-3 w-3 transition-transform group-hover/btn:translate-x-0.5" />
-                </button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      ))}
+                    View Project
+                    <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true" />
+                  </a>
+                </div>
+              </Panel>
+            </li>
+          )
+        })}
+      </ul>
     </div>
   )
 }
