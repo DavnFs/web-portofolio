@@ -13,8 +13,7 @@ export const profile = {
 }
 
 export const highlights = [
-  { label: "GPA", value: "3.82", detail: "/ 4.00" },
-  { label: "Bank Indonesia Hackathon", value: "1st Runner-Up", detail: "4th of 64 teams" },
+  { label: "GPA", value: "3.84", detail: "/ 4.00" },
   { label: "TOEIC Listening & Reading", value: "915", detail: "valid to Nov 2027" },
 ]
 
