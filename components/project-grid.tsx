@@ -27,124 +27,136 @@ const icons: Record<string, typeof Store> = {
   "map-pinned": MapPinned,
 }
 
-const accents: Record<string, { icon: string; surface: string; chip: string }> = {
-  amber: {
-    icon: "text-amber-600 dark:text-amber-400",
-    surface: "from-amber-500/20 via-amber-500/5",
-    chip: "bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-500/25",
-  },
-  emerald: {
-    icon: "text-emerald-600 dark:text-emerald-400",
-    surface: "from-emerald-500/20 via-emerald-500/5",
-    chip: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-500/25",
-  },
-  violet: {
-    icon: "text-violet-600 dark:text-violet-400",
-    surface: "from-violet-500/20 via-violet-500/5",
-    chip: "bg-violet-500/10 text-violet-700 dark:text-violet-300 border-violet-500/25",
-  },
-  sky: {
-    icon: "text-sky-600 dark:text-sky-400",
-    surface: "from-sky-500/20 via-sky-500/5",
-    chip: "bg-sky-500/10 text-sky-700 dark:text-sky-300 border-sky-500/25",
-  },
-  cyan: {
-    icon: "text-cyan-600 dark:text-cyan-400",
-    surface: "from-cyan-500/20 via-cyan-500/5",
-    chip: "bg-cyan-500/10 text-cyan-700 dark:text-cyan-300 border-cyan-500/25",
-  },
-  rose: {
-    icon: "text-rose-600 dark:text-rose-400",
-    surface: "from-rose-500/20 via-rose-500/5",
-    chip: "bg-rose-500/10 text-rose-700 dark:text-rose-300 border-rose-500/25",
-  },
-  indigo: {
-    icon: "text-indigo-600 dark:text-indigo-400",
-    surface: "from-indigo-500/20 via-indigo-500/5",
-    chip: "bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 border-indigo-500/25",
-  },
-  lime: {
-    icon: "text-lime-600 dark:text-lime-400",
-    surface: "from-lime-500/20 via-lime-500/5",
-    chip: "bg-lime-500/10 text-lime-700 dark:text-lime-300 border-lime-500/25",
-  },
-  teal: {
-    icon: "text-teal-600 dark:text-teal-400",
-    surface: "from-teal-500/20 via-teal-500/5",
-    chip: "bg-teal-500/10 text-teal-700 dark:text-teal-300 border-teal-500/25",
-  },
-}
-
 export default function ProjectGrid() {
+  const featured = projects.find((project) => project.featured)
+  const rest = projects.filter((project) => !project.featured)
+  const FeaturedIcon = featured ? icons[featured.icon] ?? Store : Store
+
   return (
     <div>
       <SectionHeading
+        index="03"
         title="Featured"
         accent="Projects"
-        description="Backend platforms, applied AI/ML systems, and embedded tooling — from hackathon builds to thesis research."
+        description="Backend platforms, applied AI/ML systems, and embedded tooling, from hackathon builds to thesis research."
       />
 
-      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
-        {projects.map((project) => {
+      {featured && (
+        <Panel as="article" className="group mb-10 overflow-hidden sm:mb-14">
+          <div className="grid lg:grid-cols-5">
+            <div className="p-6 sm:p-8 lg:col-span-3 lg:p-10">
+              <div className="flex items-center gap-3">
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-primary/20 bg-primary/10">
+                  <FeaturedIcon className="h-5 w-5 text-primary" aria-hidden="true" strokeWidth={1.75} />
+                </span>
+                <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
+                  Featured · {featured.category}
+                </p>
+              </div>
+
+              <h3 className="mt-6 text-2xl font-light tracking-tight text-foreground sm:text-3xl">{featured.name}</h3>
+              <p className="mt-1 text-sm font-medium text-primary sm:text-base">{featured.tagline}</p>
+
+              <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
+                {featured.description}
+              </p>
+
+              <ul className="mt-6 flex flex-wrap gap-1.5">
+                {featured.stack.map((tool) => (
+                  <li
+                    key={tool}
+                    className="rounded-full border border-border bg-muted/50 px-2.5 py-1 text-[0.7rem] text-muted-foreground"
+                  >
+                    {tool}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="flex flex-col border-t border-border p-6 sm:p-8 lg:col-span-2 lg:border-l lg:border-t-0 lg:p-10">
+              <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Recognition</p>
+
+              <div className="mt-4 flex items-start gap-3">
+                <Trophy className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" aria-hidden="true" />
+                <div>
+                  <p className="text-sm font-medium text-foreground">{featured.award}</p>
+                  <p className="mt-1 text-sm text-muted-foreground">{featured.awardDetail}</p>
+                </div>
+              </div>
+
+              <a
+                href={featured.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-8 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-primary px-6 text-sm font-medium text-primary-foreground transition-colors duration-300 hover:bg-primary/90 lg:mt-auto"
+              >
+                View project
+                <ArrowUpRight
+                  className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  aria-hidden="true"
+                />
+              </a>
+            </div>
+          </div>
+        </Panel>
+      )}
+
+      <p className="mb-5 text-xs uppercase tracking-[0.18em] text-muted-foreground">More projects</p>
+
+      <ul className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+        {rest.map((project) => {
           const Icon = icons[project.icon] ?? Store
-          const accent = accents[project.accent] ?? accents.sky
 
           return (
             <li key={project.name} className="group">
-              <Panel as="article" className="h-full flex flex-col overflow-hidden group-hover:-translate-y-1">
-                <div
-                  className={`relative flex h-32 items-center justify-center bg-gradient-to-br ${accent.surface} to-transparent`}
-                >
-                  <Icon className={`h-12 w-12 ${accent.icon}`} aria-hidden="true" strokeWidth={1.5} />
-
-                  <span className="absolute left-4 top-4">
-                    <span
-                      className={`inline-flex items-center rounded-full border px-2.5 py-1 text-[0.7rem] font-medium ${accent.chip}`}
-                    >
-                      {project.category}
-                    </span>
+              <Panel
+                as="article"
+                className="flex h-full flex-col p-5 transition-transform duration-300 group-hover:-translate-y-1 sm:p-6"
+              >
+                <div className="flex items-center gap-3">
+                  <span className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-muted/50">
+                    <Icon className="h-4 w-4 text-foreground/70" aria-hidden="true" strokeWidth={1.75} />
                   </span>
+                  <p className="text-[0.7rem] uppercase tracking-[0.16em] text-muted-foreground">{project.category}</p>
                 </div>
 
-                <div className="flex flex-1 flex-col p-5 sm:p-6">
-                  <h3 className="text-base sm:text-lg font-medium text-foreground leading-tight">
-                    {project.name}
-                  </h3>
-                  <p className="mt-1 text-xs sm:text-sm text-muted-foreground">{project.tagline}</p>
+                <h3 className="mt-5 text-base font-medium leading-tight text-foreground sm:text-lg">{project.name}</h3>
+                <p className="mt-1 text-xs text-muted-foreground sm:text-sm">{project.tagline}</p>
 
-                  <p className="mt-3 text-xs sm:text-sm text-muted-foreground leading-relaxed line-clamp-3">
-                    {project.description}
+                <p className="mt-3 text-xs leading-relaxed text-muted-foreground line-clamp-3 sm:text-sm">
+                  {project.description}
+                </p>
+
+                {project.note && (
+                  <p className="mt-4 flex items-start gap-2 text-xs leading-snug text-muted-foreground">
+                    <span className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full bg-primary" aria-hidden="true" />
+                    {project.note}
                   </p>
+                )}
 
-                  {project.award && (
-                    <p className="mt-4 flex items-start gap-2 rounded-xl border border-border bg-muted/50 px-3 py-2">
-                      <Trophy className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-primary" aria-hidden="true" />
-                      <span className="text-xs leading-snug">
-                        <span className="font-medium text-foreground">{project.award}</span>
-                        <span className="block text-muted-foreground">{project.awardDetail}</span>
-                      </span>
-                    </p>
-                  )}
+                <ul className="mt-4 flex flex-wrap gap-1.5">
+                  {project.stack.slice(0, 4).map((tool) => (
+                    <li
+                      key={tool}
+                      className="rounded-full border border-border bg-muted/50 px-2.5 py-1 text-[0.7rem] text-muted-foreground"
+                    >
+                      {tool}
+                    </li>
+                  ))}
+                </ul>
 
-                  <ul className="mt-4 mb-5 flex flex-wrap gap-1.5">
-                    {project.stack.slice(0, 4).map((tool) => (
-                      <li
-                        key={tool}
-                        className="rounded-full border border-border bg-muted/50 px-2.5 py-1 text-[0.7rem] text-muted-foreground"
-                      >
-                        {tool}
-                      </li>
-                    ))}
-                  </ul>
-
+                <div className="mt-auto pt-5">
                   <a
                     href={project.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-auto inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full border border-border bg-foreground px-4 text-sm font-medium text-background transition-colors duration-300 hover:bg-foreground/90"
+                    className="inline-flex min-h-11 items-center gap-1.5 text-sm font-medium text-foreground transition-colors duration-300 hover:text-primary"
                   >
-                    View Project
-                    <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true" />
+                    View project
+                    <ArrowUpRight
+                      className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                      aria-hidden="true"
+                    />
                   </a>
                 </div>
               </Panel>

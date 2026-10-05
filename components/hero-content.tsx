@@ -1,7 +1,6 @@
 "use client"
 
-import Link from "next/link"
-import { ArrowRight, Download, MapPin } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 import { useTheme } from "./auto-theme-provider"
 import { highlights, profile } from "@/lib/portfolio-data"
 
@@ -53,7 +52,7 @@ export default function HeroContent() {
             isDark ? "text-white/60" : "text-gray-600"
           }`}
         >
-          I build Python backend services, REST APIs, and applied AI/ML systems — from YOLOv11
+          I build Python backend services, REST APIs, and applied AI/ML systems, from YOLOv11
           perception research on edge hardware to LLM-assisted product features.
         </p>
 
@@ -67,49 +66,51 @@ export default function HeroContent() {
                 : "bg-gray-900 text-white hover:bg-gray-900/90 focus-visible:outline-gray-900"
             }`}
           >
-            View Projects
+            View projects
             <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
           </button>
 
-          <Link
-            href={profile.resumeFile}
-            download
-            className={`group inline-flex min-h-11 items-center rounded-full border px-7 py-3.5 text-sm font-normal transition-all duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 ${
+          <button
+            type="button"
+            onClick={() => scrollTo("contact")}
+            className={`inline-flex min-h-11 items-center rounded-full border px-7 py-3.5 text-sm font-normal transition-all duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 ${
               isDark
                 ? "border-white/30 text-white hover:bg-white/10 hover:border-white/50 focus-visible:outline-white"
                 : "border-gray-900/30 text-gray-900 hover:bg-gray-900/10 hover:border-gray-900/50 focus-visible:outline-gray-900"
             }`}
           >
-            <Download className="mr-2 h-4 w-4" aria-hidden="true" />
-            Download CV
-          </Link>
+            Get in touch
+          </button>
         </div>
 
-        <dl className="mx-auto mt-12 grid max-w-2xl grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
-          {highlights.map((item) => (
-            <div
-              key={item.label}
-              className={`rounded-2xl border px-4 py-4 backdrop-blur-sm transition-colors duration-300 ${
-                isDark ? "border-white/15 bg-white/5" : "border-gray-900/10 bg-white/50"
-              }`}
-            >
-              <dt
-                className={`text-[0.7rem] uppercase tracking-wider transition-colors duration-300 ${
-                  isDark ? "text-white/50" : "text-gray-500"
-                }`}
-              >
-                {item.label}
-              </dt>
-              <dd
-                className={`mt-1.5 text-base sm:text-lg font-medium transition-colors duration-300 ${
-                  isDark ? "text-white" : "text-gray-900"
-                }`}
-              >
-                {item.value}
-                <span className={`ml-1 text-xs font-normal ${isDark ? "text-white/50" : "text-gray-500"}`}>
-                  {item.detail}
-                </span>
-              </dd>
+        <dl className="mx-auto mt-14 flex flex-col items-center gap-5 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-x-12">
+          {highlights.map((item, index) => (
+            <div key={item.label} className="flex flex-col items-center gap-5 sm:flex-row sm:gap-x-12">
+              {index > 0 && (
+                <span
+                  aria-hidden="true"
+                  className={`h-px w-12 sm:h-9 sm:w-px ${isDark ? "bg-white/15" : "bg-gray-900/10"}`}
+                />
+              )}
+              <div className="text-center">
+                <dt
+                  className={`text-[0.7rem] uppercase tracking-wider transition-colors duration-300 ${
+                    isDark ? "text-white/50" : "text-gray-500"
+                  }`}
+                >
+                  {item.label}
+                </dt>
+                <dd
+                  className={`mt-1.5 text-base sm:text-lg font-medium transition-colors duration-300 ${
+                    isDark ? "text-white" : "text-gray-900"
+                  }`}
+                >
+                  {item.value}
+                  <span className={`ml-1 text-xs font-normal ${isDark ? "text-white/50" : "text-gray-500"}`}>
+                    {item.detail}
+                  </span>
+                </dd>
+              </div>
             </div>
           ))}
         </dl>

@@ -12,6 +12,7 @@ export default function EducationSection() {
     >
       <div className="max-w-6xl mx-auto">
         <SectionHeading
+          index="05"
           title="Education &"
           accent="Certifications"
           description="Applied technology degree, thesis research, and industry credentials."

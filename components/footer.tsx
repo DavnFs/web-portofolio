@@ -1,11 +1,10 @@
 import Link from "next/link"
-import { Github, Linkedin, Mail } from "lucide-react"
+import { Github, Linkedin } from "lucide-react"
 import { navSections, profile } from "@/lib/portfolio-data"
 
 const socials = [
   { label: "GitHub", href: profile.github, icon: Github },
   { label: "LinkedIn", href: profile.linkedin, icon: Linkedin },
-  { label: "Email", href: `mailto:${profile.email}`, icon: Mail },
 ]
 
 export default function Footer() {
@@ -25,7 +24,7 @@ export default function Footer() {
               <li key={section.id}>
                 <a
                   href={`#${section.id}`}
-                  className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+                  className="inline-flex min-h-11 items-center text-xs text-muted-foreground transition-colors hover:text-foreground"
                 >
                   {section.label}
                 </a>
@@ -43,9 +42,8 @@ export default function Footer() {
                 <Link
                   href={social.href}
                   aria-label={social.label}
-                  {...(social.href.startsWith("mailto:")
-                    ? {}
-                    : { target: "_blank", rel: "noopener noreferrer" })}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex h-11 w-11 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors duration-300 hover:bg-muted hover:text-foreground"
                 >
                   <Icon className="h-4 w-4" aria-hidden="true" />

@@ -11,16 +11,10 @@ export function Panel({ children, className, as: Tag = "div" }: PanelProps) {
   return (
     <Tag
       className={cn(
-        "relative rounded-2xl border border-border backdrop-blur-sm shadow-sm",
-        "bg-white/70 dark:bg-white/[0.04]",
-        "transition-all duration-300 hover:shadow-lg hover:border-foreground/20",
+        "rounded-2xl border border-border bg-white/80 shadow-sm dark:bg-white/[0.04]",
         className
       )}
     >
-      <span
-        aria-hidden="true"
-        className="absolute top-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-foreground/20 to-transparent"
-      />
       {children}
     </Tag>
   )

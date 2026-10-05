@@ -48,6 +48,7 @@ export default function Home() {
       <section id="skills" className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto">
           <SectionHeading
+            index="04"
             title="Skills &"
             accent="Expertise"
             description="Technologies I use to ship backend services, applied ML systems, and the tooling around them."

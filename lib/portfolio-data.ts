@@ -6,10 +6,8 @@ export const profile = {
   summary:
     "Fresh graduate in Computer Engineering Technology with hands-on experience building Python-based backend services, REST APIs, and applied AI/ML systems. Comfortable across FastAPI, Express.js, Laravel, PostgreSQL, and Prisma ORM, with project work spanning authentication, payment integration, admin dashboards, and end-to-end testing.",
   location: "Semarang, Indonesia",
-  email: "davin123fs@gmail.com",
   github: "https://github.com/DavnFs",
   linkedin: "https://www.linkedin.com/in/davinfausta",
-  resumeFile: "/Davin-Supriyadi-CV.docx",
 }
 
 export const highlights = [
@@ -66,7 +64,21 @@ export const experience = [
   },
 ]
 
-export const projects = [
+export type Project = {
+  name: string
+  category: string
+  tagline: string
+  description: string
+  stack: string[]
+  url: string
+  icon: string
+  featured?: boolean
+  award?: string
+  awardDetail?: string
+  note?: string
+}
+
+export const projects: Project[] = [
   {
     name: "Simpul",
     category: "Marketplace Platform",
@@ -74,11 +86,11 @@ export const projects = [
     description:
       "Marketplace platform covering authentication, vendor KYB, service catalog, booking, order management, and consumer/vendor/admin dashboards, with an NLP + LLM assistant that interprets user context and optimizes token usage.",
     stack: ["Express.js", "Flutter", "Supabase PostgreSQL", "Prisma ORM", "Midtrans", "LLM/NLP"],
-    award: "1st Runner-Up — Bank Indonesia Hackathon",
+    award: "1st Runner-Up, Bank Indonesia Hackathon",
     awardDetail: "Ranked 4th of 64 teams",
+    featured: true,
     url: "https://github.com/Simpul-Platform-Wedding-UMKM",
     icon: "store",
-    accent: "amber",
   },
   {
     name: "StuntGuard",
@@ -87,11 +99,9 @@ export const projects = [
     description:
       "Screening application for toddler stunting risk based on WHO growth standards, with a parent dashboard for growth-history monitoring and JWT authentication. Pairs a scikit-learn growth classifier with a WHO rule-based fallback.",
     stack: ["FastAPI", "React", "TypeScript", "SQLAlchemy", "SQLite", "scikit-learn", "Gemini"],
-    award: "Guarded AI chatbot",
-    awardDetail: "Three-layer guardrail against diagnostic claims",
+    note: "Three-layer guardrail against diagnostic claims",
     url: "https://github.com/DavnFs/StuntGuard",
     icon: "heart-pulse",
-    accent: "emerald",
   },
   {
     name: "Runa",
@@ -100,11 +110,9 @@ export const projects = [
     description:
       "Offline Android app that keeps every record on-device: no account, no cloud, and no internet permission at all. Period prediction is expressed as a median/MAD range rather than a fixed date, with explainable personal insights.",
     stack: ["Kotlin", "SQLCipher", "Android Keystore", "AES-256-GCM", "Biometrics"],
-    award: "Zero-permission by design",
-    awardDetail: "No network access, encrypted local store",
+    note: "No network permission, encrypted local store",
     url: "https://github.com/DavnFs/Runa",
     icon: "shield",
-    accent: "violet",
   },
   {
     name: "Autonomous Perception",
@@ -113,11 +121,9 @@ export const projects = [
     description:
       "YOLOv11 research pipeline for autonomous-vehicle perception, pairing an ASPP triple detection head with FPN and PANet necking. Monte Carlo Dropout adds per-prediction uncertainty so weak detections can be flagged rather than trusted.",
     stack: ["Python", "PyTorch", "YOLOv11", "OpenCV", "Jetson Orin NX"],
-    award: "Undergraduate thesis",
-    awardDetail: "28-class custom dataset",
+    note: "Undergraduate thesis · 28-class custom dataset",
     url: "https://github.com/DavnFs/yolo_inference",
     icon: "scan-eye",
-    accent: "sky",
   },
   {
     name: "Water Quality AIoT",
@@ -126,11 +132,9 @@ export const projects = [
     description:
       "AIoT system that classifies water suitability for bathing and washing from turbidity and pH readings. An ESP32 publishes sensor data over MQTT while an XGBoost model maps readings to suitability categories.",
     stack: ["ESP32", "PlatformIO", "MQTT", "XGBoost", "C++", "Python"],
-    award: "Edge inference",
-    awardDetail: "Sensor-to-classification pipeline",
+    note: "Runs classification at the edge",
     url: "https://github.com/tatatacicici/iot-mqtt-go",
     icon: "droplets",
-    accent: "cyan",
   },
   {
     name: "Svings",
@@ -139,11 +143,8 @@ export const projects = [
     description:
       "Flutter app that records expenses and income automatically by parsing transaction e-mail, removing the manual entry step that makes budgeting apps tedious to keep up with.",
     stack: ["Flutter", "Dart", "E-mail Parsing", "Automation"],
-    award: "Automated records",
-    awardDetail: "Parses income and expenses from e-mail",
     url: "https://github.com/DavnFs/Svings",
     icon: "wallet",
-    accent: "rose",
   },
   {
     name: "TunneLink",
@@ -152,11 +153,9 @@ export const projects = [
     description:
       "Lightweight Tauri desktop app for managing SSH connection profiles and local port-forwarding rules, built for people who juggle the same tunnels across several environments.",
     stack: ["Tauri", "TypeScript", "Rust", "SSH"],
-    award: "MIT licensed",
-    awardDetail: "Cross-platform desktop app",
+    note: "MIT licensed",
     url: "https://github.com/DavnFs/tunnelink",
     icon: "network",
-    accent: "indigo",
   },
   {
     name: "Catat Uang",
@@ -165,11 +164,8 @@ export const projects = [
     description:
       "Serverless Telegram bot for expense tracking with AI-generated financial insights. Natural-language expense capture backed by Google Sheets storage and personalized budget recommendations.",
     stack: ["Python", "Telegram Bot API", "NLP", "Google Sheets"],
-    award: "Live demo",
-    awardDetail: "Deployed serverless bot",
     url: "https://catat-uang-nu.vercel.app",
     icon: "receipt",
-    accent: "lime",
   },
   {
     name: "Wotic.id",
@@ -178,11 +174,8 @@ export const projects = [
     description:
       "Tourism platform for Wonosobo Regency. Built the API serving hotel listing data and wired it into the hotel page for dynamic display, plus a responsive footer used across the public site.",
     stack: ["Laravel", "JavaScript", "MySQL", "REST API"],
-    award: "Team delivery",
-    awardDetail: "Hotel listing API & responsive UI",
     url: "https://github.com/rchmdndy/wotic",
     icon: "map-pinned",
-    accent: "teal",
   },
 ]
 
@@ -240,7 +233,7 @@ export const education = {
   school: "Politeknik Negeri Semarang",
   location: "Semarang, Indonesia",
   period: "2022 – 2026",
-  gpa: "3.82 / 4.00",
+  gpa: "3.84 / 4.00",
   thesis:
     "Thesis: YOLOv11-based autonomous vehicle perception system on a custom 28-class dataset, with a triple-head detection architecture using ASPP, FPN, and PANet for real-time object detection.",
   coursework: [

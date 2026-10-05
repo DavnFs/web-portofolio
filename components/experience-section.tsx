@@ -9,6 +9,7 @@ export default function ExperienceSection() {
     <section id="experience" className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 transition-colors duration-500">
       <div className="max-w-5xl mx-auto">
         <SectionHeading
+          index="02"
           title="Work"
           accent="Experience"
           description="Research and engineering work across autonomous vehicles, applied vision, and real-time tooling."

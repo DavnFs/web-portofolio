@@ -11,35 +11,36 @@ export default function AboutSection() {
     >
       <div className="max-w-6xl mx-auto">
         <SectionHeading
+          index="01"
           title="About"
           accent="Me"
           description={profile.headline}
         />
 
-        <div className="grid lg:grid-cols-3 gap-6 lg:gap-8">
-          <div className="lg:col-span-2 space-y-6">
-            <Panel className="p-6 sm:p-8 lg:p-10">
-              <div className="space-y-6">
-                <div>
-                  <h3 className="text-lg sm:text-xl font-medium text-foreground mb-3">Background</h3>
-                  {about.background.map((paragraph) => (
-                    <p key={paragraph} className="text-muted-foreground leading-relaxed text-sm sm:text-base">
-                      {paragraph}
-                    </p>
-                  ))}
-                </div>
-
-                <div>
-                  <h3 className="text-lg sm:text-xl font-medium text-foreground mb-3">How I Work</h3>
-                  {about.approach.map((paragraph) => (
-                    <p key={paragraph} className="text-muted-foreground leading-relaxed text-sm sm:text-base">
-                      {paragraph}
-                    </p>
-                  ))}
-                </div>
+        <div className="grid gap-6 lg:grid-cols-3 lg:gap-8">
+          <Panel className="p-6 sm:p-8 lg:col-span-2 lg:p-10">
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-lg sm:text-xl font-medium text-foreground mb-3">Background</h3>
+                {about.background.map((paragraph) => (
+                  <p key={paragraph} className="text-muted-foreground leading-relaxed text-sm sm:text-base">
+                    {paragraph}
+                  </p>
+                ))}
               </div>
-            </Panel>
 
+              <div>
+                <h3 className="text-lg sm:text-xl font-medium text-foreground mb-3">How I Work</h3>
+                {about.approach.map((paragraph) => (
+                  <p key={paragraph} className="text-muted-foreground leading-relaxed text-sm sm:text-base">
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
+            </div>
+          </Panel>
+
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-1">
             <Panel className="p-6 sm:p-8">
               <div className="flex items-center gap-3 mb-5">
                 <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 border border-primary/20">
@@ -56,10 +57,8 @@ export default function AboutSection() {
                 ))}
               </ul>
             </Panel>
-          </div>
 
-          <div className="lg:col-span-1">
-            <Panel className="h-full p-6 sm:p-8">
+            <Panel className="p-6 sm:p-8">
               <div className="flex items-center gap-3 mb-6">
                 <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 border border-primary/20">
                   <Target className="h-5 w-5 text-primary" aria-hidden="true" />

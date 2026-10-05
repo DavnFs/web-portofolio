@@ -1,29 +1,19 @@
 import Link from "next/link"
-import { ArrowRight, Github, Linkedin, Mail, MapPin } from "lucide-react"
+import { ArrowUpRight, Github, Linkedin, MapPin } from "lucide-react"
 import SectionHeading from "@/components/section-heading"
 import { Panel } from "@/components/ui/panel"
 import { profile } from "@/lib/portfolio-data"
 
 const channels = [
   {
-    label: "Email",
-    value: profile.email,
-    description: "Best for roles, projects, and collaborations",
-    action: "Send Email",
-    href: `mailto:${profile.email}`,
-    icon: Mail,
-    tone: "text-primary",
-    surface: "border-primary/20 bg-primary/10 group-hover:bg-primary/15",
-  },
-  {
     label: "LinkedIn",
     value: "in/davinfausta",
-    description: "Connect professionally",
+    description: "Best for roles, projects, and collaborations",
     action: "Connect",
     href: profile.linkedin,
     icon: Linkedin,
     tone: "text-sky-600 dark:text-sky-400",
-    surface: "border-sky-500/20 bg-sky-500/10 group-hover:bg-sky-500/15",
+    surface: "border-sky-500/20 bg-sky-500/10",
   },
   {
     label: "GitHub",
@@ -33,7 +23,7 @@ const channels = [
     href: profile.github,
     icon: Github,
     tone: "text-foreground",
-    surface: "border-border bg-muted/60 group-hover:bg-muted",
+    surface: "border-border bg-muted/60",
   },
 ]
 
@@ -43,15 +33,15 @@ export default function ContactSection() {
       <div className="max-w-5xl mx-auto">
         <Panel className="p-6 sm:p-8 lg:p-14">
           <SectionHeading
+            index="06"
             title="Let's Build"
             accent="Something"
-            description="I'm open to backend, AI/ML, and automation engineering roles — and always happy to talk through an interesting problem."
+            description="I'm open to backend, AI/ML, and automation engineering roles. The fastest way to reach me is LinkedIn."
           />
 
-          <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <ul className="grid grid-cols-1 gap-5 sm:grid-cols-2">
             {channels.map((channel) => {
               const Icon = channel.icon
-              const isExternal = !channel.href.startsWith("mailto:")
 
               return (
                 <li key={channel.label} className="group">
@@ -68,7 +58,8 @@ export default function ContactSection() {
 
                     <Link
                       href={channel.href}
-                      {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="mt-auto inline-flex min-h-11 w-full items-center justify-center rounded-full border border-border px-4 text-sm font-medium text-foreground transition-colors duration-300 hover:bg-muted"
                     >
                       {channel.action}
@@ -86,12 +77,17 @@ export default function ContactSection() {
             </p>
 
             <Link
-              href={`mailto:${profile.email}`}
+              href={profile.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
               className="group inline-flex min-h-11 items-center gap-2 rounded-full bg-primary px-7 text-sm font-medium text-primary-foreground transition-colors duration-300 hover:bg-primary/90"
             >
-              <Mail className="h-4 w-4" aria-hidden="true" />
-              Get in Touch
-              <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
+              <Linkedin className="h-4 w-4" aria-hidden="true" />
+              Connect on LinkedIn
+              <ArrowUpRight
+                className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                aria-hidden="true"
+              />
             </Link>
           </div>
         </Panel>
