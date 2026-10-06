@@ -2,7 +2,7 @@
 
 import { ArrowRight } from "lucide-react"
 import { useTheme } from "./auto-theme-provider"
-import { highlights, profile } from "@/lib/portfolio-data"
+import { profile } from "@/lib/portfolio-data"
 
 export default function HeroContent() {
   const { theme } = useTheme()
@@ -82,38 +82,6 @@ export default function HeroContent() {
             Get in touch
           </button>
         </div>
-
-        <dl className="mx-auto mt-14 flex flex-col items-center gap-5 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-x-12">
-          {highlights.map((item, index) => (
-            <div key={item.label} className="flex flex-col items-center gap-5 sm:flex-row sm:gap-x-12">
-              {index > 0 && (
-                <span
-                  aria-hidden="true"
-                  className={`h-px w-12 sm:h-9 sm:w-px ${isDark ? "bg-white/15" : "bg-gray-900/10"}`}
-                />
-              )}
-              <div className="text-center">
-                <dt
-                  className={`text-[0.7rem] uppercase tracking-wider transition-colors duration-300 ${
-                    isDark ? "text-white/50" : "text-gray-500"
-                  }`}
-                >
-                  {item.label}
-                </dt>
-                <dd
-                  className={`mt-1.5 text-base sm:text-lg font-medium transition-colors duration-300 ${
-                    isDark ? "text-white" : "text-gray-900"
-                  }`}
-                >
-                  {item.value}
-                  <span className={`ml-1 text-xs font-normal ${isDark ? "text-white/50" : "text-gray-500"}`}>
-                    {item.detail}
-                  </span>
-                </dd>
-              </div>
-            </div>
-          ))}
-        </dl>
       </div>
     </section>
   )

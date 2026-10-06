@@ -2,18 +2,13 @@ export const profile = {
   name: "Davin Fausta Supriyadi",
   nameParts: { first: "Hi, I'm", last: "Davin Supriyadi" },
   headline: "Fresh Graduate, Computer Engineering Technology",
-  focusAreas: ["Python Backend Development", "AI/ML & Automation", "Applied Computer Vision"],
+  focusAreas: ["Mobile Development", "AI/ML & Automation", "Applied Computer Vision"],
   summary:
-    "Fresh graduate in Computer Engineering Technology with hands-on experience building Python-based backend services, REST APIs, and applied AI/ML systems. Comfortable across FastAPI, Express.js, Laravel, PostgreSQL, and Prisma ORM, with project work spanning authentication, payment integration, admin dashboards, and end-to-end testing.",
+    "Fresh graduate in Computer Engineering Technology with hands-on experience building Mobile Developer, Python-based backend services, REST APIs, and applied AI/ML systems. Comfortable across FastAPI, Express.js, Laravel, PostgreSQL, and Prisma ORM, with project work spanning authentication, payment integration, admin dashboards, and end-to-end testing.",
   location: "Semarang, Indonesia",
   github: "https://github.com/DavnFs",
   linkedin: "https://www.linkedin.com/in/davinfausta",
 }
-
-export const highlights = [
-  { label: "GPA", value: "3.84", detail: "/ 4.00" },
-  { label: "TOEIC Listening & Reading", value: "915", detail: "valid to Nov 2027" },
-]
 
 export const about = {
   background: [
@@ -27,11 +22,21 @@ export const about = {
   currentFocus: [
     "Open to backend, AI/ML, and automation engineering roles",
     "YOLOv11 perception research with edge deployment on NVIDIA Jetson Orin NX",
-    "Building Runa — a private-first Android app with on-device analysis",
   ],
 }
 
 export const experience = [
+  {
+    role: "Mobile Developer Intern (Maganghub)",
+    organisation: "PT. BPR Arto Moro",
+    location: "Semarang, Indonesia",
+    period: "Sep 2026 – Present",
+    summary: "Building new feature in internal apps for PT. BPR Arto Moro",
+    points: [
+      "Developed and implemented new features for internal apps using Flutter and Dart.",
+    ],
+    stack: ["Flutter", "Dart", "Golang"],
+  },
   {
     role: "Research Assistant — Autonomous Vehicle Perception System",
     organisation: "Politeknik Negeri Semarang",

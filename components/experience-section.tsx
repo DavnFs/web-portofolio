@@ -12,7 +12,7 @@ export default function ExperienceSection() {
           index="02"
           title="Work"
           accent="Experience"
-          description="Research and engineering work across autonomous vehicles, applied vision, and real-time tooling."
+          description="Research and engineering work across Mobile apps, autonomous vehicles, applied vision, and real-time tooling."
         />
 
         <ol className="relative space-y-6 sm:space-y-8">
