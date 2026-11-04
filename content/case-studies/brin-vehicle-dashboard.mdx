@@ -1,0 +1,84 @@
+---
+index: "02"
+title: "BRIN Vehicle Dashboard"
+tagline: "Real-time ROS1 sensor telemetry into a Flutter operator cockpit"
+summary: "Interactive control cockpit for an autonomous electric vehicle research platform, integrating live LiDAR, GPS, and IMU streams with interactive goal-point dispatch."
+projectType: "Research Platform Engineering"
+year: "2025"
+role: "Engineering Intern"
+stack: ["ROS1 Noetic", "Flutter", "LiDAR", "GPS", "IMU", "WebSockets", "nuScenes"]
+heroMedia:
+  type: "diagram"
+  src: "/images/brin-dashboard-flow.svg"
+  alt: "BRIN autonomous vehicle sensor-to-dashboard pipeline diagram"
+nextSlug: "autonomous-perception"
+---
+
+## The Problem
+
+Autonomous vehicle field tests require test engineers to observe vehicle telemetry in real time and safely dispatch navigation commands without tethering bulky laptops running RViz. During testing at BRIN, operators needed a fast, interactive mobile interface that could render live sensor telemetry and route navigation goal points directly into the vehicle stack.
+
+My role was to design and build an operator cockpit using Flutter and connect it to the vehicle ROS1 Noetic bus over a low-latency bridge.
+
+<Figure
+  src="/images/brin-dashboard-flow.svg"
+  alt="ROS1 telemetry and goal dispatch architecture for BRIN EV platform"
+  caption="Bi-directional telemetry pipeline connecting vehicle bus to Flutter operator cockpit"
+/>
+
+## How It Works
+
+The platform bridges real-time robotics middleware with a reactive mobile interface through three core components.
+
+<Steps>
+  <Step number="01" title="ROS1 Sensor Aggregation">
+    Subscribed to physical sensor topics on the vehicle bus, including 3D LiDAR point clouds, RTK-GPS coordinates (/fix), and IMU acceleration and orientation feeds (/imu/data). Timestamp synchronization prevented state drift across streams.
+  </Step>
+  <Step number="02" title="Rosbridge WebSocket Serialization">
+    Deployed a rosbridge daemon that serialized native ROS messages into lightweight JSON payloads over WebSockets. High-frequency feeds were downsampled to balance network throughput across wireless test ranges.
+  </Step>
+  <Step number="03" title="Interactive Cockpit and Waypoint Dispatch">
+    Rendered real-time vehicle orientation, speed, and spatial obstacle boundaries on a custom Flutter map overlay calibrated to the BRIN KST test area. Operators could tap directly on the test map to publish a target pose (/move_base_simple/goal) to the autonomous planner.
+  </Step>
+</Steps>
+
+## Decisions and Trade-offs
+
+### Flutter over Web RViz
+RViz web bridges exist, but they are heavy, consume substantial client resources, and do not provide clean mobile touch ergonomics in the field. Flutter allowed us to compile a responsive mobile app with custom 60 FPS vector instrumentation.
+
+### Selective Downsampling on Heavy LiDAR Feeds
+Raw 3D point cloud topics easily saturated wireless links between the moving vehicle and the tablet. I implemented spatial filtering and downsampled preview rates to 10 Hz for the operator display while leaving the onboard autonomous planner untouched at full bus frequency.
+
+<Callout type="note" title="Test Environment Scope">
+Field operations and waypoint dispatches were executed within the designated BRIN Kawasan Sains dan Teknologi (KST) testing grounds under controlled safety supervision.
+</Callout>
+
+### Camera-LiDAR Multimodal Exploration
+In parallel with dashboard development, I researched Bird&apos;s Eye View (BEV) fusion architectures on the nuScenes dataset, evaluating how multimodal camera-LiDAR representations preserve 3D geometry compared to single-sensor projections.
+
+## Results
+
+The dashboard served as the active monitoring interface during vehicle navigation trials.
+
+<StatBlock>
+  <Stat
+    value="3"
+    label="Fused Telemetry Streams"
+    condition="LiDAR obstacle boundary, RTK-GPS position, 6-DOF IMU"
+  />
+  <Stat
+    value="TODO: add latency ms"
+    label="Telemetry Bridge Latency"
+    condition="Local 5GHz Wi-Fi bridge to vehicle rosbridge node"
+  />
+  <Stat
+    value="TODO: add frequency Hz"
+    label="Display Refresh Frequency"
+    condition="Filtered telemetry render rate on Flutter client"
+  />
+</StatBlock>
+
+## Summary
+
+The dashboard closed the loop between the vehicle onboard autonomy stack and safety engineers on the ground, enabling instant goal placement and real-time state verification during research maneuvers.

@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="100%" height="100%" fill="none">
+  <rect width="1200" height="675" fill="currentColor" class="text-surface" rx="8"/>
+  <rect x="0.5" y="0.5" width="1199" height="674" stroke="currentColor" class="text-line" rx="7.5"/>
+  
+  <defs>
+    <pattern id="grid-brin" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" class="text-line" stroke-width="0.5" opacity="0.4"/>
+    </pattern>
+    <marker id="arrow-brin" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#4A90E2"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="675" fill="url(#grid-brin)" opacity="0.6"/>
+
+  <text x="60" y="70" font-family="ui-monospace, monospace" font-size="12" fill="#4A90E2" letter-spacing="0.1em" font-weight="600">RESEARCH PLATFORM // BRIN SMART MECHATRONICS 2025</text>
+  <text x="60" y="105" font-family="system-ui, sans-serif" font-size="24" fill="currentColor" class="text-ink" font-weight="600">Autonomous Electric Vehicle Telemetry &amp; Navigation Cockpit</text>
+  <text x="60" y="130" font-family="system-ui, sans-serif" font-size="14" fill="currentColor" class="text-ink-muted">ROS1 Noetic Sensor Streams (LiDAR, GPS, IMU) into a Real-Time Flutter Operator Interface</text>
+
+  <!-- 1. Sensor Array -->
+  <g transform="translate(60, 200)">
+    <rect width="210" height="340" rx="4" fill="currentColor" class="text-bg" stroke="currentColor" class="text-line" stroke-width="1.5"/>
+    <text x="20" y="35" font-family="ui-monospace, monospace" font-size="11" fill="#4A90E2" font-weight="600">01 // SENSOR HARDWARE</text>
+    <text x="20" y="70" font-family="system-ui, sans-serif" font-size="16" fill="currentColor" class="text-ink" font-weight="600">Vehicle Perception</text>
+    <text x="20" y="95" font-family="system-ui, sans-serif" font-size="13" fill="currentColor" class="text-ink-muted">Physical Bus Streams</text>
+    <line x1="20" y1="120" x2="190" y2="120" stroke="currentColor" class="text-line" stroke-width="1"/>
+
+    <rect x="15" y="140" width="180" height="50" rx="3" fill="currentColor" class="text-surface" stroke="currentColor" class="text-line"/>
+    <text x="25" y="162" font-family="system-ui, sans-serif" font-size="12" fill="currentColor" class="text-ink" font-weight="600">3D LiDAR (Point Cloud)</text>
+    <text x="25" y="178" font-family="ui-monospace, monospace" font-size="10" fill="currentColor" class="text-ink-muted">Topic: /velodyne_points (10Hz)</text>
+
+    <rect x="15" y="200" width="180" height="50" rx="3" fill="currentColor" class="text-surface" stroke="currentColor" class="text-line"/>
+    <text x="25" y="222" font-family="system-ui, sans-serif" font-size="12" fill="currentColor" class="text-ink" font-weight="600">RTK-GPS / GNSS</text>
+    <text x="25" y="238" font-family="ui-monospace, monospace" font-size="10" fill="currentColor" class="text-ink-muted">Topic: /fix (Centimeter Fix)</text>
+
+    <rect x="15" y="260" width="180" height="50" rx="3" fill="currentColor" class="text-surface" stroke="currentColor" class="text-line"/>
+    <text x="25" y="282" font-family="system-ui, sans-serif" font-size="12" fill="currentColor" class="text-ink" font-weight="600">6-DOF IMU &amp; Odometry</text>
+    <text x="25" y="298" font-family="ui-monospace, monospace" font-size="10" fill="currentColor" class="text-ink-muted">Topic: /imu/data &amp; /odom (50Hz)</text>
+  </g>
+
+  <path d="M 270 370 L 330 370" stroke="#4A90E2" stroke-width="2" marker-end="url(#arrow-brin)"/>
+
+  <!-- 2. ROS Master & Middleware -->
+  <g transform="translate(340, 200)">
+    <rect width="250" height="340" rx="4" fill="currentColor" class="text-bg" stroke="currentColor" class="text-line" stroke-width="1.5"/>
+    <text x="20" y="35" font-family="ui-monospace, monospace" font-size="11" fill="#4A90E2" font-weight="600">02 // ROS1 MIDDLEWARE</text>
+    <text x="20" y="70" font-family="system-ui, sans-serif" font-size="16" fill="currentColor" class="text-ink" font-weight="600">ROS Core &amp; Rosbridge</text>
+    <text x="20" y="95" font-family="system-ui, sans-serif" font-size="13" fill="currentColor" class="text-ink-muted">Serialization &amp; Bridge Daemon</text>
+    <line x1="20" y1="120" x2="230" y2="120" stroke="currentColor" class="text-line" stroke-width="1"/>
+
+    <rect x="15" y="140" width="220" height="75" rx="3" fill="currentColor" class="text-surface" stroke="currentColor" class="text-line"/>
+    <text x="25" y="165" font-family="system-ui, sans-serif" font-size="12" fill="currentColor" class="text-ink" font-weight="600">Sensor Aggregation</text>
+    <text x="25" y="185" font-family="ui-monospace, monospace" font-size="10" fill="currentColor" class="text-ink-muted">Downsamples point cloud data</text>
+    <text x="25" y="200" font-family="ui-monospace, monospace" font-size="10" fill="currentColor" class="text-ink-muted">Synchronizes timestamps via message_filters</text>
+
+    <rect x="15" y="225" width="220" height="85" rx="3" fill="currentColor" class="text-surface" stroke="currentColor" class="text-line"/>
+    <text x="25" y="250" font-family="system-ui, sans-serif" font-size="12" fill="currentColor" class="text-ink" font-weight="600">Rosbridge WebSocket Server</text>
+    <text x="25" y="270" font-family="ui-monospace, monospace" font-size="10" fill="currentColor" class="text-ink-muted">Port: 9090 JSON protocol</text>
+    <text x="25" y="285" font-family="ui-monospace, monospace" font-size="10" fill="currentColor" class="text-ink-muted">Bi-directional publish/subscribe</text>
+    <text x="25" y="300" font-family="ui-monospace, monospace" font-size="10" fill="currentColor" class="text-ink-muted">Sub-10ms network transport</text>
+  </g>
+
+  <path d="M 590 370 L 650 370" stroke="#4A90E2" stroke-width="2" marker-end="url(#arrow-brin)"/>
+
+  <!-- 3. Flutter Front-End Dashboard -->
+  <g transform="translate(660, 200)">
+    <rect width="250" height="340" rx="4" fill="currentColor" class="text-bg" stroke="currentColor" class="text-line" stroke-width="1.5"/>
+    <text x="20" y="35" font-family="ui-monospace, monospace" font-size="11" fill="#4A90E2" font-weight="600">03 // OPERATOR DASHBOARD</text>
+    <text x="20" y="70" font-family="system-ui, sans-serif" font-size="16" fill="currentColor" class="text-ink" font-weight="600">Flutter Cockpit UI</text>
+    <text x="20" y="95" font-family="system-ui, sans-serif" font-size="13" fill="currentColor" class="text-ink-muted">Live Rendering &amp; Control</text>
+    <line x1="20" y1="120" x2="230" y2="120" stroke="currentColor" class="text-line" stroke-width="1"/>
+
+    <rect x="15" y="140" width="220" height="75" rx="3" fill="currentColor" class="text-surface" stroke="currentColor" class="text-line"/>
+    <text x="25" y="165" font-family="system-ui, sans-serif" font-size="12" fill="currentColor" class="text-ink" font-weight="600">Real-time Gauges &amp; Metrics</text>
+    <text x="25" y="185" font-family="ui-monospace, monospace" font-size="10" fill="currentColor" class="text-ink-muted">Speed, battery state, yaw, roll</text>
+    <text x="25" y="200" font-family="ui-monospace, monospace" font-size="10" fill="currentColor" class="text-ink-muted">Live 2D LiDAR obstacle field</text>
+
+    <rect x="15" y="225" width="220" height="85" rx="3" fill="currentColor" class="text-surface" stroke="currentColor" class="text-line"/>
+    <text x="25" y="250" font-family="system-ui, sans-serif" font-size="12" fill="currentColor" class="text-ink" font-weight="600">Interactive Map View</text>
+    <text x="25" y="270" font-family="ui-monospace, monospace" font-size="10" fill="currentColor" class="text-ink-muted">BRIN KST Area Map Overlay</text>
+    <text x="25" y="285" font-family="ui-monospace, monospace" font-size="10" fill="currentColor" class="text-ink-muted">Vehicle trajectory tracking</text>
+    <text x="25" y="300" font-family="ui-monospace, monospace" font-size="10" fill="currentColor" class="text-ink-muted">Tap to place waypoint</text>
+  </g>
+
+  <!-- Connect 3 -> 4 (Command Return Loop) -->
+  <path d="M 910 370 L 970 370" stroke="#4A90E2" stroke-width="2" marker-end="url(#arrow-brin)"/>
+
+  <!-- 4. Path Planner Dispatch -->
+  <g transform="translate(980, 200)">
+    <rect width="160" height="340" rx="4" fill="currentColor" class="text-bg" stroke="currentColor" class="text-line" stroke-width="1.5"/>
+    <text x="15" y="35" font-family="ui-monospace, monospace" font-size="11" fill="#4A90E2" font-weight="600">04 // DISPATCH</text>
+    <text x="15" y="70" font-family="system-ui, sans-serif" font-size="16" fill="currentColor" class="text-ink" font-weight="600">Goal Routing</text>
+    <text x="15" y="95" font-family="system-ui, sans-serif" font-size="13" fill="currentColor" class="text-ink-muted">Navigation Stack</text>
+    <line x1="15" y1="120" x2="145" y2="120" stroke="currentColor" class="text-line" stroke-width="1"/>
+
+    <rect x="15" y="140" width="130" height="70" rx="3" fill="#4A90E2" fill-opacity="0.1" stroke="#4A90E2"/>
+    <text x="23" y="165" font-family="system-ui, sans-serif" font-size="11" fill="#4A90E2" font-weight="600">/move_base_simple</text>
+    <text x="23" y="183" font-family="ui-monospace, monospace" font-size="10" fill="currentColor" class="text-ink-muted">geometry_msgs/Pose</text>
+    <text x="23" y="198" font-family="ui-monospace, monospace" font-size="10" fill="currentColor" class="text-ink-muted">Dispatched goal point</text>
+
+    <rect x="15" y="225" width="130" height="70" rx="3" fill="currentColor" class="text-surface" stroke="currentColor" class="text-line"/>
+    <text x="23" y="250" font-family="system-ui, sans-serif" font-size="11" fill="currentColor" class="text-ink" font-weight="600">Planner Module</text>
+    <text x="23" y="268" font-family="ui-monospace, monospace" font-size="10" fill="currentColor" class="text-ink-muted">A* / TEB Local Planner</text>
+    <text x="23" y="283" font-family="ui-monospace, monospace" font-size="10" fill="currentColor" class="text-ink-muted">Executes path to goal</text>
+  </g>
+</svg>

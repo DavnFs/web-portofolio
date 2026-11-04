@@ -1,41 +1,114 @@
 "use client"
 
-import { ArrowRight } from "lucide-react"
-import { useTheme } from "./auto-theme-provider"
-import { profile } from "@/lib/portfolio-data"
+import { useEffect, useRef, useState } from "react"
+import { useTheme } from "next-themes"
+import { gsap, useGSAP } from "@/lib/motion/register"
+import { MOTION } from "@/lib/motion/tokens"
+import { MOTION_QUERIES } from "@/lib/motion/reduced-motion"
+import { splitWords } from "@/lib/motion/split-words"
 
 export default function HeroContent() {
-  const { theme } = useTheme()
-  const isDark = theme === "dark"
+  const { resolvedTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const titleRef = useRef<HTMLHeadingElement>(null)
 
-  const scrollTo = (id: string) => {
-    const target = document.getElementById(id)
-    if (!target) return
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" })
-  }
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  const isDark = !mounted || resolvedTheme === "dark"
+
+  useGSAP(
+    () => {
+      if (!containerRef.current || !titleRef.current) return
+
+      const mm = gsap.matchMedia()
+
+      mm.add(MOTION_QUERIES.motionOK, () => {
+        // Split headline into words for editorial curtain reveal (A7)
+        const split = splitWords(titleRef.current!)
+
+        const tl = gsap.timeline({
+          defaults: {
+            ease: MOTION.ease.editorial,
+            duration: MOTION.duration.editorial,
+          },
+        })
+
+        // A7: Headline words curtain reveal
+        tl.fromTo(
+          split.words,
+          { yPercent: 115, opacity: 0 },
+          {
+            yPercent: 0,
+            opacity: 1,
+            stagger: MOTION.stagger.words,
+            duration: MOTION.duration.editorial,
+            delay: 0.1,
+          }
+        )
+          // A8: Focus pills & subtitle fade
+          .fromTo(
+            ".hero-pills li",
+            { opacity: 0, y: MOTION.distance.sm },
+            {
+              opacity: 1,
+              y: 0,
+              duration: MOTION.duration.normal,
+              stagger: MOTION.stagger.pills,
+            },
+            "-=0.5"
+          )
+          .fromTo(
+            ".hero-bio",
+            { opacity: 0, y: MOTION.distance.sm },
+            {
+              opacity: 1,
+              y: 0,
+              duration: MOTION.duration.editorial,
+            },
+            "-=0.4"
+          )
+
+        return () => {
+          split.revert()
+        }
+      })
+
+      mm.add(MOTION_QUERIES.reducedMotion, () => {
+        // Instant presentation for users with prefers-reduced-motion
+        gsap.set([".hero-pills li", ".hero-bio"], {
+          opacity: 1,
+          y: 0,
+        })
+      })
+    },
+    { scope: containerRef }
+  )
 
   return (
     <section
       aria-label="Introduction"
-      className="relative z-20 flex min-h-dvh items-center justify-center px-6 pb-16 pt-28 no-dm"
+      className="relative z-20 flex min-h-dvh items-center justify-center px-6 pb-16 pt-28"
     >
-      <div className="w-full max-w-3xl text-center">
+      <div ref={containerRef} className="w-full max-w-3xl text-center">
         <h1
-          className={`mt-6 text-4xl sm:text-5xl md:text-6xl leading-tight tracking-tight font-light transition-colors duration-300 ${
+          ref={titleRef}
+          className={`hero-title mt-6 text-4xl sm:text-5xl md:text-6xl leading-tight tracking-tight font-light transition-colors duration-300 ${
             isDark ? "text-white" : "text-gray-900"
           }`}
         >
-          <span className="font-serif font-medium italic">Hi, I&apos;m</span>{" "}
-          <span className="block">Davin Supriyadi</span>
+          <span className="font-editorial-italic font-normal">Hi, I&apos;m</span>{" "}
+          <span className="block font-editorial-italic font-normal tracking-tight">Davin Supriyadi</span>
         </h1>
 
         <ul
-          className={`mt-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-sm md:text-base font-medium transition-colors duration-300 ${
+          className={`hero-pills mt-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-sm md:text-base font-medium transition-colors duration-300 ${
             isDark ? "text-white/85" : "text-gray-700"
           }`}
         >
-          {profile.focusAreas.map((area, index) => (
+          {["Mobile Development", "AI/ML & Automation", "Applied Computer Vision"].map((area, index) => (
             <li key={area} className="flex items-center gap-3">
               {index > 0 && (
                 <span aria-hidden="true" className={isDark ? "text-white/30" : "text-gray-400"}>
@@ -48,40 +121,13 @@ export default function HeroContent() {
         </ul>
 
         <p
-          className={`mx-auto mt-6 max-w-2xl text-sm md:text-base leading-relaxed transition-colors duration-300 ${
-            isDark ? "text-white/60" : "text-gray-600"
+          className={`hero-bio mx-auto mt-6 max-w-2xl text-sm md:text-base leading-relaxed transition-colors duration-300 ${
+            isDark ? "text-white/70" : "text-gray-600"
           }`}
         >
-          I build Python backend services, REST APIs, and applied AI/ML systems, from YOLOv11
-          perception research on edge hardware to LLM-assisted product features.
+          Mobile Development Intern at PT. BPR Arto Moro Semarang. I build Flutter applications,
+          Python backend services, and applied AI/ML systems on edge hardware.
         </p>
-
-        <div className="mt-9 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
-          <button
-            type="button"
-            onClick={() => scrollTo("projects")}
-            className={`group inline-flex min-h-11 items-center rounded-full px-7 py-3.5 text-sm font-medium transition-all duration-300 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 ${
-              isDark
-                ? "bg-white text-black hover:bg-white/90 focus-visible:outline-white"
-                : "bg-gray-900 text-white hover:bg-gray-900/90 focus-visible:outline-gray-900"
-            }`}
-          >
-            View projects
-            <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
-          </button>
-
-          <button
-            type="button"
-            onClick={() => scrollTo("contact")}
-            className={`inline-flex min-h-11 items-center rounded-full border px-7 py-3.5 text-sm font-normal transition-all duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 ${
-              isDark
-                ? "border-white/30 text-white hover:bg-white/10 hover:border-white/50 focus-visible:outline-white"
-                : "border-gray-900/30 text-gray-900 hover:bg-gray-900/10 hover:border-gray-900/50 focus-visible:outline-gray-900"
-            }`}
-          >
-            Get in touch
-          </button>
-        </div>
       </div>
     </section>
   )

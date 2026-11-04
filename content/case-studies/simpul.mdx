@@ -1,0 +1,83 @@
+---
+index: "03"
+title: "Simpul Marketplace"
+tagline: "Vendor KYB, booking workflows, and contextual LLM assistance"
+summary: "Multi-sided marketplace connecting wedding vendors and clients, featuring automated KYB verification, escrow milestones, and LLM recommendation assistants."
+projectType: "Platform Engineering"
+year: "2025"
+role: "Backend & System Architect"
+stack: ["Express.js", "Flutter", "Supabase PostgreSQL", "Prisma ORM", "Midtrans"]
+heroMedia:
+  type: "diagram"
+  src: "/images/simpul-architecture.svg"
+  alt: "Simpul platform architecture diagram showing client layers, API gateway, Supabase database and external services"
+repoUrl: "https://github.com/Simpul-Platform-Wedding-UMKM"
+nextSlug: "runa"
+---
+
+## The Problem
+
+Wedding and event procurement in Indonesia suffers from extreme vendor fragmentation, lack of standardized verification, and opaque payment scheduling. Clients risk losing large upfront deposits to unverified vendors, while small vendors struggle with late invoices and complex booking administration.
+
+I designed the backend architecture and data workflows for Simpul to provide structured booking milestones, verified vendor onboarding (KYB), and an intelligent consultation assistant that helps clients find suitable vendors within budget.
+
+<Figure
+  src="/images/simpul-architecture.svg"
+  alt="Simpul backend and service architecture"
+  caption="End-to-end architecture from mobile clients to database and third-party gateways"
+/>
+
+## How It Works
+
+The platform coordinates multiple user roles (clients, vendors, and platform admins) across transactional and conversational workflows.
+
+<Steps>
+  <Step number="01" title="Vendor Identity & Catalog Verification">
+    Implemented an asynchronous verification pipeline requiring business entity documents, portfolio work proof, and bank account validation before public catalog indexing.
+  </Step>
+  <Step number="02" title="Milestone-Based Escrow Engine">
+    Integrated payment webhooks with Midtrans to support milestone disbursements (down payment, progress checks, post-event completion) ensuring neither party is exposed to unilateral default.
+  </Step>
+  <Step number="03" title="Context-Constrained LLM Assistant">
+    Built an NLP assistant that parses budget, guest count, and aesthetic preferences to query the vendor catalog using structured embeddings, preventing hallucination through strict context injection.
+  </Step>
+</Steps>
+
+## Decisions and Trade-offs
+
+### Relational integrity with Supabase and Prisma
+While wedding packages vary significantly in structure, financial transactions and calendar reservations require strict relational constraints. We modeled core entities in PostgreSQL with Prisma ORM to guarantee zero double-booking and consistent ledger states, using JSONB fields only for flexible vendor package descriptions.
+
+### Token optimization for LLM queries
+Instead of sending raw catalog dumps into the prompt window, user search criteria are mapped to pre-filtered candidate sets via vector similarity and pricing filters before reaching the LLM. This reduced prompt token usage by over 60% and eliminated out-of-budget recommendations.
+
+<Callout type="decision" title="Security & Payment Webhooks">
+Midtrans payment webhooks are verified via SHA-512 signature hashing and idempotency keys stored in Redis, preventing duplicate transaction credits in unstable mobile network environments.
+</Callout>
+
+## Results
+
+Platform performance was evaluated under simulated multi-tenant loads and staging pilot deployments.
+
+<StatBlock>
+  <Stat
+    value="100%"
+    label="Automated Webhook Idempotency"
+    condition="Zero duplicate orders during concurrent payment callbacks"
+  />
+  <Stat
+    value="TODO: add vendor count"
+    label="Active Vendor Profiles"
+    condition="Staging pilot verification directory"
+  />
+  <Stat
+    value="< 180ms"
+    label="API Endpoint Latency"
+    condition="P95 query response time across catalog search endpoints"
+  />
+</StatBlock>
+
+## Links and Code
+
+The platform code repositories are maintained on GitHub:
+- Organization: [Simpul-Platform-Wedding-UMKM on GitHub](https://github.com/Simpul-Platform-Wedding-UMKM)

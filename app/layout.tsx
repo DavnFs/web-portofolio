@@ -1,20 +1,22 @@
 import type React from "react"
 import "./globals.css"
 import type { Metadata, Viewport } from "next"
-import { DM_Sans } from "next/font/google"
-import { AutoThemeProvider } from "@/components/auto-theme-provider"
-import HeaderShader from "@/components/header-shader"
-import Footer from "@/components/footer"
-import { Analytics } from "@vercel/analytics/next"
-import { profile } from "@/lib/portfolio-data"
-
-const dmSans = DM_Sans({ subsets: ["latin"], weight: ["400", "500", "700"], display: "swap" })
+import { sansFont, serifFont, monoFont } from "@/lib/fonts"
+import { ThemeProvider } from "@/components/theme-provider"
+import { Navigation } from "@/components/navigation"
+import { SiteFooter } from "@/components/site-footer"
+import { AnalyticsScript } from "@/components/analytics-script"
+import { SmoothScroll } from "@/components/smooth-scroll"
+import { profile, LEAD_IDENTITY } from "@/content/profile"
 
 export const metadata: Metadata = {
-  title: "Davin Fausta Supriyadi — Backend, AI/ML & Applied Computer Vision",
-  description:
-    "Portfolio of Davin Fausta Supriyadi, a Computer Engineering Technology graduate building Python backend services, REST APIs, and applied AI/ML systems — from YOLOv11 perception research to LLM-assisted product features.",
+  title: {
+    default: `${profile.name} — ${LEAD_IDENTITY}`,
+    template: `%s — ${profile.name}`,
+  },
+  description: profile.headline,
   authors: [{ name: profile.name, url: profile.github }],
+  creator: profile.name,
   keywords: [
     "Davin Fausta Supriyadi",
     "Backend Engineer",
@@ -24,14 +26,21 @@ export const metadata: Metadata = {
     "Computer Vision",
     "YOLOv11",
     "Flutter",
-    "Internet of Things",
+    "Jetson Orin NX",
+    "ROS1",
   ],
+  metadataBase: new URL("https://dsupriyadi.my.id"),
   openGraph: {
-    title: "Davin Fausta Supriyadi — Backend, AI/ML & Applied Computer Vision",
-    description:
-      "Fresh graduate in Computer Engineering Technology building Python backend services, REST APIs, and applied AI/ML systems.",
-    type: "website",
+    title: `${profile.name} — ${LEAD_IDENTITY}`,
+    description: profile.headline,
+    url: "https://dsupriyadi.my.id",
+    siteName: profile.name,
     locale: "en_US",
+    type: "website",
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 }
 
@@ -39,27 +48,35 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: light)", color: "#FFFFFF" },
     { media: "(prefers-color-scheme: dark)", color: "#021024" },
   ],
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className={dmSans.className}>
-        <AutoThemeProvider defaultTheme="dark">
-          <a
-            href="#main-content"
-            className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-primary-foreground"
-          >
-            Skip to main content
-          </a>
-          <HeaderShader />
-          <main id="main-content">{children}</main>
-          <Footer />
-          <Analytics />
-        </AutoThemeProvider>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${sansFont.variable} ${serifFont.variable} ${monoFont.variable}`}
+    >
+      <body className="min-h-screen bg-bg text-ink font-sans selection:bg-accent selection:text-white">
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <SmoothScroll>
+            <a
+              href="#main-content"
+              className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-ink focus:text-bg focus:border focus:border-line focus:shadow-md focus:font-mono focus:text-xs uppercase tracking-wider"
+            >
+              Skip to main content
+            </a>
+            <Navigation />
+            <main id="main-content" tabIndex={-1} className="outline-none">
+              {children}
+            </main>
+            <SiteFooter />
+            <AnalyticsScript />
+          </SmoothScroll>
+        </ThemeProvider>
       </body>
     </html>
   )

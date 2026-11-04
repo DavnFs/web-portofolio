@@ -1,84 +1,72 @@
 import type { Config } from "tailwindcss"
 
-const config = {
+const config: Config = {
   darkMode: ["class"],
   content: [
     "./pages/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
     "./app/**/*.{ts,tsx}",
-    "./src/**/*.{ts,tsx}",
-    "*.{js,ts,jsx,tsx,mdx}",
+    "./content/**/*.{ts,tsx,mdx}",
+    "./lib/**/*.{ts,tsx}",
   ],
-  prefix: "",
   future: {
     hoverOnlyWhenSupported: true,
   },
   theme: {
-    container: {
-      center: true,
-      padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
+    screens: {
+      sm: "480px",
+      md: "768px",
+      lg: "1024px",
+      xl: "1440px",
     },
     extend: {
       colors: {
-        border: "var(--border)",
-        input: "var(--input)",
-        ring: "var(--ring)",
-        background: "var(--background)",
-        foreground: "var(--foreground)",
-        primary: {
-          DEFAULT: "var(--primary)",
-          foreground: "var(--primary-foreground)",
-        },
-        secondary: {
-          DEFAULT: "var(--secondary)",
-          foreground: "var(--secondary-foreground)",
-        },
-        destructive: {
-          DEFAULT: "var(--destructive)",
-          foreground: "var(--destructive-foreground)",
-        },
+        bg: "var(--bg)",
+        surface: "var(--surface)",
+        ink: "var(--ink)",
+        "ink-muted": "var(--ink-muted)",
+        line: "var(--line)",
+        accent: "var(--accent)",
+
+        // Compatibility mappings
+        background: "var(--bg)",
+        foreground: "var(--ink)",
+        border: "var(--line)",
         muted: {
-          DEFAULT: "var(--muted)",
-          foreground: "var(--muted-foreground)",
+          DEFAULT: "var(--surface)",
+          foreground: "var(--ink-muted)",
         },
-        accent: {
-          DEFAULT: "var(--accent)",
-          foreground: "var(--accent-foreground)",
+        primary: {
+          DEFAULT: "var(--ink)",
+          foreground: "var(--bg)",
         },
-        popover: {
-          DEFAULT: "var(--popover)",
-          foreground: "var(--popover-foreground)",
-        },
-        card: {
-          DEFAULT: "var(--card)",
-          foreground: "var(--card-foreground)",
-        },
+      },
+      fontFamily: {
+        sans: ["var(--font-sans)", "system-ui", "-apple-system", "sans-serif"],
+        serif: ["var(--font-serif)", "Georgia", "serif"],
+        mono: ["var(--font-mono)", "ui-monospace", "monospace"],
+      },
+      fontSize: {
+        display: ["clamp(3rem, 9vw, 8.5rem)", { lineHeight: "0.95", letterSpacing: "-0.03em" }],
+        h1: ["clamp(2.25rem, 6vw, 4.5rem)", { lineHeight: "1.0", letterSpacing: "-0.02em" }],
+        h2: ["clamp(1.5rem, 3vw, 2.5rem)", { lineHeight: "1.15", letterSpacing: "-0.015em" }],
+        "body-lg": ["clamp(1.125rem, 1.6vw, 1.375rem)", { lineHeight: "1.5" }],
+        body: ["1rem", { lineHeight: "1.65" }],
+        meta: ["0.75rem", { lineHeight: "1.3", letterSpacing: "0.08em" }],
       },
       borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        none: "0",
+        media: "12px",
       },
-      keyframes: {
-        "accordion-down": {
-          from: { height: "0" },
-          to: { height: "var(--radix-accordion-content-height)" },
-        },
-        "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
-        },
+      maxWidth: {
+        canvas: "1440px",
       },
-      animation: {
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
+      transitionTimingFunction: {
+        editorial: "cubic-bezier(0.22, 1, 0.36, 1)",
       },
     },
   },
   plugins: [require("tailwindcss-animate")],
-} satisfies Config
+}
 
 export default config

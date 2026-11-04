@@ -1,0 +1,86 @@
+---
+index: "01"
+title: "Autonomous Perception System"
+tagline: "YOLOv11 perception with uncertainty estimation on Jetson Orin NX"
+summary: "Undergraduate thesis researching YOLOv11 architecture modifications using an ASPP-based triple detection head and Monte Carlo Dropout for real-time edge obstacle perception."
+projectType: "Undergraduate Thesis & Applied Research"
+year: "2026"
+role: "Lead Researcher"
+stack: ["PyTorch", "YOLOv11", "ASPP", "FPN", "PANet", "Monte Carlo Dropout", "NVIDIA Jetson Orin NX"]
+heroMedia:
+  type: "diagram"
+  src: "/images/perception-architecture.svg"
+  alt: "Autonomous vehicle perception pipeline showing backbone, ASPP triple-head neck, and Monte Carlo Dropout uncertainty output"
+repoUrl: "https://github.com/DavnFs/yolo_inference"
+nextSlug: "brin-vehicle-dashboard"
+---
+
+## The Problem
+
+Standard object detectors output bounding boxes with single confidence scores that express how similar a feature patch looks to training examples, not whether the model is actually certain of its prediction. In autonomous driving scenarios, false certainty on obscured or out-of-distribution obstacles creates critical safety hazards.
+
+My undergraduate thesis investigated how to modify YOLOv11 to capture multi-scale context in complex road-safety scenes while providing calibrated epistemic uncertainty on an embedded NVIDIA Jetson Orin NX computer.
+
+<Figure
+  src="/images/perception-architecture.svg"
+  alt="YOLOv11 perception pipeline with ASPP and Monte Carlo Dropout"
+  caption="End-to-end perception pipeline from camera intake to uncertainty-aware edge dispatch"
+/>
+
+## How It Works
+
+I structured the perception pipeline into three sequential stages to balance detection accuracy against real-time edge compute constraints.
+
+<Steps>
+  <Step number="01" title="Context-Aware Backbone and ASPP Triple Head">
+    Integrated an Atrous Spatial Pyramid Pooling (ASPP) module with dilation rates of 1, 6, 12, and 18. This captures multi-scale visual context without increasing receptive field parameters or losing spatial resolution for small obstacles.
+  </Step>
+  <Step number="02" title="Feature Pyramid Network (FPN) and PANet Fusion">
+    Routed multi-scale features through bidirectional paths combining top-down semantic propagation with bottom-up localization signals. This provides high-resolution feature maps to three distinct detection heads.
+  </Step>
+  <Step number="03" title="Monte Carlo Dropout Uncertainty Sampling">
+    Retained active dropout (rate p = 0.2) across N=8 stochastic forward passes during inference. The variance across predicted bounding boxes approximates epistemic uncertainty, allowing downstream planners to distinguish high-confidence predictions from ambiguous edge cases.
+  </Step>
+</Steps>
+
+## Decisions and Trade-offs
+
+### Kept ASPP in the neck instead of adding deeper backbone layers
+Deeper backbones improved offline mAP slightly in PyTorch on an RTX GPU, but spiked inference latency on the Jetson Orin NX beyond our 35ms target. ASPP achieved equivalent contextual coverage with dilated convolutions at a fraction of the parameter weight.
+
+### Stochastic forward passes vs Ensembles
+Full deep ensembles produce strong uncertainty estimates but require loading multiple independent models into memory. On the Jetson Orin NX with 20W power capping, loading multiple model weights was non-viable. Monte Carlo Dropout provides a Bayesian approximation using a single set of trained weights.
+
+<Callout type="constraint" title="Edge Compute Boundary">
+The Jetson Orin NX was benchmarked in 20W operational mode. The system required memory headroom for ROS middleware and camera acquisition, making model footprint and tensor memory layout critical constraints.
+</Callout>
+
+### 28-Class road safety dataset
+Rather than using generic COCO classes, the model was trained on a custom 28-class dataset tailored to Indonesian road traffic, covering mixed vehicles, vulnerable road users, and local obstacles under varied lighting conditions.
+
+## Results
+
+Measurements were collected on the custom test set and verified on the physical Jetson Orin NX edge platform.
+
+<StatBlock>
+  <Stat
+    value="28"
+    label="Custom Target Classes"
+    condition="Vulnerable road users, local vehicle types, roadway obstacles"
+  />
+  <Stat
+    value="TODO: add mAP"
+    label="Detection Precision (mAP@50-95)"
+    condition="Test split, IoU threshold 0.50:0.95"
+  />
+  <Stat
+    value="TODO: add latency ms"
+    label="Inference Latency"
+    condition="NVIDIA Jetson Orin NX, 20W mode, FP16 TensorRT engine"
+  />
+</StatBlock>
+
+## Links and Code
+
+The inference pipeline and evaluation notebooks are available on GitHub:
+- Repository: [yolo_inference on GitHub](https://github.com/DavnFs/yolo_inference)
