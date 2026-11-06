@@ -87,3 +87,12 @@
   font-style: italic;
   font-weight: 400;
 }
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}

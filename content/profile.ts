@@ -8,7 +8,7 @@ export const profile = {
   headline: "Mobile Development Intern at PT. BPR Arto Moro · Computer Engineering Technology graduate",
   location: "Semarang, Indonesia",
   status: "Mobile Developer Intern at PT. BPR Arto Moro. Semarang, Indonesia.",
-  email: "davinfausta@gmail.com",
+  email: "davin123fs@gmail.com",
   github: "https://github.com/DavnFs",
   linkedin: "https://www.linkedin.com/in/davinfausta",
   cvPath: "/Davin-Supriyadi-CV.docx", // public CV asset

@@ -1,5 +1,6 @@
 import ShaderBackground from "@/components/shader-background"
 import HeroContent from "@/components/hero-content"
+import { HorizontalShowcase } from "@/components/home/horizontal-showcase"
 import { EthosSection } from "@/components/home/ethos-section"
 import { SelectedWork } from "@/components/home/selected-work"
 import { AboutTeaser } from "@/components/home/about-teaser"
@@ -45,6 +46,9 @@ export default function Home() {
       <ShaderBackground>
         <HeroContent />
       </ShaderBackground>
+
+      {/* Solicia Brown Horizontal Scroll Animation Showcase */}
+      <HorizontalShowcase />
 
       <div className="max-w-canvas mx-auto px-5 sm:px-8 lg:px-12">
         <EthosSection />
