@@ -3,6 +3,7 @@
 import { useRef } from "react"
 import Link from "next/link"
 import { gsap, useGSAP } from "@/lib/motion/register"
+import { MOTION } from "@/lib/motion/tokens"
 import { CASE_STUDIES } from "@/content/case-studies/types"
 import { profile } from "@/content/profile"
 
@@ -16,6 +17,7 @@ export function HorizontalShowcase() {
 
       const mm = gsap.matchMedia()
 
+      // Desktop: Continuous horizontal scrub & pin
       mm.add("(min-width: 768px)", () => {
         const track = trackRef.current
         if (!track) return
@@ -41,6 +43,59 @@ export function HorizontalShowcase() {
           tween.kill()
         }
       })
+
+      // Mobile: Individual scroll-triggered reveals per panel
+      mm.add("(max-width: 767px) and (prefers-reduced-motion: no-preference)", () => {
+        const panels = containerRef.current?.querySelectorAll(".showcase-panel")
+        if (!panels) return
+
+        panels.forEach((panel) => {
+          const contents = panel.querySelectorAll(".showcase-panel-content")
+
+          gsap.fromTo(
+            panel,
+            { opacity: 0.2, y: MOTION.distance.mobile },
+            {
+              opacity: 1,
+              y: 0,
+              duration: MOTION.mobile.duration,
+              ease: MOTION.ease.smooth,
+              scrollTrigger: {
+                trigger: panel,
+                start: "top 85%",
+                toggleActions: "play none none none",
+              },
+            }
+          )
+
+          if (contents.length > 0) {
+            gsap.fromTo(
+              contents,
+              { opacity: 0, y: 12 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.5,
+                stagger: 0.06,
+                ease: MOTION.ease.editorial,
+                scrollTrigger: {
+                  trigger: panel,
+                  start: "top 80%",
+                  toggleActions: "play none none none",
+                },
+              }
+            )
+          }
+        })
+      })
+
+      // Reduced motion fallback
+      mm.add("(prefers-reduced-motion: reduce)", () => {
+        const panels = containerRef.current?.querySelectorAll(".showcase-panel")
+        const contents = containerRef.current?.querySelectorAll(".showcase-panel-content")
+        if (panels) gsap.set(panels, { opacity: 1, y: 0 })
+        if (contents) gsap.set(contents, { opacity: 1, y: 0 })
+      })
     },
     { scope: containerRef }
   )
@@ -53,25 +108,26 @@ export function HorizontalShowcase() {
       className="relative w-full overflow-hidden bg-bg border-t border-line/60"
       aria-label="Horizontal scroll showcase"
     >
-      {/* Horizontal Track for Desktop / Scrollable Row for Mobile */}
+      {/* Horizontal Track for Desktop / Refined Stack for Mobile */}
       <div
         ref={trackRef}
-        className="flex flex-col md:flex-row h-auto md:h-screen w-full md:w-max will-change-transform"
+        className="flex flex-col md:flex-row h-auto md:h-screen w-full md:w-max md:will-change-transform"
       >
         {/* Panel 1: Design Ethos & Engineering Philosophy */}
-        <div className="w-full md:w-screen md:min-w-[100vw] h-auto md:h-full flex-shrink-0 flex flex-col justify-between p-8 sm:p-12 md:p-20 relative bg-bg border-b md:border-b-0 md:border-r border-line/60">
+        <div className="showcase-panel w-full md:w-screen md:min-w-[100vw] h-auto md:h-full flex-shrink-0 flex flex-col justify-between p-8 sm:p-12 md:p-20 relative bg-bg border-b md:border-b-0 md:border-r border-line/60">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 md:w-96 md:h-96 rounded-full bg-accent/10 blur-3xl pointer-events-none" />
 
-          <div className="relative z-10 flex items-center justify-between">
+          <div className="showcase-panel-content relative z-10 flex items-center justify-between">
             <span className="font-mono text-xs uppercase tracking-widest text-ink-muted">
-              01 // Scroll Showcase
+              <span className="hidden md:inline">01 // Scroll Showcase</span>
+              <span className="md:hidden">01 // Selected Showcase</span>
             </span>
             <span className="font-mono text-xs text-accent">
               Semarang, ID · UTC+7
             </span>
           </div>
 
-          <div className="relative z-10 max-w-4xl my-16 md:my-auto">
+          <div className="showcase-panel-content relative z-10 max-w-4xl my-16 md:my-auto">
             <span className="font-serif italic text-xl md:text-2xl text-accent block mb-3">
               Engineering Ethos
             </span>
@@ -88,7 +144,7 @@ export function HorizontalShowcase() {
             </p>
           </div>
 
-          <div className="relative z-10 flex items-center justify-between border-t border-line/40 pt-4 font-mono text-xs text-ink-muted">
+          <div className="showcase-panel-content relative z-10 flex items-center justify-between border-t border-line/40 pt-4 font-mono text-xs text-ink-muted">
             <div className="flex items-center gap-4">
               <span>NVIDIA Jetson Orin NX</span>
               <span>·</span>
@@ -107,9 +163,9 @@ export function HorizontalShowcase() {
         {featuredStudies.map((study) => (
           <div
             key={study.slug}
-            className="w-full md:w-[85vw] lg:w-[65vw] h-auto md:h-full flex-shrink-0 flex flex-col justify-between p-8 sm:p-12 md:p-16 bg-surface border-b md:border-b-0 md:border-r border-line/60 relative group"
+            className="showcase-panel w-full md:w-[85vw] lg:w-[65vw] h-auto md:h-full flex-shrink-0 flex flex-col justify-between p-8 sm:p-12 md:p-16 bg-surface border-b md:border-b-0 md:border-r border-line/60 relative group active:scale-[0.99] transition-transform duration-200"
           >
-            <div className="flex items-center justify-between border-b border-line/60 pb-4">
+            <div className="showcase-panel-content flex items-center justify-between border-b border-line/60 pb-4">
               <span className="font-mono text-sm font-medium text-accent">
                 ({study.index})
               </span>
@@ -118,7 +174,7 @@ export function HorizontalShowcase() {
               </span>
             </div>
 
-            <div className="my-10 md:my-auto max-w-2xl space-y-6">
+            <div className="showcase-panel-content my-10 md:my-auto max-w-2xl space-y-6">
               <div className="space-y-3">
                 <span className="font-mono text-xs text-ink-muted uppercase tracking-wider">
                   Role: {study.role}
@@ -147,7 +203,7 @@ export function HorizontalShowcase() {
               </div>
             </div>
 
-            <div className="flex items-center justify-between border-t border-line/60 pt-4">
+            <div className="showcase-panel-content flex items-center justify-between border-t border-line/60 pt-4">
               <span className="font-mono text-xs text-ink-muted">
                 Edge AI &amp; Robotics Research
               </span>
@@ -165,15 +221,15 @@ export function HorizontalShowcase() {
         ))}
 
         {/* Panel 4: About & Contact Outro */}
-        <div className="w-full md:w-[70vw] lg:w-[50vw] h-auto md:h-full flex-shrink-0 flex flex-col justify-between p-8 sm:p-12 md:p-20 bg-bg relative">
-          <div className="flex items-center justify-between">
+        <div className="showcase-panel w-full md:w-[70vw] lg:w-[50vw] h-auto md:h-full flex-shrink-0 flex flex-col justify-between p-8 sm:p-12 md:p-20 bg-bg relative">
+          <div className="showcase-panel-content flex items-center justify-between">
             <span className="font-mono text-xs uppercase tracking-widest text-ink-muted">
               02 // Background &amp; Profile
             </span>
             <span className="font-mono text-xs text-accent">Top of Cohort · GPA 3.94</span>
           </div>
 
-          <div className="my-12 md:my-auto space-y-6 max-w-xl">
+          <div className="showcase-panel-content my-12 md:my-auto space-y-6 max-w-xl">
             <h3 className="text-3xl sm:text-4xl md:text-5xl font-sans font-light text-ink leading-tight">
               {profile.name}
             </h3>
@@ -203,7 +259,7 @@ export function HorizontalShowcase() {
             </div>
           </div>
 
-          <div className="border-t border-line/40 pt-4 flex items-center justify-between font-mono text-xs text-ink-muted">
+          <div className="showcase-panel-content border-t border-line/40 pt-4 flex items-center justify-between font-mono text-xs text-ink-muted">
             <span>{profile.headline}</span>
             <a
               href={`mailto:${profile.email}`}

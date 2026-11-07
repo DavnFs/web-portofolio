@@ -5,13 +5,20 @@ import { usePathname } from "next/navigation"
 import { useState, useEffect, useRef } from "react"
 import { CASE_STUDIES } from "@/content/case-studies/types"
 import { trackEvent } from "@/lib/analytics"
+import { ThemeToggle } from "@/components/theme-toggle"
+import { stopSmoothScroll, startSmoothScroll } from "@/components/smooth-scroll"
+import { gsap } from "@/lib/motion/register"
+import { MOTION } from "@/lib/motion/tokens"
+import { isReducedMotion } from "@/lib/motion/reduced-motion"
 
 export function Navigation() {
   const pathname = usePathname()
   const [scrolled, setScrolled] = useState(false)
   const [workMenuOpen, setWorkMenuOpen] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [isClosing, setIsClosing] = useState(false)
   const workMenuRef = useRef<HTMLDivElement>(null)
+  const mobileMenuRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,10 +29,44 @@ export function Navigation() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
+  const handleCloseMobileMenu = (callback?: () => void) => {
+    if (!mobileMenuRef.current || isReducedMotion()) {
+      setMobileMenuOpen(false)
+      setIsClosing(false)
+      startSmoothScroll()
+      callback?.()
+      return
+    }
+
+    setIsClosing(true)
+    gsap.to(mobileMenuRef.current, {
+      opacity: 0,
+      y: -10,
+      duration: 0.22,
+      ease: "power2.in",
+      onComplete: () => {
+        setMobileMenuOpen(false)
+        setIsClosing(false)
+        startSmoothScroll()
+        callback?.()
+      },
+    })
+  }
+
+  const handleToggleMobileMenu = () => {
+    if (mobileMenuOpen) {
+      handleCloseMobileMenu()
+    } else {
+      setMobileMenuOpen(true)
+      stopSmoothScroll()
+    }
+  }
+
   // Close menus on path change
   useEffect(() => {
     setWorkMenuOpen(false)
     setMobileMenuOpen(false)
+    startSmoothScroll()
   }, [pathname])
 
   // Close work menu on click outside or escape key
@@ -38,7 +79,9 @@ export function Navigation() {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setWorkMenuOpen(false)
-        setMobileMenuOpen(false)
+        if (mobileMenuOpen) {
+          handleCloseMobileMenu()
+        }
       }
     }
     document.addEventListener("mousedown", handleClickOutside)
@@ -47,19 +90,60 @@ export function Navigation() {
       document.removeEventListener("mousedown", handleClickOutside)
       document.removeEventListener("keydown", handleKeyDown)
     }
-  }, [])
+  }, [mobileMenuOpen])
 
   // Prevent background scroll when mobile menu is open
   useEffect(() => {
     if (mobileMenuOpen) {
       document.body.style.overflow = "hidden"
+      stopSmoothScroll()
     } else {
       document.body.style.overflow = ""
+      startSmoothScroll()
     }
     return () => {
       document.body.style.overflow = ""
+      startSmoothScroll()
     }
   }, [mobileMenuOpen])
+
+  // Mobile menu entrance micro-animation (A5)
+  useEffect(() => {
+    if (mobileMenuOpen && !isClosing && mobileMenuRef.current) {
+      if (isReducedMotion()) {
+        gsap.set(mobileMenuRef.current, { opacity: 1, y: 0 })
+        return
+      }
+
+      const tl = gsap.timeline({
+        defaults: { ease: MOTION.ease.editorial },
+      })
+
+      tl.fromTo(
+        mobileMenuRef.current,
+        { opacity: 0, y: -12 },
+        { opacity: 1, y: 0, duration: 0.3 }
+      )
+        .fromTo(
+          ".mobile-nav-item",
+          { opacity: 0, x: -14 },
+          { opacity: 1, x: 0, duration: 0.35, stagger: 0.04 },
+          "-=0.15"
+        )
+        .fromTo(
+          ".mobile-work-item",
+          { opacity: 0, y: 10 },
+          { opacity: 1, y: 0, duration: 0.3, stagger: 0.03 },
+          "-=0.2"
+        )
+        .fromTo(
+          ".mobile-footer-item",
+          { opacity: 0 },
+          { opacity: 1, duration: 0.25 },
+          "-=0.15"
+        )
+    }
+  }, [mobileMenuOpen, isClosing])
 
   return (
     <header
@@ -179,59 +263,63 @@ export function Navigation() {
           >
             Contact
           </Link>
+
+          <ThemeToggle />
         </nav>
 
-        {/* Mobile Menu Button */}
-        <div className="md:hidden">
+        {/* Mobile Menu Actions & Button (A5) */}
+        <div className="md:hidden flex items-center gap-3">
+          <ThemeToggle />
           <button
             type="button"
-            onClick={() => setMobileMenuOpen((prev) => !prev)}
+            onClick={handleToggleMobileMenu}
             aria-expanded={mobileMenuOpen}
             aria-controls="mobile-menu"
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-            className="p-2 -mr-2 text-ink hover:text-accent transition-colors font-mono text-xs uppercase"
+            className="p-2 -mr-2 text-ink hover:text-accent transition-all duration-200 font-mono text-xs uppercase active:scale-95"
           >
             {mobileMenuOpen ? "[ Close ]" : "[ Menu ]"}
           </button>
         </div>
       </div>
 
-      {/* Mobile Full-Screen Overlay */}
+      {/* Mobile Full-Screen Overlay (A5 with staggered entrance and smooth exit) */}
       {mobileMenuOpen && (
         <div
+          ref={mobileMenuRef}
           id="mobile-menu"
-          className="fixed inset-0 top-[61px] bg-bg z-40 p-6 flex flex-col justify-between overflow-y-auto border-t border-line"
+          className="fixed inset-0 top-[61px] bg-bg/95 backdrop-blur-md z-40 p-6 flex flex-col justify-between overflow-y-auto border-t border-line will-change-[transform,opacity]"
         >
           <div className="space-y-6 pt-4">
-            <div className="font-mono text-meta text-ink-muted uppercase tracking-wider">
+            <div className="mobile-nav-item font-mono text-meta text-ink-muted uppercase tracking-wider">
               Navigation
             </div>
             <div className="flex flex-col space-y-4">
               <Link
                 href="/"
-                onClick={() => setMobileMenuOpen(false)}
-                className="text-2xl font-serif italic text-ink hover:text-accent transition-colors"
+                onClick={() => handleCloseMobileMenu()}
+                className="mobile-nav-item text-2xl font-serif italic text-ink hover:text-accent active:translate-x-1.5 transition-all"
               >
                 Index
               </Link>
               <Link
                 href="/about"
-                onClick={() => setMobileMenuOpen(false)}
-                className="text-2xl font-serif italic text-ink hover:text-accent transition-colors"
+                onClick={() => handleCloseMobileMenu()}
+                className="mobile-nav-item text-2xl font-serif italic text-ink hover:text-accent active:translate-x-1.5 transition-all"
               >
                 About
               </Link>
               <Link
                 href="/contact"
-                onClick={() => setMobileMenuOpen(false)}
-                className="text-2xl font-serif italic text-ink hover:text-accent transition-colors"
+                onClick={() => handleCloseMobileMenu()}
+                className="mobile-nav-item text-2xl font-serif italic text-ink hover:text-accent active:translate-x-1.5 transition-all"
               >
                 Contact
               </Link>
             </div>
 
             <div className="pt-6 border-t border-line">
-              <div className="font-mono text-meta text-ink-muted uppercase tracking-wider mb-4">
+              <div className="mobile-work-item font-mono text-meta text-ink-muted uppercase tracking-wider mb-4">
                 Selected Work
               </div>
               <div className="space-y-3">
@@ -240,10 +328,11 @@ export function Navigation() {
                     key={cs.slug}
                     href={`/work/${cs.slug}`}
                     onClick={() => {
-                      setMobileMenuOpen(false)
-                      trackEvent("case_study_open", { slug: cs.slug, source: "mobile_menu" })
+                      handleCloseMobileMenu(() => {
+                        trackEvent("case_study_open", { slug: cs.slug, source: "mobile_menu" })
+                      })
                     }}
-                    className="block group py-1"
+                    className="mobile-work-item block group py-1 active:translate-x-1 transition-transform"
                   >
                     <div className="flex items-center gap-2">
                       <span className="font-mono text-xs text-accent">({cs.index})</span>
@@ -256,8 +345,8 @@ export function Navigation() {
                 ))}
                 <Link
                   href="/work"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="inline-flex items-center gap-2 pt-2 text-xs font-mono text-accent hover:underline uppercase tracking-wider"
+                  onClick={() => handleCloseMobileMenu()}
+                  className="mobile-work-item inline-flex items-center gap-2 pt-2 text-xs font-mono text-accent hover:underline uppercase tracking-wider active:translate-x-1 transition-transform"
                 >
                   <span>Full Archive</span>
                   <span>→</span>
@@ -266,7 +355,7 @@ export function Navigation() {
             </div>
           </div>
 
-          <div className="pt-8 pb-4 border-t border-line text-xs font-mono text-ink-muted">
+          <div className="mobile-footer-item pt-8 pb-4 border-t border-line text-xs font-mono text-ink-muted flex items-center justify-between">
             <p>Davin Fausta Supriyadi — Semarang, ID</p>
           </div>
         </div>

@@ -25,7 +25,7 @@ export function splitWords(element: HTMLElement, wordClass = "split-word"): {
           fragment.appendChild(document.createTextNode(token))
         } else if (token.length > 0) {
           const outer = document.createElement("span")
-          outer.className = "inline-block overflow-hidden align-top"
+          outer.className = "inline-block overflow-hidden align-top pb-1 -mb-1"
           outer.setAttribute("aria-hidden", "true")
 
           const inner = document.createElement("span")

@@ -25,8 +25,8 @@ export default function HeroContent() {
 
       const mm = gsap.matchMedia()
 
-      mm.add(MOTION_QUERIES.motionOK, () => {
-        // Split headline into words for editorial curtain reveal (A7)
+      // Desktop entrance
+      mm.add("(min-width: 768px) and (prefers-reduced-motion: no-preference)", () => {
         const split = splitWords(titleRef.current!)
 
         const tl = gsap.timeline({
@@ -69,6 +69,55 @@ export default function HeroContent() {
               duration: MOTION.duration.editorial,
             },
             "-=0.4"
+          )
+
+        return () => {
+          split.revert()
+        }
+      })
+
+      // Mobile entrance: Snappy and direct to accommodate mobile attention & speed
+      mm.add("(max-width: 767px) and (prefers-reduced-motion: no-preference)", () => {
+        const split = splitWords(titleRef.current!)
+
+        const tl = gsap.timeline({
+          defaults: {
+            ease: MOTION.ease.editorial,
+            duration: MOTION.mobile.duration,
+          },
+        })
+
+        tl.fromTo(
+          split.words,
+          { yPercent: 110, opacity: 0 },
+          {
+            yPercent: 0,
+            opacity: 1,
+            stagger: 0.035,
+            duration: MOTION.mobile.duration,
+            delay: 0.05,
+          }
+        )
+          .fromTo(
+            ".hero-pills li",
+            { opacity: 0, y: MOTION.distance.sm },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.45,
+              stagger: 0.04,
+            },
+            "-=0.35"
+          )
+          .fromTo(
+            ".hero-bio",
+            { opacity: 0, y: MOTION.distance.sm },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.55,
+            },
+            "-=0.3"
           )
 
         return () => {

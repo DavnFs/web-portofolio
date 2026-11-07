@@ -14,7 +14,8 @@ export function EthosSection() {
 
       const mm = gsap.matchMedia()
 
-      mm.add(MOTION_QUERIES.motionOK, () => {
+      // Desktop: Standard editorial scrub
+      mm.add("(min-width: 768px) and (prefers-reduced-motion: no-preference)", () => {
         const words = paragraphRef.current?.querySelectorAll(".ethos-word")
         if (!words || words.length === 0) return
 
@@ -35,6 +36,33 @@ export function EthosSection() {
               start: "top 78%",
               end: "bottom 52%",
               scrub: 0.8,
+            },
+          }
+        )
+      })
+
+      // Mobile: Responsive, tighter scrub calibrated for rapid thumb scrolling
+      mm.add("(max-width: 767px) and (prefers-reduced-motion: no-preference)", () => {
+        const words = paragraphRef.current?.querySelectorAll(".ethos-word")
+        if (!words || words.length === 0) return
+
+        // Refined mobile word opacity reveal: starts smoothly and tracks thumb scroll without lag
+        gsap.fromTo(
+          words,
+          {
+            opacity: 0.18,
+            y: 2,
+          },
+          {
+            opacity: 1,
+            y: 0,
+            stagger: 0.05,
+            ease: "none",
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: "top 82%",
+              end: "bottom 68%",
+              scrub: 0.35,
             },
           }
         )

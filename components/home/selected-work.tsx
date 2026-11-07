@@ -25,8 +25,8 @@ export function SelectedWork() {
       const isTouch = window.matchMedia("(hover: none)").matches
       setIsTouchDevice(isTouch)
 
-      // Motion-enabled desktop & mobile
-      mm.add(MOTION_QUERIES.motionOK, () => {
+      // Desktop motion: Staggered batch reveal & quickTo cursor preview
+      mm.add("(min-width: 768px) and (prefers-reduced-motion: no-preference)", () => {
         // A12: Staggered entrance for work rows on scroll
         const rows = sectionRef.current?.querySelectorAll(".work-row")
         if (rows && rows.length > 0) {
@@ -63,6 +63,33 @@ export function SelectedWork() {
             ease: MOTION.ease.editorial,
           })
         }
+      })
+
+      // Mobile motion: Individual row entrances calibrated for single-column cards
+      mm.add("(max-width: 767px) and (prefers-reduced-motion: no-preference)", () => {
+        const rows = sectionRef.current?.querySelectorAll(".work-row")
+        if (!rows) return
+
+        rows.forEach((row) => {
+          gsap.fromTo(
+            row,
+            {
+              opacity: 0.15,
+              y: MOTION.distance.mobile,
+            },
+            {
+              opacity: 1,
+              y: 0,
+              duration: MOTION.mobile.duration,
+              ease: MOTION.ease.smooth,
+              scrollTrigger: {
+                trigger: row,
+                start: "top 86%",
+                toggleActions: "play none none none",
+              },
+            }
+          )
+        })
       })
 
       // Reduced motion fallback

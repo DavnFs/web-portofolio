@@ -39,7 +39,7 @@ export function AnimatedLink({
       {underline && (
         <span
           aria-hidden="true"
-          className="absolute bottom-0 left-0 h-[1px] w-full bg-accent origin-left scale-x-0 transition-transform duration-300 ease-editorial group-hover/link:scale-x-100"
+          className="absolute bottom-0 left-0 h-[1px] w-full bg-accent origin-left scale-x-0 transition-transform duration-300 ease-editorial group-hover/link:scale-x-100 group-active/link:scale-x-100"
         />
       )}
     </>

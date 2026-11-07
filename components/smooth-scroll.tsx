@@ -8,6 +8,14 @@ import { isReducedMotion } from "@/lib/motion/reduced-motion"
 
 export let lenisInstance: Lenis | null = null
 
+export function stopSmoothScroll() {
+  lenisInstance?.stop()
+}
+
+export function startSmoothScroll() {
+  lenisInstance?.start()
+}
+
 export function smoothScrollTo(
   target: string | number | HTMLElement,
   options?: { offset?: number; duration?: number; immediate?: boolean }
@@ -42,7 +50,8 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
       gestureOrientation: "vertical",
       smoothWheel: true,
       wheelMultiplier: 0.95,
-      touchMultiplier: 1.8,
+      touchMultiplier: 1.0,
+      syncTouch: false,
     })
 
     localRef.current = lenis

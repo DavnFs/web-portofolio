@@ -17,6 +17,8 @@ export const MOTION_QUERIES = {
   desktopMotion: "(min-width: 768px) and (prefers-reduced-motion: no-preference)",
   // Touch / Mobile
   mobile: "(max-width: 767px)",
+  // Touch / Mobile with standard motion
+  mobileMotion: "(max-width: 767px) and (prefers-reduced-motion: no-preference)",
 } as const
 
 export function isReducedMotion(): boolean {

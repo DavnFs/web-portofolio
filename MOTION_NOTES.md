@@ -39,17 +39,20 @@ components/
 | ID | Name | Status | Tunable Values | Viewing Instructions |
 |---|---|---|---|---|
 | **A1** | Page Entry / Loader | ✅ Instant entry | Initial paint: 0ms | Load `/`. Zero blocking preloader; page paints immediately per user preference. |
-| **A2** | Weighted Smooth Scroll | ✅ Active | `duration: 1.2s`, `wheelMultiplier: 0.95`, `lenisExpo` | Scroll on any route (`/`, `/work`). Notice weighted deceleration matching soliciabrown.com. |
-| **A6** | Theme Toggle Micro-transition | ✅ Active | `duration: 0.25s`, `ease: power3.out` | Click `[ Theme: ... ]` in top nav. Observe smooth icon/label settle. |
-| **A7** | Hero Headline Curtain Reveal | ✅ Active | `duration: 0.8s`, `stagger: 0.05s`, `ease: power3.out` | Reload `/`. Headline words rise up from behind hidden curtain. |
-| **A8** | Hero Bio & Focus Subtitle | ✅ Active | `duration: 0.7s`, `distance: 12px` | Reload `/`. Focus pills and bio fade and settle into place. |
-| **A9** | Hero CTA Button Entrance | ✅ Active | `duration: 0.5s`, `scale: 0.96 -> 1` | Reload `/`. "View projects" and "Get in touch" buttons expand and settle. |
-| **A10** | Ethos Word-by-Word Scrub | ✅ Active | `scrub: 0.8`, `opacity: 0.18 -> 1.0` | Scroll to Section 01 on `/`. Words brighten from dim to ink as viewport passes. |
-| **A12** | Work List Staggered Entrance | ✅ Active | `duration: 0.8s`, `stagger: 0.12s` | Scroll down to Section 02 on `/`. Project rows rise in sequence. |
-| **A13** | Desktop Cursor Preview (`quickTo`) | ✅ Active | `duration: 0.35s`, `quickTo` physics | Hover over any project row in Section 02 on desktop. Floating preview tracks cursor. |
+| **A2** | Weighted Smooth Scroll | ✅ Active | `duration: 1.2s`, `wheelMultiplier: 0.95`, `touchMultiplier: 1.0`, `lenisExpo` | Scroll on any route (`/`, `/work`). Calibrated for silky desktop deceleration and native mobile touch stability. |
+| **A5** | Navigation Mobile Menu | ✅ Active | `duration: 0.3s`, `stagger: 0.04s`, `ease: power3.out` | Tap `[ Menu ]` on mobile screen. Staggered link reveal, micro-button transition, smooth slide/fade exit, and Lenis lock. |
+| **A6** | Theme Toggle Micro-transition | ✅ Active | `duration: 0.25s`, `ease: power3.out` | Click or tap `[ Theme: ... ]` in top nav or mobile menu. Observe smooth icon/label settle. |
+| **A7** | Hero Headline Curtain Reveal | ✅ Active | `duration: 0.8s` (desktop), `0.65s` (mobile), `ease: power3.out` | Reload `/`. Headline words rise up from behind hidden curtain without descender clipping. |
+| **A8** | Hero Bio & Focus Subtitle | ✅ Active | `duration: 0.7s` (desktop), `0.55s` (mobile), `distance: 12px` | Reload `/`. Focus pills and bio fade and settle into place. |
+| **A9** | Hero CTA Button Entrance | ✅ Active | `duration: 0.5s`, `scale: 0.96 -> 1` | Reload `/`. Buttons expand and settle. |
+| **A10** | Ethos Word-by-Word Scrub | ✅ Active | Desktop: `scrub: 0.8`. Mobile: `scrub: 0.35`, `start: top 82%`, `end: bottom 68%` | Scroll to Section 01 on mobile or desktop. Words brighten from dim to ink in direct synchronization with scroll. |
+| **A12** | Work List Entrance | ✅ Active | Desktop: `duration: 0.8s`, `stagger: 0.12s`. Mobile: Individual triggers at `top 86%` | Scroll to Section 02. On mobile, each card animates individually as it enters the viewport. |
+| **A13** | Desktop Cursor Preview (`quickTo`) | ✅ Active | `duration: 0.35s`, `quickTo` physics | Hover over any project row in Section 02 on desktop (disabled on touch devices). |
 | **A14** | Media Decode Fade-In | ✅ Active | `duration: 0.7s`, `ease-editorial` | View project cards or case study images. Decodes smoothly with zero layout pop. |
 | **A15** | Architecture Diagram Reveal | ✅ Active | `duration: 1.2s`, `strokeDashoffset` | View case study architecture diagram on `/work/autonomous-perception`. |
-| **A22** | Link Hover Underline Sweep | ✅ Active | `duration: 0.3s`, `scaleX: 0 -> 1` | Hover over archive link or case study links. Underline sweeps left-to-right. |
+| **A16** | About Teaser Entrance | ✅ Active | `duration: 0.65s`, `stagger: 0.08s` | Scroll to Section 03 on `/`. Header, lead, and highlight cards glide into position. |
+| **A21** | Contact Teaser Entrance | ✅ Active | `duration: 0.65s`, `distance: 16px` | Scroll to Section 04 on `/`. Display statement, direct email box, and outbound links reveal. |
+| **A22** | Link Underline Sweep | ✅ Active | `duration: 0.3s`, `scaleX: 0 -> 1` | Hover on desktop or tap on touch devices. Underline sweeps left-to-right with instant active feedback. |
 
 ---
 

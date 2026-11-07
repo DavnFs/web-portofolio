@@ -37,5 +37,12 @@ export const MOTION = {
     md: 24,
     lg: 48,
     hero: 35,
+    mobile: 16,
+  },
+  mobile: {
+    duration: 0.65,
+    distance: 18,
+    scrub: 0.35,
+    stagger: 0.05,
   },
 } as const
