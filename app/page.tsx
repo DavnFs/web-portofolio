@@ -10,29 +10,65 @@ import { profile } from "@/content/profile"
 export default function Home() {
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Person",
-    name: profile.name,
-    jobTitle: "Mobile Developer Intern",
-    worksFor: {
-      "@type": "Organization",
-      name: "PT. BPR Arto Moro",
-    },
-    description: profile.headline,
-    url: "https://dsupriyadi.my.id",
-    sameAs: [profile.github, profile.linkedin],
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: "Semarang",
-      addressCountry: "ID",
-    },
-    knowsAbout: [
-      "Backend Architecture",
-      "FastAPI",
-      "Applied Computer Vision",
-      "YOLOv11",
-      "Flutter",
-      "Edge Computing",
-      "ROS1",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://dsupriyadi.my.id/#website",
+        url: "https://dsupriyadi.my.id",
+        name: "Davin Fausta Supriyadi — Official Portfolio",
+        alternateName: [
+          "Davin Supriyadi",
+          "Davin Fausta",
+          "DavnFs",
+          "dsupriyadi.my.id",
+        ],
+        description: profile.headline,
+        publisher: {
+          "@id": "https://dsupriyadi.my.id/#person",
+        },
+      },
+      {
+        "@type": "Person",
+        "@id": "https://dsupriyadi.my.id/#person",
+        name: profile.name,
+        alternateName: [
+          "Davin Supriyadi",
+          "Davin Fausta",
+          "DavnFs",
+          "dsupriyadi",
+        ],
+        givenName: "Davin Fausta",
+        familyName: "Supriyadi",
+        jobTitle: "Mobile Developer Intern & Applied AI Engineer",
+        worksFor: {
+          "@type": "Organization",
+          name: "PT. BPR Arto Moro",
+        },
+        alumniOf: {
+          "@type": "CollegeOrUniversity",
+          name: "Politeknik Negeri Semarang",
+        },
+        description: profile.headline,
+        url: "https://dsupriyadi.my.id",
+        image: "https://dsupriyadi.my.id/images/work/perception-hero.png",
+        sameAs: [profile.github, profile.linkedin, "https://dsupriyadi.my.id"],
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: "Semarang",
+          addressCountry: "ID",
+        },
+        knowsAbout: [
+          "Mobile Application Development",
+          "Flutter",
+          "Backend Architecture",
+          "Python",
+          "FastAPI",
+          "Applied Computer Vision",
+          "YOLOv11",
+          "Edge Computing",
+          "ROS1",
+        ],
+      },
     ],
   }
 

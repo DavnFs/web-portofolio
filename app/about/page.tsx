@@ -8,9 +8,9 @@ import { certifications } from "@/content/certifications"
 import { AnimatedLink } from "@/components/ui/animated-link"
 
 export const metadata: Metadata = {
-  title: "About | Davin Fausta Supriyadi",
+  title: "About & Engineering Background",
   description:
-    "Background, engineering experience, education, skills, and certifications of Davin Fausta Supriyadi.",
+    "Background, engineering experience, education, skills, and certifications of Davin Fausta Supriyadi (Davin Supriyadi). Mobile Developer Intern and Computer Engineering graduate.",
 }
 
 export default function AboutPage() {
