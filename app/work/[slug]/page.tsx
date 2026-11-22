@@ -1,6 +1,5 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import Image from "next/image"
 import { notFound } from "next/navigation"
 import { getCaseStudy, getAllCaseStudySlugs } from "@/lib/case-studies"
 import { profile } from "@/content/profile"
@@ -27,7 +26,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: `${frontmatter.title} — ${profile.name}`,
       description: frontmatter.summary,
       type: "article",
-      images: frontmatter.heroMedia?.src ? [frontmatter.heroMedia.src] : [],
     },
   }
 }
@@ -95,23 +93,6 @@ export default async function CaseStudyPage({ params }: Props) {
             </div>
           </div>
         </header>
-
-        {/* 4. Hero Media Banner */}
-        <div className="my-12 sm:my-16">
-          <div className="relative aspect-[16/9] w-full bg-surface border border-line rounded-media overflow-hidden">
-            <Image
-              src={frontmatter.heroMedia.src}
-              alt={frontmatter.heroMedia.alt}
-              fill
-              priority
-              sizes="(max-width: 1440px) 100vw, 1440px"
-              className="object-contain"
-            />
-          </div>
-          <div className="mt-3 font-mono text-xs text-ink-muted text-center">
-            Figure 01 // {frontmatter.heroMedia.alt}
-          </div>
-        </div>
 
         {/* MDX Body (The Problem, How It Works, Decisions & Tradeoffs, Results, Links) */}
         <div className="max-w-3xl mx-auto prose prose-neutral prose-headings:font-sans prose-headings:font-medium prose-p:leading-relaxed prose-p:text-ink/90 prose-li:text-ink/90">

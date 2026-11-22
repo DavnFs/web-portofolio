@@ -74,7 +74,7 @@
 
 /* Editorial typography utilities */
 .font-editorial-italic {
-  font-family: var(--font-serif), Georgia, serif;
+  font-family: Georgia, "Times New Roman", Times, serif;
   font-style: italic;
   font-weight: 400;
 }

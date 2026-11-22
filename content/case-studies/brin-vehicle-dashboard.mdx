@@ -7,10 +7,6 @@ projectType: "Research Platform Engineering"
 year: "2025"
 role: "Engineering Intern"
 stack: ["ROS1 Noetic", "Flutter", "LiDAR", "GPS", "IMU", "WebSockets", "nuScenes"]
-heroMedia:
-  type: "diagram"
-  src: "/images/brin-dashboard-flow.svg"
-  alt: "BRIN autonomous vehicle sensor-to-dashboard pipeline diagram"
 nextSlug: "autonomous-perception"
 ---
 
@@ -19,12 +15,6 @@ nextSlug: "autonomous-perception"
 Autonomous vehicle field tests require test engineers to observe vehicle telemetry in real time and safely dispatch navigation commands without tethering bulky laptops running RViz. During testing at BRIN, operators needed a fast, interactive mobile interface that could render live sensor telemetry and route navigation goal points directly into the vehicle stack.
 
 My role was to design and build an operator cockpit using Flutter and connect it to the vehicle ROS1 Noetic bus over a low-latency bridge.
-
-<Figure
-  src="/images/brin-bev-cockpit.svg"
-  alt="Dual-path ROS1 sensor frequency isolation and closed-loop waypoint dispatch sequence diagram"
-  caption="Dual-path bandwidth isolation (full-rate onboard autonomy vs 10Hz filtered Wi-Fi telemetry) and closed-loop /move_base_simple/goal dispatch"
-/>
 
 ## How It Works
 

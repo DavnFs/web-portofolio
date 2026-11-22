@@ -42,9 +42,9 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ["var(--font-sans)", "system-ui", "-apple-system", "sans-serif"],
-        serif: ["var(--font-serif)", "Georgia", "serif"],
-        mono: ["var(--font-mono)", "ui-monospace", "monospace"],
+        sans: ["var(--font-sans)", "ui-sans-serif", "system-ui", "-apple-system", "sans-serif"],
+        serif: ["Georgia, 'Times New Roman', Times, serif", "Georgia", "serif"],
+        mono: ["'SF Mono', 'Roboto Mono', 'Ubuntu Mono', monospace", "ui-monospace", "monospace"],
       },
       fontSize: {
         display: ["clamp(3rem, 9vw, 8.5rem)", { lineHeight: "0.95", letterSpacing: "-0.03em" }],

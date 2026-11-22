@@ -1,6 +1,5 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import Image from "next/image"
 import { CASE_STUDIES } from "@/content/case-studies/types"
 import { archiveProjects } from "@/content/archive"
 import { profile } from "@/content/profile"
@@ -43,7 +42,7 @@ export default function WorkIndexPage() {
                   </div>
                 </div>
 
-                <div className="lg:col-span-5 space-y-4">
+                <div className="lg:col-span-9 space-y-4">
                   <Link href={`/work/${project.slug}`} className="inline-block">
                     <h2 className="text-2xl sm:text-3xl font-sans font-medium text-ink group-hover:text-accent transition-colors">
                       {project.title}
@@ -72,23 +71,6 @@ export default function WorkIndexPage() {
                     </Link>
                   </div>
                 </div>
-
-                <div className="lg:col-span-4">
-                  <Link
-                    href={`/work/${project.slug}`}
-                    aria-label={`View ${project.title}`}
-                    className="block relative aspect-[16/9] w-full bg-[#F8FAFC] border border-line rounded-media overflow-hidden"
-                  >
-                    <Image
-                      src={project.heroMedia.src}
-                      alt={project.heroMedia.alt}
-                      fill
-                      priority={project.index === "01"}
-                      sizes="(max-width: 1024px) 100vw, 440px"
-                      className="object-contain group-hover:scale-[1.02] transition-transform duration-300"
-                    />
-                  </Link>
-                </div>
               </div>
             </div>
           ))}
@@ -115,15 +97,6 @@ export default function WorkIndexPage() {
                 className="group flex flex-col justify-between bg-white border border-line rounded-media overflow-hidden hover:border-accent transition-colors"
               >
                 <div>
-                  <div className="relative aspect-[16/9] w-full bg-[#F8FAFC] border-b border-line overflow-hidden">
-                    <Image
-                      src={row.diagramSrc}
-                      alt={row.diagramAlt}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      className="object-contain group-hover:scale-[1.02] transition-transform duration-300"
-                    />
-                  </div>
                   <div className="p-5 space-y-3">
                     <div className="flex items-center justify-between font-mono text-[11px] uppercase tracking-wider text-ink-muted">
                       <span>{row.category}</span>

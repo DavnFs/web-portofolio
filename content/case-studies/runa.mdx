@@ -7,10 +7,6 @@ projectType: "Native Mobile & Privacy Architecture"
 year: "2024"
 role: "Lead Mobile Engineer"
 stack: ["Kotlin", "SQLCipher", "Android Keystore", "AES-256-GCM", "Jetpack Compose"]
-heroMedia:
-  type: "diagram"
-  src: "/images/runa-security-flow.svg"
-  alt: "Runa zero-network on-device cryptographic storage and prediction pipeline diagram"
 nextSlug: "autonomous-perception"
 ---
 
@@ -19,12 +15,6 @@ nextSlug: "autonomous-perception"
 Most commercial reproductive health applications transmit sensitive personal telemetry to centralized cloud servers, frequently sharing telemetry with advertising aggregators or third-party data brokers. Following global shifts in data privacy legislation, users require verifiable guarantees that their personal logs remain entirely inaccessible to external observers.
 
 I built Runa as a strictly zero-network Android application designed from the operating system layer up to make data exfiltration technically impossible.
-
-<Figure
-  src="/images/runa-median-mad.svg"
-  alt="Android Keystore biometric unseal and RAM zeroize lifecycle alongside Median/MAD vs naive mean cycle outlier resilience"
-  caption="Hardware-backed biometric key unseal and pause zeroization lifecycle (left) and Median/MAD outlier resilience over naive mean (right)"
-/>
 
 ## How It Works
 

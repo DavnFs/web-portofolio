@@ -7,10 +7,6 @@ projectType: "Undergraduate Thesis & Applied Research"
 year: "2026"
 role: "Lead Researcher"
 stack: ["PyTorch", "YOLOv11", "ASPP", "FPN", "PANet", "Monte Carlo Dropout", "NVIDIA Jetson Orin NX"]
-heroMedia:
-  type: "diagram"
-  src: "/images/perception-architecture.svg"
-  alt: "Autonomous vehicle perception pipeline showing backbone, ASPP triple-head neck, and Monte Carlo Dropout uncertainty output"
 repoUrl: "https://github.com/DavnFs/yolo_inference"
 nextSlug: "brin-vehicle-dashboard"
 ---
@@ -20,12 +16,6 @@ nextSlug: "brin-vehicle-dashboard"
 Standard object detectors output bounding boxes with single confidence scores that express how similar a feature patch looks to training examples, not whether the model is actually certain of its prediction. In autonomous driving scenarios, false certainty on obscured or out-of-distribution obstacles creates critical safety hazards.
 
 My undergraduate thesis investigated how to modify YOLOv11 to capture multi-scale context in complex road-safety scenes while providing calibrated epistemic uncertainty on an embedded NVIDIA Jetson Orin NX computer.
-
-<Figure
-  src="/images/perception-uncertainty-flow.svg"
-  alt="ASPP dilated receptive field kernels r=1, 6, 12, 18 and Monte Carlo Dropout N=8 epistemic variance separation"
-  caption="ASPP multi-scale dilated receptive fields (left) and Monte Carlo Dropout stochastic box spread separating clear vs out-of-distribution obstacles (right)"
-/>
 
 ## How It Works
 

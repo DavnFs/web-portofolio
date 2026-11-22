@@ -2,7 +2,6 @@
 
 import { useRef } from "react"
 import Link from "next/link"
-import Image from "next/image"
 import { gsap, useGSAP } from "@/lib/motion/register"
 import { MOTION } from "@/lib/motion/tokens"
 import { CASE_STUDIES } from "@/content/case-studies/types"
@@ -176,7 +175,7 @@ export function HorizontalShowcase() {
             </div>
 
             <div className="showcase-panel-content my-8 md:my-auto grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
-              <div className="lg:col-span-6 space-y-5">
+              <div className="lg:col-span-12 space-y-5">
                 <div className="space-y-2.5">
                   <span className="font-mono text-xs text-ink-muted uppercase tracking-wider">
                     Role: {study.role}
@@ -203,22 +202,6 @@ export function HorizontalShowcase() {
                     </span>
                   ))}
                 </div>
-              </div>
-
-              <div className="lg:col-span-6">
-                <Link
-                  href={`/work/${study.slug}`}
-                  aria-label={`View architecture diagram for ${study.title}`}
-                  className="block relative aspect-[16/9] w-full bg-[#F8FAFC] border border-line rounded-media overflow-hidden shadow-sm"
-                >
-                  <Image
-                    src={study.heroMedia.src}
-                    alt={study.heroMedia.alt}
-                    fill
-                    sizes="(max-width: 1024px) 100vw, 40vw"
-                    className="object-contain group-hover:scale-[1.015] transition-transform duration-300"
-                  />
-                </Link>
               </div>
             </div>
 

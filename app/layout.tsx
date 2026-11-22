@@ -1,12 +1,18 @@
 import type React from "react"
 import "./globals.css"
 import type { Metadata, Viewport } from "next"
-import { sansFont, serifFont, monoFont } from "@/lib/fonts"
+import { Instrument_Sans } from "next/font/google"
 import { Navigation } from "@/components/navigation"
 import { SiteFooter } from "@/components/site-footer"
 import { AnalyticsScript } from "@/components/analytics-script"
 import { SmoothScroll } from "@/components/smooth-scroll"
 import { profile, LEAD_IDENTITY } from "@/content/profile"
+
+const instrumentSans = Instrument_Sans({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-sans",
+})
 
 export const metadata: Metadata = {
   title: {
@@ -99,10 +105,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang="en"
-      className={`${sansFont.variable} ${serifFont.variable} ${monoFont.variable}`}
-    >
+    <html lang="en" className={instrumentSans.variable}>
       <body className="min-h-screen bg-bg text-ink font-sans selection:bg-accent selection:text-white">
         <SmoothScroll>
           <a

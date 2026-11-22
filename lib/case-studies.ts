@@ -13,11 +13,6 @@ export interface CaseStudyFrontmatter {
   year: string
   role: string
   stack: string[]
-  heroMedia: {
-    type: "image" | "video" | "diagram"
-    src: string
-    alt: string
-  }
   repoUrl?: string
   demoUrl?: string
   nextSlug?: string

@@ -8,12 +8,6 @@ export interface CaseStudyMeta {
   year: string
   role: string
   stack: string[]
-  heroMedia: {
-    type: "image" | "video" | "diagram"
-    src: string
-    alt: string
-    aspectRatio?: "16/9" | "4/5" | "21/9"
-  }
   featured: boolean
   published: boolean
   repoUrl?: string
@@ -32,12 +26,6 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     year: "2026",
     role: "Lead Researcher",
     stack: ["PyTorch", "YOLOv11", "ASPP", "Monte Carlo Dropout", "NVIDIA Jetson Orin NX"],
-    heroMedia: {
-      type: "diagram",
-      src: "/images/perception-architecture.svg",
-      alt: "Autonomous vehicle perception pipeline diagram showing backbone, ASPP triple-head neck, and Monte Carlo Dropout output",
-      aspectRatio: "16/9",
-    },
     featured: true,
     published: true,
     repoUrl: "https://github.com/DavnFs/yolo_inference",
@@ -53,12 +41,6 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     year: "2025",
     role: "Engineering Intern",
     stack: ["ROS1 Noetic", "Flutter", "LiDAR", "GPS", "IMU", "WebSockets"],
-    heroMedia: {
-      type: "diagram",
-      src: "/images/brin-dashboard-flow.svg",
-      alt: "BRIN autonomous vehicle sensor-to-dashboard pipeline diagram",
-      aspectRatio: "16/9",
-    },
     featured: true,
     published: true,
   },
@@ -73,12 +55,6 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     year: "2025",
     role: "Backend & System Architect",
     stack: ["Express.js", "Flutter", "Supabase PostgreSQL", "Prisma ORM", "Midtrans"],
-    heroMedia: {
-      type: "diagram",
-      src: "/images/simpul-architecture.svg",
-      alt: "Simpul platform architecture diagram showing client layers, API gateway, Supabase database and external services",
-      aspectRatio: "16/9",
-    },
     featured: true,
     published: true,
     repoUrl: "https://github.com/Simpul-Platform-Wedding-UMKM",
@@ -94,12 +70,6 @@ export const CASE_STUDIES: CaseStudyMeta[] = [
     year: "2024",
     role: "Lead Mobile Engineer",
     stack: ["Kotlin", "SQLCipher", "Android Keystore", "AES-256-GCM", "Jetpack Compose"],
-    heroMedia: {
-      type: "diagram",
-      src: "/images/runa-security-flow.svg",
-      alt: "Runa zero-network on-device cryptographic storage and prediction pipeline diagram",
-      aspectRatio: "16/9",
-    },
     featured: true,
     published: true,
     repoUrl: "https://github.com/DavnFs/Runa",

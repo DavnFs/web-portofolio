@@ -1,8 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import Image from "next/image"
-import { useState, useRef } from "react"
+import { useRef } from "react"
 import { gsap, useGSAP } from "@/lib/motion/register"
 import { MOTION } from "@/lib/motion/tokens"
 import { MOTION_QUERIES } from "@/lib/motion/reduced-motion"
@@ -10,22 +9,15 @@ import { CASE_STUDIES } from "@/content/case-studies/types"
 import { trackEvent } from "@/lib/analytics"
 
 export function SelectedWork() {
-  const [activeSlug, setActiveSlug] = useState<string | null>(null)
-  const [isTouchDevice, setIsTouchDevice] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
-  const previewRef = useRef<HTMLDivElement>(null)
-  const quickX = useRef<((value: number) => void) | null>(null)
-  const quickY = useRef<((value: number) => void) | null>(null)
 
   useGSAP(
     () => {
       if (!sectionRef.current) return
 
       const mm = gsap.matchMedia()
-      const isTouch = window.matchMedia("(hover: none)").matches
-      setIsTouchDevice(isTouch)
 
-      // Desktop motion: Staggered batch reveal & quickTo cursor preview
+      // Desktop motion: Staggered batch reveal
       mm.add("(min-width: 768px) and (prefers-reduced-motion: no-preference)", () => {
         // A12: Staggered entrance for work rows on scroll
         const rows = sectionRef.current?.querySelectorAll(".work-row")
@@ -49,19 +41,6 @@ export function SelectedWork() {
               },
             }
           )
-        }
-
-        // A13: Ultra-smooth GSAP quickTo cursor-following preview (Desktop only)
-        if (previewRef.current && !isTouch) {
-          gsap.set(previewRef.current, { xPercent: 12, yPercent: -50 })
-          quickX.current = gsap.quickTo(previewRef.current, "x", {
-            duration: MOTION.duration.cursor,
-            ease: MOTION.ease.editorial,
-          })
-          quickY.current = gsap.quickTo(previewRef.current, "y", {
-            duration: MOTION.duration.cursor,
-            ease: MOTION.ease.editorial,
-          })
         }
       })
 
@@ -99,23 +78,9 @@ export function SelectedWork() {
           gsap.set(rows, { opacity: 1, y: 0 })
         }
       })
-
-      const handleMouseMove = (e: MouseEvent) => {
-        if (quickX.current && quickY.current) {
-          quickX.current(e.clientX)
-          quickY.current(e.clientY)
-        }
-      }
-
-      window.addEventListener("mousemove", handleMouseMove, { passive: true })
-      return () => {
-        window.removeEventListener("mousemove", handleMouseMove)
-      }
     },
     { scope: sectionRef }
   )
-
-  const activeProject = CASE_STUDIES.find((cs) => cs.slug === activeSlug)
 
   return (
     <section
@@ -148,8 +113,6 @@ export function SelectedWork() {
         {CASE_STUDIES.map((project) => (
           <div
             key={project.slug}
-            onMouseEnter={() => !isTouchDevice && setActiveSlug(project.slug)}
-            onMouseLeave={() => !isTouchDevice && setActiveSlug(null)}
             className="work-row group relative py-12 sm:py-16 transition-colors will-change-[transform,opacity]"
           >
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
@@ -178,19 +141,6 @@ export function SelectedWork() {
                 <p className="text-body text-ink-muted max-w-xl leading-relaxed">
                   {project.summary}
                 </p>
-
-                {/* Inline Mobile/Touch Poster */}
-                <div className="block lg:hidden pt-4">
-                  <div className="relative aspect-[16/9] w-full bg-[#F8FAFC] border border-line rounded-media overflow-hidden">
-                    <Image
-                      src={project.heroMedia.src}
-                      alt={project.heroMedia.alt}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 50vw"
-                      className="object-contain"
-                    />
-                  </div>
-                </div>
               </div>
 
               {/* Stack Tags & Onward arrow */}
@@ -220,33 +170,6 @@ export function SelectedWork() {
           </div>
         ))}
       </div>
-
-      {/* GSAP QuickTo Powered Desktop Floating Cursor Preview (A13) */}
-      {!isTouchDevice && (
-        <div
-          ref={previewRef}
-          aria-hidden="true"
-          className={`fixed top-0 left-0 pointer-events-none z-50 w-80 h-48 rounded-media overflow-hidden border border-line shadow-2xl transition-opacity duration-200 bg-surface hidden lg:block ${
-            activeProject ? "opacity-100 scale-100" : "opacity-0 scale-95"
-          }`}
-          style={{ willChange: "transform, opacity" }}
-        >
-          {activeProject && (
-            <div className="relative w-full h-full bg-[#F8FAFC]">
-              <Image
-                src={activeProject.heroMedia.src}
-                alt=""
-                fill
-                sizes="320px"
-                className="object-contain"
-              />
-              <div className="absolute bottom-2 left-2 right-2 px-2.5 py-1 bg-white/95 border border-line text-[10px] font-mono text-ink uppercase tracking-wider truncate">
-                Diagram // {activeProject.title}
-              </div>
-            </div>
-          )}
-        </div>
-      )}
     </section>
   )
 }
