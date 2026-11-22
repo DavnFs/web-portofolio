@@ -2,7 +2,6 @@ import type React from "react"
 import "./globals.css"
 import type { Metadata, Viewport } from "next"
 import { sansFont, serifFont, monoFont } from "@/lib/fonts"
-import { ThemeProvider } from "@/components/theme-provider"
 import { Navigation } from "@/components/navigation"
 import { SiteFooter } from "@/components/site-footer"
 import { AnalyticsScript } from "@/components/analytics-script"
@@ -95,36 +94,30 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#FFFFFF" },
-    { media: "(prefers-color-scheme: dark)", color: "#021024" },
-  ],
+  themeColor: "#FFFFFF",
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
       lang="en"
-      suppressHydrationWarning
       className={`${sansFont.variable} ${serifFont.variable} ${monoFont.variable}`}
     >
       <body className="min-h-screen bg-bg text-ink font-sans selection:bg-accent selection:text-white">
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <SmoothScroll>
-            <a
-              href="#main-content"
-              className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-ink focus:text-bg focus:border focus:border-line focus:shadow-md focus:font-mono focus:text-xs uppercase tracking-wider"
-            >
-              Skip to main content
-            </a>
-            <Navigation />
-            <main id="main-content" tabIndex={-1} className="outline-none">
-              {children}
-            </main>
-            <SiteFooter />
-            <AnalyticsScript />
-          </SmoothScroll>
-        </ThemeProvider>
+        <SmoothScroll>
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-ink focus:text-bg focus:border focus:border-line focus:shadow-md focus:font-mono focus:text-xs uppercase tracking-wider"
+          >
+            Skip to main content
+          </a>
+          <Navigation />
+          <main id="main-content" tabIndex={-1} className="outline-none">
+            {children}
+          </main>
+          <SiteFooter />
+          <AnalyticsScript />
+        </SmoothScroll>
       </body>
     </html>
   )

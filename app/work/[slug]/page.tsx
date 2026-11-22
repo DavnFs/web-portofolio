@@ -114,7 +114,7 @@ export default async function CaseStudyPage({ params }: Props) {
         </div>
 
         {/* MDX Body (The Problem, How It Works, Decisions & Tradeoffs, Results, Links) */}
-        <div className="max-w-3xl mx-auto prose prose-neutral dark:prose-invert prose-headings:font-sans prose-headings:font-medium prose-p:leading-relaxed prose-p:text-ink/90 prose-li:text-ink/90">
+        <div className="max-w-3xl mx-auto prose prose-neutral prose-headings:font-sans prose-headings:font-medium prose-p:leading-relaxed prose-p:text-ink/90 prose-li:text-ink/90">
           {content}
         </div>
 

@@ -11,7 +11,7 @@ export function Panel({ children, className, as: Tag = "div" }: PanelProps) {
   return (
     <Tag
       className={cn(
-        "rounded-2xl border border-border bg-white/80 shadow-sm dark:bg-white/[0.04]",
+        "rounded-2xl border border-border bg-white shadow-sm",
         className
       )}
     >

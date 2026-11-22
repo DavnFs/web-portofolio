@@ -12,7 +12,7 @@ const channels = [
     action: "Connect",
     href: profile.linkedin,
     icon: Linkedin,
-    tone: "text-sky-600 dark:text-sky-400",
+    tone: "text-sky-600",
     surface: "border-sky-500/20 bg-sky-500/10",
   },
   {

@@ -11,15 +11,6 @@
   --accent: #2563EB;
 }
 
-.dark {
-  --bg: #021024;
-  --surface: #0A1B33;
-  --ink: #FFFFFF;
-  --ink-muted: #94A0B4;
-  --line: #1C2D48;
-  --accent: #4A90E2;
-}
-
 @layer base {
   * {
     border-color: var(--line);

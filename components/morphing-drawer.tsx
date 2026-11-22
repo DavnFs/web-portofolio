@@ -44,7 +44,9 @@ export function MorphingDrawer({
       if (e.key === "Escape") onClose()
     }
     const handleMouseDown = (e: MouseEvent) => {
-      if (panelRef.current && !panelRef.current.contains(e.target as Node)) {
+      const target = e.target as HTMLElement | null
+      if (target?.closest('[data-testid="site-topbar"]')) return
+      if (panelRef.current && !panelRef.current.contains(target as Node)) {
         onClose()
       }
     }
@@ -68,7 +70,7 @@ export function MorphingDrawer({
     <AnimatePresence>
       {open && (
         <>
-          {/* Subtle scrim behind morphed drawer */}
+          {/* Clean neutral scrim behind morphed light drawer (no glass blur) */}
           <motion.div
             key="morphing-drawer-backdrop"
             initial={{ opacity: 0 }}
@@ -76,10 +78,10 @@ export function MorphingDrawer({
             exit={{ opacity: 0 }}
             transition={{ duration: prefersReduced ? 0.01 : 0.2 }}
             aria-hidden="true"
-            className="fixed inset-0 z-[55] bg-[#021024]/35"
+            className="fixed inset-0 z-[55] bg-[#021024]/15"
           />
 
-          {/* Morphing Split-Pane Drawer (top-right anchored) */}
+          {/* Crisp Light Split-Pane Morphing Drawer (top-right anchored) */}
           <div className="fixed top-4 right-4 sm:top-5 sm:right-6 z-[60] max-w-[calc(100vw-2rem)]">
             <motion.div
               ref={panelRef}
@@ -93,11 +95,11 @@ export function MorphingDrawer({
               transition={spring}
               className="flex flex-col md:flex-row items-stretch gap-2.5 origin-top-right"
             >
-              {/* Primary Drawer Pane */}
+              {/* Primary Crisp Light Pane */}
               <motion.div
                 layout
                 transition={spring}
-                className="w-[300px] sm:w-[320px] max-w-full rounded-2xl border border-white/15 bg-[#050E1E] text-white shadow-[0_24px_70px_rgba(2,16,36,0.55)] p-6 flex flex-col justify-between min-h-[380px] sm:min-h-[430px]"
+                className="w-[300px] sm:w-[320px] max-w-full rounded-2xl border border-slate-200 bg-white text-ink shadow-[0_24px_64px_rgba(2,16,36,0.12)] p-6 flex flex-col justify-between min-h-[380px] sm:min-h-[430px]"
               >
                 <div>
                   {/* Top Bar with Close button */}
@@ -106,11 +108,11 @@ export function MorphingDrawer({
                       type="button"
                       onClick={onClose}
                       aria-label="Close morphing drawer"
-                      className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white/80 hover:bg-white/15 hover:text-white transition-colors"
+                      className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-slate-200 bg-slate-50 text-ink-muted hover:border-slate-300 hover:bg-slate-100 hover:text-ink transition-colors cursor-pointer"
                     >
                       <X className="h-4 w-4" aria-hidden="true" />
                     </button>
-                    <span className="font-mono text-[11px] text-white/45">
+                    <span className="font-mono text-[11px] text-ink-muted">
                       Navigation
                     </span>
                   </div>
@@ -144,18 +146,20 @@ export function MorphingDrawer({
                               type="button"
                               onClick={onToggleWorkSubmenu}
                               aria-expanded={showWorkPane}
-                              className={`group flex items-center justify-between py-2 text-left text-2xl sm:text-[28px] font-serif tracking-tight leading-tight transition-colors ${
-                                showWorkPane || isActive
-                                  ? "text-white"
-                                  : "text-white/55 hover:text-white"
+                              className={`group flex items-center justify-between rounded-xl px-2.5 py-2 text-left text-2xl sm:text-[28px] font-serif tracking-tight leading-tight transition-colors cursor-pointer ${
+                                showWorkPane
+                                  ? "bg-blue-50 text-ink"
+                                  : isActive
+                                  ? "bg-slate-100 text-ink"
+                                  : "text-ink-muted hover:bg-slate-50 hover:text-ink"
                               }`}
                             >
                               <span>{route.label}</span>
                               <ChevronRight
                                 className={`h-4 w-4 transition-transform duration-200 ${
                                   showWorkPane
-                                    ? "text-[#4A90E2] md:translate-x-0.5 rotate-90 md:rotate-0"
-                                    : "text-white/40 group-hover:text-white/80"
+                                    ? "text-accent md:translate-x-0.5 rotate-90 md:rotate-0"
+                                    : "text-slate-400 group-hover:text-ink"
                                 }`}
                                 aria-hidden="true"
                               />
@@ -169,7 +173,7 @@ export function MorphingDrawer({
                                   animate={{ opacity: 1, height: "auto" }}
                                   exit={{ opacity: 0, height: 0 }}
                                   transition={{ duration: prefersReduced ? 0.01 : 0.24 }}
-                                  className="md:hidden overflow-hidden pl-3 border-l border-white/15 my-2 space-y-2"
+                                  className="md:hidden overflow-hidden pl-3 my-2 space-y-1.5"
                                 >
                                   {CASE_STUDIES.map((cs) => (
                                     <Link
@@ -182,9 +186,9 @@ export function MorphingDrawer({
                                         })
                                         onClose()
                                       }}
-                                      className="block py-1 text-sm text-white/75 hover:text-white transition-colors"
+                                      className="block rounded-lg px-2 py-1.5 text-sm text-ink-muted hover:bg-slate-50 hover:text-ink transition-colors"
                                     >
-                                      <span className="font-mono text-[11px] text-[#4A90E2] mr-2 tabular-nums">
+                                      <span className="font-mono text-[11px] text-accent mr-2 tabular-nums">
                                         ({cs.index})
                                       </span>
                                       <span>{cs.title}</span>
@@ -193,7 +197,7 @@ export function MorphingDrawer({
                                   <Link
                                     href="/work"
                                     onClick={onClose}
-                                    className="inline-flex items-center gap-1.5 pt-1 text-xs font-mono text-[#4A90E2] hover:underline"
+                                    className="inline-flex items-center gap-1.5 px-2 pt-1 text-xs font-mono text-accent hover:underline"
                                   >
                                     <span>All Work &amp; Archive</span>
                                     <span>→</span>
@@ -223,13 +227,18 @@ export function MorphingDrawer({
                           <Link
                             href={route.href}
                             onClick={onClose}
-                            className={`block py-2 text-2xl sm:text-[28px] font-serif tracking-tight leading-tight transition-colors ${
+                            className={`flex items-center justify-between rounded-xl px-2.5 py-2 text-2xl sm:text-[28px] font-serif tracking-tight leading-tight transition-colors ${
                               isActive
-                                ? "text-white"
-                                : "text-white/55 hover:text-white"
+                                ? "bg-slate-100 text-ink"
+                                : "text-ink-muted hover:bg-slate-50 hover:text-ink"
                             }`}
                           >
-                            {route.label}
+                            <span>{route.label}</span>
+                            {isActive && (
+                              <span className="font-mono text-[10px] text-accent">
+                                Current
+                              </span>
+                            )}
                           </Link>
                         </motion.div>
                       )
@@ -238,7 +247,7 @@ export function MorphingDrawer({
                 </div>
 
                 {/* Bottom Secondary Utility Links */}
-                <div className="pt-8 mt-6 border-t border-white/10 space-y-2 text-xs text-white/55">
+                <div className="pt-8 mt-6 border-t border-slate-200 space-y-2 text-xs text-ink-muted">
                   <div className="flex flex-col space-y-1.5">
                     <a
                       href={profile.github}
@@ -250,7 +259,7 @@ export function MorphingDrawer({
                           type: "github",
                         })
                       }
-                      className="inline-flex items-center justify-between hover:text-white transition-colors py-0.5"
+                      className="inline-flex items-center justify-between hover:text-ink transition-colors py-0.5"
                     >
                       <span>GitHub</span>
                       <ArrowUpRight className="h-3.5 w-3.5 opacity-70" aria-hidden="true" />
@@ -265,7 +274,7 @@ export function MorphingDrawer({
                           type: "linkedin",
                         })
                       }
-                      className="inline-flex items-center justify-between hover:text-white transition-colors py-0.5"
+                      className="inline-flex items-center justify-between hover:text-ink transition-colors py-0.5"
                     >
                       <span>LinkedIn</span>
                       <ArrowUpRight className="h-3.5 w-3.5 opacity-70" aria-hidden="true" />
@@ -274,7 +283,7 @@ export function MorphingDrawer({
                       href={profile.cvPath}
                       download
                       onClick={() => trackEvent("cv_download", { source: "morphing_drawer" })}
-                      className="inline-flex items-center justify-between text-[#4A90E2] hover:text-sky-300 transition-colors py-0.5"
+                      className="inline-flex items-center justify-between text-accent font-medium hover:underline transition-colors py-0.5"
                     >
                       <span>Download CV</span>
                       <span aria-hidden="true">↓</span>
@@ -283,7 +292,7 @@ export function MorphingDrawer({
                 </div>
               </motion.div>
 
-              {/* Secondary Split Pane (Desktop morphing reveal for Case Studies) */}
+              {/* Secondary Split Light Pane (Desktop morphing reveal for Case Studies) */}
               <AnimatePresence>
                 {showWorkPane && (
                   <motion.div
@@ -293,14 +302,14 @@ export function MorphingDrawer({
                     animate={{ opacity: 1, x: 0, scale: 1 }}
                     exit={{ opacity: 0, x: -12, scale: 0.96 }}
                     transition={spring}
-                    className="hidden md:flex w-[320px] rounded-2xl border border-white/15 bg-[#07152B] text-white shadow-[0_24px_70px_rgba(2,16,36,0.55)] p-6 flex-col justify-between"
+                    className="hidden md:flex w-[324px] rounded-2xl border border-slate-200 bg-[#F8FAFC] text-ink shadow-[0_24px_64px_rgba(2,16,36,0.12)] p-6 flex-col justify-between"
                   >
                     <div className="space-y-4">
-                      <div className="flex items-center justify-between border-b border-white/10 pb-3">
-                        <span className="font-mono text-[11px] text-white/55">
+                      <div className="flex items-center justify-between border-b border-slate-200 pb-3">
+                        <span className="font-mono text-[11px] text-ink-muted">
                           Selected Work
                         </span>
-                        <span className="font-mono text-[11px] text-[#4A90E2] tabular-nums">
+                        <span className="font-mono text-[11px] text-accent tabular-nums">
                           (0{CASE_STUDIES.length})
                         </span>
                       </div>
@@ -329,19 +338,19 @@ export function MorphingDrawer({
                                 }}
                                 className={`group block rounded-xl p-3 transition-colors ${
                                   isCurrentStudy
-                                    ? "bg-white/15 text-white"
-                                    : "hover:bg-white/10 text-white/80 hover:text-white"
+                                    ? "bg-white border border-slate-200 text-ink shadow-sm"
+                                    : "hover:bg-white text-ink"
                                 }`}
                               >
                                 <div className="flex items-baseline justify-between gap-2">
-                                  <span className="font-serif text-lg leading-snug group-hover:text-white">
+                                  <span className="font-serif text-lg leading-snug group-hover:text-accent transition-colors">
                                     {cs.title}
                                   </span>
-                                  <span className="font-mono text-[10px] text-[#4A90E2] shrink-0 tabular-nums">
+                                  <span className="font-mono text-[10px] text-accent shrink-0 tabular-nums">
                                     ({cs.index})
                                   </span>
                                 </div>
-                                <p className="text-xs text-white/50 group-hover:text-white/70 line-clamp-1 mt-1">
+                                <p className="text-xs text-ink-muted line-clamp-1 mt-1">
                                   {cs.tagline}
                                 </p>
                               </Link>
@@ -351,14 +360,14 @@ export function MorphingDrawer({
                       </div>
                     </div>
 
-                    <div className="pt-4 border-t border-white/10">
+                    <div className="pt-4 border-t border-slate-200">
                       <Link
                         href="/work"
                         onClick={onClose}
-                        className="group flex items-center justify-between rounded-xl px-3 py-2.5 text-xs font-mono text-white/75 hover:bg-white/10 hover:text-white transition-colors"
+                        className="group flex items-center justify-between rounded-xl px-3 py-2.5 text-xs font-mono text-ink-muted hover:bg-white hover:text-ink transition-colors"
                       >
                         <span>All Work &amp; Archive</span>
-                        <span className="text-[#4A90E2] group-hover:translate-x-0.5 transition-transform">
+                        <span className="text-accent group-hover:translate-x-0.5 transition-transform">
                           →
                         </span>
                       </Link>
