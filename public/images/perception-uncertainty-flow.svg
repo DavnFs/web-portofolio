@@ -1,0 +1,156 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675" fill="none">
+  <defs>
+    <pattern id="grid-pu" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" fill="none" stroke="#E2E8F0" stroke-width="0.75"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="675" fill="#F8FAFC"/>
+  <rect width="1200" height="675" fill="url(#grid-pu)"/>
+  <rect x="16" y="16" width="1168" height="643" rx="12" fill="none" stroke="#E2E8F0"/>
+
+  <text x="48" y="56" font-family="ui-monospace, monospace" font-size="12" font-weight="600" fill="#2563EB" letter-spacing="1.4">DEEP DIVE 01B // MULTI-SCALE CONTEXT &amp; EPISTEMIC CALIBRATION</text>
+  <text x="48" y="88" font-family="system-ui, -apple-system, sans-serif" font-size="25" font-weight="700" fill="#021024">ASPP Dilated Receptive Fields vs. Monte Carlo Dropout Box Spread</text>
+
+  <!-- LEFT PANEL: ASPP DILATED KERNELS -->
+  <g transform="translate(48, 124)">
+    <rect width="532" height="486" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.25"/>
+    <rect width="532" height="38" rx="10" fill="#EFF6FF"/>
+    <rect y="28" width="532" height="10" fill="#EFF6FF"/>
+    <text x="20" y="24" font-family="ui-monospace, monospace" font-size="11" font-weight="700" fill="#2563EB">A // ASPP ATROUS RECEPTIVE FIELD EXPANSION</text>
+
+    <text x="20" y="66" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="#021024">Same 3×3 Parameter Weight · Exponentially Wider Road Context</text>
+    <text x="20" y="86" font-family="system-ui, sans-serif" font-size="12" fill="#475569">Avoids heavy backbone depth that exceeded Jetson Orin NX 35ms budget</text>
+
+    <!-- Kernel 1: r = 1 -->
+    <g transform="translate(24, 114)">
+      <rect width="232" height="164" rx="8" fill="#F8FAFC" stroke="#E2E8F0"/>
+      <text x="14" y="24" font-family="ui-monospace, monospace" font-size="11" font-weight="700" fill="#2563EB">Rate r = 1 (3×3 Dense)</text>
+      <text x="14" y="42" font-family="system-ui, sans-serif" font-size="11" fill="#475569">Fine edges, cones, distant bikes</text>
+      <!-- 7x7 grid with centered 3x3 active -->
+      <g transform="translate(68, 56)">
+        <rect x="0" y="0" width="96" height="96" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+        <rect x="34" y="34" width="8" height="8" rx="1.5" fill="#2563EB"/>
+        <rect x="44" y="34" width="8" height="8" rx="1.5" fill="#2563EB"/>
+        <rect x="54" y="34" width="8" height="8" rx="1.5" fill="#2563EB"/>
+        <rect x="34" y="44" width="8" height="8" rx="1.5" fill="#2563EB"/>
+        <rect x="44" y="44" width="8" height="8" rx="1.5" fill="#1D4ED8"/>
+        <rect x="54" y="44" width="8" height="8" rx="1.5" fill="#2563EB"/>
+        <rect x="34" y="54" width="8" height="8" rx="1.5" fill="#2563EB"/>
+        <rect x="44" y="54" width="8" height="8" rx="1.5" fill="#2563EB"/>
+        <rect x="54" y="54" width="8" height="8" rx="1.5" fill="#2563EB"/>
+      </g>
+    </g>
+
+    <!-- Kernel 2: r = 6 -->
+    <g transform="translate(276, 114)">
+      <rect width="232" height="164" rx="8" fill="#F8FAFC" stroke="#E2E8F0"/>
+      <text x="14" y="24" font-family="ui-monospace, monospace" font-size="11" font-weight="700" fill="#2563EB">Rate r = 6 (Local Context)</text>
+      <text x="14" y="42" font-family="system-ui, sans-serif" font-size="11" fill="#475569">Pedestrians &amp; motorcycles</text>
+      <g transform="translate(68, 56)">
+        <rect x="0" y="0" width="96" height="96" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+        <rect x="24" y="24" width="48" height="48" fill="#EFF6FF" stroke="#93C5FD" stroke-dasharray="3 2"/>
+        <rect x="24" y="24" width="8" height="8" rx="1.5" fill="#2563EB"/>
+        <rect x="44" y="24" width="8" height="8" rx="1.5" fill="#2563EB"/>
+        <rect x="64" y="24" width="8" height="8" rx="1.5" fill="#2563EB"/>
+        <rect x="24" y="44" width="8" height="8" rx="1.5" fill="#2563EB"/>
+        <rect x="44" y="44" width="8" height="8" rx="1.5" fill="#1D4ED8"/>
+        <rect x="64" y="44" width="8" height="8" rx="1.5" fill="#2563EB"/>
+        <rect x="24" y="64" width="8" height="8" rx="1.5" fill="#2563EB"/>
+        <rect x="44" y="64" width="8" height="8" rx="1.5" fill="#2563EB"/>
+        <rect x="64" y="64" width="8" height="8" rx="1.5" fill="#2563EB"/>
+      </g>
+    </g>
+
+    <!-- Kernel 3: r = 12 -->
+    <g transform="translate(24, 296)">
+      <rect width="232" height="164" rx="8" fill="#F8FAFC" stroke="#E2E8F0"/>
+      <text x="14" y="24" font-family="ui-monospace, monospace" font-size="11" font-weight="700" fill="#2563EB">Rate r = 12 (Mid-Road)</text>
+      <text x="14" y="42" font-family="system-ui, sans-serif" font-size="11" fill="#475569">Cars, lane geometry, barriers</text>
+      <g transform="translate(68, 56)">
+        <rect x="0" y="0" width="96" height="96" rx="4" fill="#FFFFFF" stroke="#CBD5E1"/>
+        <rect x="14" y="14" width="68" height="68" fill="#EFF6FF" stroke="#60A5FA" stroke-dasharray="3 2"/>
+        <rect x="14" y="14" width="8" height="8" rx="1.5" fill="#2563EB"/>
+        <rect x="44" y="14" width="8" height="8" rx="1.5" fill="#2563EB"/>
+        <rect x="74" y="14" width="8" height="8" rx="1.5" fill="#2563EB"/>
+        <rect x="14" y="44" width="8" height="8" rx="1.5" fill="#2563EB"/>
+        <rect x="44" y="44" width="8" height="8" rx="1.5" fill="#1D4ED8"/>
+        <rect x="74" y="44" width="8" height="8" rx="1.5" fill="#2563EB"/>
+        <rect x="14" y="74" width="8" height="8" rx="1.5" fill="#2563EB"/>
+        <rect x="44" y="74" width="8" height="8" rx="1.5" fill="#2563EB"/>
+        <rect x="74" y="74" width="8" height="8" rx="1.5" fill="#2563EB"/>
+      </g>
+    </g>
+
+    <!-- Kernel 4: r = 18 -->
+    <g transform="translate(276, 296)">
+      <rect width="232" height="164" rx="8" fill="#EFF6FF" stroke="#93C5FD"/>
+      <text x="14" y="24" font-family="ui-monospace, monospace" font-size="11" font-weight="700" fill="#1D4ED8">Rate r = 18 + GAP (Scene)</text>
+      <text x="14" y="42" font-family="system-ui, sans-serif" font-size="11" fill="#1E3A8A">Buses, trucks, intersections</text>
+      <g transform="translate(68, 56)">
+        <rect x="0" y="0" width="96" height="96" rx="4" fill="#FFFFFF" stroke="#3B82F6"/>
+        <rect x="4" y="4" width="88" height="88" fill="#DBEAFE" fill-opacity="0.55" stroke="#2563EB" stroke-dasharray="3 2"/>
+        <rect x="6" y="6" width="8" height="8" rx="1.5" fill="#1D4ED8"/>
+        <rect x="44" y="6" width="8" height="8" rx="1.5" fill="#1D4ED8"/>
+        <rect x="82" y="6" width="8" height="8" rx="1.5" fill="#1D4ED8"/>
+        <rect x="6" y="44" width="8" height="8" rx="1.5" fill="#1D4ED8"/>
+        <rect x="44" y="44" width="8" height="8" rx="1.5" fill="#021024"/>
+        <rect x="82" y="44" width="8" height="8" rx="1.5" fill="#1D4ED8"/>
+        <rect x="6" y="82" width="8" height="8" rx="1.5" fill="#1D4ED8"/>
+        <rect x="44" y="82" width="8" height="8" rx="1.5" fill="#1D4ED8"/>
+        <rect x="82" y="82" width="8" height="8" rx="1.5" fill="#1D4ED8"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- RIGHT PANEL: MC DROPOUT VARIANCE COMPARISON -->
+  <g transform="translate(604, 124)">
+    <rect width="548" height="486" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.25"/>
+    <rect width="548" height="38" rx="10" fill="#EFF6FF"/>
+    <rect y="28" width="548" height="10" fill="#EFF6FF"/>
+    <text x="20" y="24" font-family="ui-monospace, monospace" font-size="11" font-weight="700" fill="#2563EB">B // MONTE CARLO DROPOUT UNCERTAINTY SEPARATION (N = 8)</text>
+
+    <text x="20" y="66" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="#021024">Stochastic Bounding Box Agreement Reveals Model Epistemic Uncertainty</text>
+    <text x="20" y="86" font-family="system-ui, sans-serif" font-size="12" fill="#475569">Single weight set in Jetson VRAM · Active dropout p = 0.2 at test time</text>
+
+    <!-- Case 1: Low Variance -->
+    <g transform="translate(24, 114)">
+      <rect width="500" height="162" rx="8" fill="#F8FAFC" stroke="#93C5FD" stroke-width="1.2"/>
+      <text x="16" y="26" font-family="ui-monospace, monospace" font-size="11" font-weight="700" fill="#1D4ED8">CASE 1 · CLEAR IN-DISTRIBUTION VEHICLE</text>
+      <!-- Tight overlapping stochastic boxes -->
+      <rect x="24" y="44" width="164" height="98" rx="6" fill="#0F172A"/>
+      <rect x="64" y="64" width="84" height="58" fill="none" stroke="#60A5FA" stroke-width="1" opacity="0.5"/>
+      <rect x="66" y="62" width="83" height="59" fill="none" stroke="#93C5FD" stroke-width="1" opacity="0.5"/>
+      <rect x="65" y="65" width="85" height="57" fill="none" stroke="#38BDF8" stroke-width="1.8"/>
+      <text x="72" y="98" font-family="ui-monospace, monospace" font-size="10" font-weight="700" fill="#FFFFFF">Tight IoU</text>
+
+      <!-- Metrics -->
+      <text x="210" y="64" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#021024">All 8 Passes Agree</text>
+      <text x="210" y="86" font-family="ui-monospace, monospace" font-size="11" fill="#475569">Mean Conf μ  : 0.94</text>
+      <text x="210" y="106" font-family="ui-monospace, monospace" font-size="11" font-weight="700" fill="#2563EB">Variance σ²  : 0.008 (Low)</text>
+      <rect x="210" y="118" width="268" height="28" rx="5" fill="#EFF6FF" stroke="#2563EB"/>
+      <text x="224" y="136" font-family="ui-monospace, monospace" font-size="10.5" font-weight="700" fill="#1D4ED8">ACTION: DISPATCH TO PLANNER</text>
+    </g>
+
+    <!-- Case 2: High Variance / OOD -->
+    <g transform="translate(24, 296)">
+      <rect width="500" height="164" rx="8" fill="#FFFBEB" stroke="#F59E0B" stroke-width="1.2"/>
+      <text x="16" y="26" font-family="ui-monospace, monospace" font-size="11" font-weight="700" fill="#B45309">CASE 2 · OCCLUDED / OUT-OF-DISTRIBUTION OBSTACLE</text>
+      <!-- Dispersed stochastic boxes -->
+      <rect x="24" y="44" width="164" height="100" rx="6" fill="#0F172A"/>
+      <rect x="42" y="54" width="76" height="54" fill="none" stroke="#FBBF24" stroke-width="1.2" stroke-dasharray="3 2"/>
+      <rect x="68" y="68" width="96" height="62" fill="none" stroke="#F59E0B" stroke-width="1.2" stroke-dasharray="3 2"/>
+      <rect x="54" y="76" width="84" height="52" fill="none" stroke="#FDE68A" stroke-width="1.2" stroke-dasharray="3 2"/>
+      <rect x="82" y="52" width="72" height="66" fill="none" stroke="#EF4444" stroke-width="1.4"/>
+      <text x="64" y="100" font-family="ui-monospace, monospace" font-size="10" font-weight="700" fill="#FDE68A">High Spread</text>
+
+      <!-- Metrics -->
+      <text x="210" y="64" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#021024">Sub-Networks Disagree</text>
+      <text x="210" y="86" font-family="ui-monospace, monospace" font-size="11" fill="#78350F">Naive Point Score : 0.78 (False Cert.)</text>
+      <text x="210" y="106" font-family="ui-monospace, monospace" font-size="11" font-weight="700" fill="#B45309">Variance σ²       : 0.194 (High!)</text>
+      <rect x="210" y="118" width="268" height="28" rx="5" fill="#FEF3C7" stroke="#D97706"/>
+      <text x="224" y="136" font-family="ui-monospace, monospace" font-size="10.5" font-weight="700" fill="#92400E">ACTION: FLAG SAFETY CAUTION</text>
+    </g>
+  </g>
+
+  <text x="48" y="638" font-family="ui-monospace, monospace" font-size="11" fill="#64748B">FIG 01B // EPISTEMIC UNCERTAINTY PREVENTS OVERCONFIDENT FALSE POSITIVES ON EDGE HARDWARE</text>
+</svg>

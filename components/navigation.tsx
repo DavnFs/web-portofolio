@@ -53,54 +53,7 @@ export function Navigation() {
             </Link>
           </div>
 
-          {/* Zone 2: Desktop Single-Line Navigation */}
-          <nav
-            className="hidden md:flex items-center gap-7 text-sm"
-            aria-label="Main navigation"
-          >
-            <Link
-              href="/about"
-              className={`transition-colors py-1 hover:text-accent whitespace-nowrap shrink-0 ${
-                pathname === "/about"
-                  ? "text-accent font-medium"
-                  : "text-ink-muted hover:text-ink"
-              }`}
-            >
-              About
-            </Link>
-
-            <button
-              type="button"
-              onClick={() =>
-                drawerState.open && drawerState.activeSubmenu === "work"
-                  ? dispatch({ type: "CLOSE" })
-                  : dispatch({ type: "OPEN_WORK" })
-              }
-              aria-haspopup="dialog"
-              aria-expanded={drawerState.open && drawerState.activeSubmenu === "work"}
-              className={`flex items-center gap-1.5 py-1 transition-colors hover:text-accent whitespace-nowrap shrink-0 cursor-pointer ${
-                pathname.startsWith("/work") ||
-                (drawerState.open && drawerState.activeSubmenu === "work")
-                  ? "text-accent font-medium"
-                  : "text-ink-muted hover:text-ink"
-              }`}
-            >
-              <span>Work</span>
-            </button>
-
-            <Link
-              href="/contact"
-              className={`transition-colors py-1 hover:text-accent whitespace-nowrap shrink-0 ${
-                pathname === "/contact"
-                  ? "text-accent font-medium"
-                  : "text-ink-muted hover:text-ink"
-              }`}
-            >
-              Contact
-            </Link>
-          </nav>
-
-          {/* Zone 3: Single Menu Trigger Button (No Theme Toggle) */}
+          {/* Right: Single Top-Right Navigation Menu Trigger */}
           <div className="flex items-center shrink-0">
             <button
               type="button"

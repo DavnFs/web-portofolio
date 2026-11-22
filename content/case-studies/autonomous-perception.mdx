@@ -22,9 +22,9 @@ Standard object detectors output bounding boxes with single confidence scores th
 My undergraduate thesis investigated how to modify YOLOv11 to capture multi-scale context in complex road-safety scenes while providing calibrated epistemic uncertainty on an embedded NVIDIA Jetson Orin NX computer.
 
 <Figure
-  src="/images/perception-architecture.svg"
-  alt="YOLOv11 perception pipeline with ASPP and Monte Carlo Dropout"
-  caption="End-to-end perception pipeline from camera intake to uncertainty-aware edge dispatch"
+  src="/images/perception-uncertainty-flow.svg"
+  alt="ASPP dilated receptive field kernels r=1, 6, 12, 18 and Monte Carlo Dropout N=8 epistemic variance separation"
+  caption="ASPP multi-scale dilated receptive fields (left) and Monte Carlo Dropout stochastic box spread separating clear vs out-of-distribution obstacles (right)"
 />
 
 ## How It Works

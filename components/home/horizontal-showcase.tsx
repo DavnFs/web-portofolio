@@ -2,6 +2,7 @@
 
 import { useRef } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { gsap, useGSAP } from "@/lib/motion/register"
 import { MOTION } from "@/lib/motion/tokens"
 import { CASE_STUDIES } from "@/content/case-studies/types"
@@ -174,32 +175,50 @@ export function HorizontalShowcase() {
               </span>
             </div>
 
-            <div className="showcase-panel-content my-10 md:my-auto max-w-2xl space-y-6">
-              <div className="space-y-3">
-                <span className="font-mono text-xs text-ink-muted uppercase tracking-wider">
-                  Role: {study.role}
-                </span>
-                <h3 className="text-2xl sm:text-3xl md:text-5xl font-sans font-normal text-ink group-hover:text-accent transition-colors duration-300">
-                  {study.title}
-                </h3>
-                <p className="text-base sm:text-xl font-serif italic text-ink-muted leading-snug">
-                  {study.tagline}
+            <div className="showcase-panel-content my-8 md:my-auto grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
+              <div className="lg:col-span-6 space-y-5">
+                <div className="space-y-2.5">
+                  <span className="font-mono text-xs text-ink-muted uppercase tracking-wider">
+                    Role: {study.role}
+                  </span>
+                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-sans font-normal text-ink group-hover:text-accent transition-colors duration-300">
+                    {study.title}
+                  </h3>
+                  <p className="text-base sm:text-lg font-serif italic text-ink-muted leading-snug">
+                    {study.tagline}
+                  </p>
+                </div>
+
+                <p className="text-sm md:text-base text-ink-muted leading-relaxed">
+                  {study.summary}
                 </p>
+
+                <div className="flex flex-wrap gap-2 pt-1">
+                  {study.stack.map((tech) => (
+                    <span
+                      key={tech}
+                      className="font-mono text-xs px-2.5 py-1 bg-bg border border-line text-ink"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
               </div>
 
-              <p className="text-sm md:text-base text-ink-muted leading-relaxed">
-                {study.summary}
-              </p>
-
-              <div className="flex flex-wrap gap-2 pt-2">
-                {study.stack.map((tech) => (
-                  <span
-                    key={tech}
-                    className="font-mono text-xs px-2.5 py-1 bg-bg border border-line text-ink"
-                  >
-                    {tech}
-                  </span>
-                ))}
+              <div className="lg:col-span-6">
+                <Link
+                  href={`/work/${study.slug}`}
+                  aria-label={`View architecture diagram for ${study.title}`}
+                  className="block relative aspect-[16/9] w-full bg-[#F8FAFC] border border-line rounded-media overflow-hidden shadow-sm"
+                >
+                  <Image
+                    src={study.heroMedia.src}
+                    alt={study.heroMedia.alt}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 40vw"
+                    className="object-contain group-hover:scale-[1.015] transition-transform duration-300"
+                  />
+                </Link>
               </div>
             </div>
 

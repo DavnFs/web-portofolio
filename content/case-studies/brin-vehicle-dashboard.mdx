@@ -21,9 +21,9 @@ Autonomous vehicle field tests require test engineers to observe vehicle telemet
 My role was to design and build an operator cockpit using Flutter and connect it to the vehicle ROS1 Noetic bus over a low-latency bridge.
 
 <Figure
-  src="/images/brin-dashboard-flow.svg"
-  alt="ROS1 telemetry and goal dispatch architecture for BRIN EV platform"
-  caption="Bi-directional telemetry pipeline connecting vehicle bus to Flutter operator cockpit"
+  src="/images/brin-bev-cockpit.svg"
+  alt="Dual-path ROS1 sensor frequency isolation and closed-loop waypoint dispatch sequence diagram"
+  caption="Dual-path bandwidth isolation (full-rate onboard autonomy vs 10Hz filtered Wi-Fi telemetry) and closed-loop /move_base_simple/goal dispatch"
 />
 
 ## How It Works

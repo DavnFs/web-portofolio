@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" width="960" height="540" fill="none">
+  <defs>
+    <pattern id="g-cu" width="28" height="28" patternUnits="userSpaceOnUse">
+      <path d="M 28 0 L 0 0 0 28" fill="none" stroke="#E2E8F0" stroke-width="0.7"/>
+    </pattern>
+    <marker id="a-cu" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#2563EB"/>
+    </marker>
+  </defs>
+  <rect width="960" height="540" fill="#F8FAFC"/>
+  <rect width="960" height="540" fill="url(#g-cu)"/>
+  <rect x="14" y="14" width="932" height="512" rx="10" fill="none" stroke="#E2E8F0"/>
+
+  <text x="40" y="54" font-family="ui-monospace, monospace" font-size="12" font-weight="700" fill="#2563EB" letter-spacing="1.2">ARCHIVE // LLM AUTOMATION · 2024</text>
+  <text x="40" y="84" font-family="system-ui, sans-serif" font-size="24" font-weight="700" fill="#021024">Catat Uang Serverless Telegram NLP Expense Bot</text>
+
+  <!-- Node 1: Telegram Chat -->
+  <g transform="translate(40, 128)">
+    <rect width="248" height="330" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.25"/>
+    <rect width="248" height="34" rx="10" fill="#EFF6FF"/>
+    <rect y="24" width="248" height="10" fill="#EFF6FF"/>
+    <text x="16" y="22" font-family="ui-monospace, monospace" font-size="11" font-weight="700" fill="#2563EB">01 // TELEGRAM INPUT</text>
+    <text x="16" y="62" font-family="system-ui, sans-serif" font-size="17" font-weight="700" fill="#021024">Natural Language</text>
+    <rect x="16" y="88" width="216" height="84" rx="8" fill="#EFF6FF" stroke="#93C5FD"/>
+    <text x="26" y="112" font-family="system-ui, sans-serif" font-size="12.5" font-weight="600" fill="#021024">"makan siang 28rb +</text>
+    <text x="26" y="132" font-family="system-ui, sans-serif" font-size="12.5" font-weight="600" fill="#021024">parkir 3rb cash"</text>
+    <text x="26" y="156" font-family="ui-monospace, monospace" font-size="10" fill="#2563EB">Telegram Bot Webhook</text>
+    <rect x="16" y="190" width="216" height="116" rx="6" fill="#F8FAFC" stroke="#E2E8F0"/>
+    <text x="26" y="214" font-family="ui-monospace, monospace" font-size="11" font-weight="700" fill="#021024">Chat Commands</text>
+    <text x="26" y="238" font-family="ui-monospace, monospace" font-size="10.5" fill="#475569">• /summary (weekly)</text>
+    <text x="26" y="258" font-family="ui-monospace, monospace" font-size="10.5" fill="#475569">• /today (breakdown)</text>
+    <text x="26" y="278" font-family="ui-monospace, monospace" font-size="10.5" fill="#475569">• Freeform ID slang</text>
+  </g>
+
+  <path d="M 290 293 L 344 293" stroke="#2563EB" stroke-width="2.4" marker-end="url(#a-cu)"/>
+
+  <!-- Node 2: Serverless NLP Extractor -->
+  <g transform="translate(352, 128)">
+    <rect width="256" height="330" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.25"/>
+    <rect width="256" height="34" rx="10" fill="#EFF6FF"/>
+    <rect y="24" width="256" height="10" fill="#EFF6FF"/>
+    <text x="16" y="22" font-family="ui-monospace, monospace" font-size="11" font-weight="700" fill="#2563EB">02 // PYTHON NLP ENGINE</text>
+    <text x="16" y="62" font-family="system-ui, sans-serif" font-size="17" font-weight="700" fill="#021024">Structured Extraction</text>
+    <rect x="16" y="88" width="224" height="122" rx="6" fill="#0F172A"/>
+    <text x="26" y="110" font-family="ui-monospace, monospace" font-size="10" font-weight="700" fill="#38BDF8">PARSED LINE ITEMS</text>
+    <text x="26" y="132" font-family="ui-monospace, monospace" font-size="10" fill="#E2E8F0">[ { item: "Makan Siang",</text>
+    <text x="26" y="150" font-family="ui-monospace, monospace" font-size="10" fill="#34D399">    amount: 28000, cat: "F&amp;B" },</text>
+    <text x="26" y="170" font-family="ui-monospace, monospace" font-size="10" fill="#E2E8F0">  { item: "Parkir",</text>
+    <text x="26" y="188" font-family="ui-monospace, monospace" font-size="10" fill="#34D399">    amount: 3000, cat: "Ops" } ]</text>
+    <rect x="16" y="226" width="224" height="80" rx="6" fill="#F8FAFC" stroke="#E2E8F0"/>
+    <text x="26" y="250" font-family="ui-monospace, monospace" font-size="11" font-weight="700" fill="#021024">Serverless Webhook</text>
+    <text x="26" y="272" font-family="system-ui, sans-serif" font-size="12" fill="#475569">Stateless cold-start safe</text>
+    <text x="26" y="292" font-family="system-ui, sans-serif" font-size="12" fill="#475569">Indonesian currency parser</text>
+  </g>
+
+  <path d="M 610 293 L 664 293" stroke="#2563EB" stroke-width="2.4" marker-end="url(#a-cu)"/>
+
+  <!-- Node 3: Google Sheets & Reply -->
+  <g transform="translate(672, 128)">
+    <rect width="248" height="330" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.25"/>
+    <rect width="248" height="34" rx="10" fill="#ECFDF5"/>
+    <rect y="24" width="248" height="10" fill="#ECFDF5"/>
+    <text x="16" y="22" font-family="ui-monospace, monospace" font-size="11" font-weight="700" fill="#047857">03 // CLOUD LEDGER</text>
+    <text x="16" y="62" font-family="system-ui, sans-serif" font-size="17" font-weight="700" fill="#021024">Google Sheets Sync</text>
+    <rect x="16" y="88" width="216" height="106" rx="6" fill="#F8FAFC" stroke="#CBD5E1"/>
+    <text x="26" y="110" font-family="ui-monospace, monospace" font-size="10" font-weight="700" fill="#047857">DATE   | ITEM    | IDR</text>
+    <line x1="26" y1="120" x2="220" y2="120" stroke="#CBD5E1"/>
+    <text x="26" y="140" font-family="ui-monospace, monospace" font-size="10" fill="#021024">11-22  | Lunch   | 28,000</text>
+    <text x="26" y="160" font-family="ui-monospace, monospace" font-size="10" fill="#021024">11-22  | Parking |  3,000</text>
+    <text x="26" y="180" font-family="ui-monospace, monospace" font-size="10" fill="#2563EB">TOTAL  | Today   | 31,000</text>
+    <rect x="16" y="210" width="216" height="96" rx="6" fill="#ECFDF5" stroke="#6EE7B7"/>
+    <text x="26" y="236" font-family="ui-monospace, monospace" font-size="11" font-weight="700" fill="#047857">Automated Digest</text>
+    <text x="26" y="258" font-family="system-ui, sans-serif" font-size="12" fill="#065F46">Instant receipt reply +</text>
+    <text x="26" y="278" font-family="system-ui, sans-serif" font-size="12" fill="#065F46">scheduled spend summary</text>
+  </g>
+
+  <text x="40" y="502" font-family="ui-monospace, monospace" font-size="11" fill="#64748B">PYTHON · TELEGRAM BOT API · NLP EXTRACTION · GOOGLE SHEETS API</text>
+</svg>

@@ -181,13 +181,13 @@ export function SelectedWork() {
 
                 {/* Inline Mobile/Touch Poster */}
                 <div className="block lg:hidden pt-4">
-                  <div className="relative aspect-[16/9] w-full bg-surface border border-line rounded-media overflow-hidden">
+                  <div className="relative aspect-[16/9] w-full bg-[#F8FAFC] border border-line rounded-media overflow-hidden">
                     <Image
                       src={project.heroMedia.src}
                       alt={project.heroMedia.alt}
                       fill
                       sizes="(max-width: 768px) 100vw, 50vw"
-                      className="object-cover"
+                      className="object-contain"
                     />
                   </div>
                 </div>
@@ -232,17 +232,16 @@ export function SelectedWork() {
           style={{ willChange: "transform, opacity" }}
         >
           {activeProject && (
-            <div className="relative w-full h-full">
+            <div className="relative w-full h-full bg-[#F8FAFC]">
               <Image
                 src={activeProject.heroMedia.src}
                 alt=""
                 fill
                 sizes="320px"
-                className="object-cover"
+                className="object-contain"
               />
-              <div className="absolute inset-0 bg-ink/10 mix-blend-overlay" />
-              <div className="absolute bottom-2 left-2 right-2 px-2.5 py-1 bg-bg/90 backdrop-blur-sm border border-line text-[10px] font-mono text-ink uppercase tracking-wider truncate">
-                Preview // {activeProject.title}
+              <div className="absolute bottom-2 left-2 right-2 px-2.5 py-1 bg-white/95 border border-line text-[10px] font-mono text-ink uppercase tracking-wider truncate">
+                Diagram // {activeProject.title}
               </div>
             </div>
           )}

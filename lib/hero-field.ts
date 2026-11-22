@@ -1,28 +1,3 @@
-export interface HeroCloud {
-  id: number
-  /** Normalized rest anchor in [0, 1] */
-  baseX: number
-  baseY: number
-  /** Randomized harmonic angular frequencies (rad/s) */
-  freqX1: number
-  freqX2: number
-  freqY1: number
-  freqY2: number
-  /** Randomized initial phases (rad) */
-  phaseX: number
-  phaseY: number
-  /** Normalized drift amplitude */
-  ampX: number
-  ampY: number
-  /** Radius relative to max(width, height) */
-  radiusRatio: number
-  /** How strongly this cloud responds to the cursor (0..1) */
-  cursorAffinity: number
-  /** Monochrome cool-silver inner & mid color stops */
-  innerRgba: string
-  midRgba: string
-}
-
 export interface CursorFieldState {
   /** Raw pointer target in normalized [0, 1] coordinates */
   targetX: number
@@ -32,66 +7,38 @@ export interface CursorFieldState {
   y: number
   /** Presence fade in [0, 1] */
   strength: number
-  /** Smoothed movement speed for subtle radius bloom */
+  /** Smoothed movement speed for subtle swirl bloom */
   speed: number
   active: boolean
 }
 
-export interface ResolvedCloudPoint {
-  x: number
-  y: number
-  radiusScale: number
+export interface MeshSessionSeed {
+  /** Randomized starting shader frame (ms) for primary MeshGradient */
+  primaryFrame: number
+  /** Randomized starting shader frame (ms) for secondary MeshGradient */
+  secondaryFrame: number
+  /** Randomized base rotation in degrees */
+  baseRotation: number
+  /** Randomized organic sway frequencies (rad/s) */
+  freqA: number
+  freqB: number
+  /** Randomized organic sway phases (rad) */
+  phaseA: number
+  phaseB: number
 }
 
-const MONOCHROME_SILVER_PALETTE: ReadonlyArray<{
-  baseX: number
-  baseY: number
-  radiusRatio: number
-  cursorAffinity: number
-  innerRgba: string
-  midRgba: string
-}> = [
-  {
-    baseX: 0.22,
-    baseY: 0.28,
-    radiusRatio: 0.44,
-    cursorAffinity: 0.22,
-    innerRgba: "rgba(148, 163, 184, 0.24)",
-    midRgba: "rgba(203, 213, 225, 0.12)",
-  },
-  {
-    baseX: 0.78,
-    baseY: 0.24,
-    radiusRatio: 0.48,
-    cursorAffinity: 0.18,
-    innerRgba: "rgba(180, 192, 208, 0.26)",
-    midRgba: "rgba(226, 232, 240, 0.14)",
-  },
-  {
-    baseX: 0.52,
-    baseY: 0.62,
-    radiusRatio: 0.52,
-    cursorAffinity: 0.26,
-    innerRgba: "rgba(203, 213, 225, 0.30)",
-    midRgba: "rgba(241, 245, 249, 0.16)",
-  },
-  {
-    baseX: 0.18,
-    baseY: 0.78,
-    radiusRatio: 0.4,
-    cursorAffinity: 0.16,
-    innerRgba: "rgba(148, 163, 184, 0.20)",
-    midRgba: "rgba(226, 232, 240, 0.10)",
-  },
-  {
-    baseX: 0.84,
-    baseY: 0.74,
-    radiusRatio: 0.42,
-    cursorAffinity: 0.2,
-    innerRgba: "rgba(165, 179, 198, 0.22)",
-    midRgba: "rgba(226, 232, 240, 0.11)",
-  },
-]
+export interface MeshLayerUniforms {
+  u_offsetX: number
+  u_offsetY: number
+  u_rotation: number
+  u_swirl: number
+  u_distortion: number
+}
+
+export interface DualMeshUniforms {
+  primary: MeshLayerUniforms
+  secondary: MeshLayerUniforms
+}
 
 export const INITIAL_CURSOR_FIELD: CursorFieldState = {
   targetX: 0.5,
@@ -103,32 +50,37 @@ export const INITIAL_CURSOR_FIELD: CursorFieldState = {
   active: false,
 }
 
-/**
- * Generates randomized monochrome cool-silver atmospheric clouds.
- * Accepts an optional RNG for deterministic unit tests.
- */
-export function createHeroClouds(
-  randomFn: () => number = Math.random
-): HeroCloud[] {
-  const rand = (min: number, max: number) => min + randomFn() * (max - min)
+export const DEFAULT_MESH_SEED: MeshSessionSeed = {
+  primaryFrame: 12000,
+  secondaryFrame: 34000,
+  baseRotation: 18,
+  freqA: 0.14,
+  freqB: 0.09,
+  phaseA: 0.8,
+  phaseB: 2.1,
+}
 
-  return MONOCHROME_SILVER_PALETTE.map((preset, idx) => ({
-    id: idx,
-    baseX: Math.min(0.92, Math.max(0.08, preset.baseX + rand(-0.07, 0.07))),
-    baseY: Math.min(0.92, Math.max(0.08, preset.baseY + rand(-0.07, 0.07))),
-    freqX1: rand(0.11, 0.24),
-    freqX2: rand(0.05, 0.13),
-    freqY1: rand(0.1, 0.22),
-    freqY2: rand(0.06, 0.14),
-    phaseX: rand(0, Math.PI * 2),
-    phaseY: rand(0, Math.PI * 2),
-    ampX: rand(0.09, 0.16),
-    ampY: rand(0.08, 0.15),
-    radiusRatio: preset.radiusRatio * rand(0.92, 1.08),
-    cursorAffinity: preset.cursorAffinity,
-    innerRgba: preset.innerRgba,
-    midRgba: preset.midRgba,
-  }))
+function clamp(value: number, min: number, max: number): number {
+  return Math.min(max, Math.max(min, value))
+}
+
+/**
+ * Generates randomized per-session starting frames and organic drift phases
+ * so the WebGL MeshGradient opens in a distinct composition on every visit.
+ */
+export function createMeshSessionSeed(
+  randomFn: () => number = Math.random
+): MeshSessionSeed {
+  const rand = (min: number, max: number) => min + randomFn() * (max - min)
+  return {
+    primaryFrame: Math.round(rand(4000, 90000)),
+    secondaryFrame: Math.round(rand(8000, 110000)),
+    baseRotation: rand(0, 360),
+    freqA: rand(0.09, 0.18),
+    freqB: rand(0.06, 0.13),
+    phaseA: rand(0, Math.PI * 2),
+    phaseB: rand(0, Math.PI * 2),
+  }
 }
 
 /**
@@ -139,8 +91,8 @@ export function stepCursorSpring(
   dtSeconds: number
 ): CursorFieldState {
   const dt = Math.min(Math.max(dtSeconds, 0), 0.1)
-  const posAlpha = 1 - Math.exp(-6.5 * dt)
-  const strengthAlpha = 1 - Math.exp(-(state.active ? 5.5 : 2.6) * dt)
+  const posAlpha = 1 - Math.exp(-5.8 * dt)
+  const strengthAlpha = 1 - Math.exp(-(state.active ? 5.0 : 2.2) * dt)
 
   const nextX = state.x + (state.targetX - state.x) * posAlpha
   const nextY = state.y + (state.targetY - state.y) * posAlpha
@@ -148,7 +100,7 @@ export function stepCursorSpring(
   const dx = nextX - state.x
   const dy = nextY - state.y
   const instantSpeed = dt > 0 ? Math.min(1.5, Math.hypot(dx, dy) / dt) : 0
-  const speedAlpha = 1 - Math.exp(-8 * dt)
+  const speedAlpha = 1 - Math.exp(-7.5 * dt)
   const nextSpeed = state.speed + (instantSpeed - state.speed) * speedAlpha
 
   const targetStrength = state.active ? 1 : 0
@@ -165,39 +117,88 @@ export function stepCursorSpring(
 }
 
 /**
- * Computes a cloud's normalized position by blending dual-harmonic organic drift
- * with smooth gravitational cursor attraction when the pointer is present.
+ * Maps randomized organic harmonic drift + smooth spring-damped cursor tracking
+ * into bounded WebGL MeshGradient uniforms for dual-layer parallax flow.
  */
-export function computeCloudPosition(
-  cloud: HeroCloud,
+export function computeMeshUniforms(
+  seed: MeshSessionSeed,
   timeSeconds: number,
   cursor: CursorFieldState
-): ResolvedCloudPoint {
-  // Multi-harmonic non-repeating organic drift
+): DualMeshUniforms {
+  // Subtle randomized multi-harmonic drift so the gradient breathes organically
   const driftX =
-    Math.sin(timeSeconds * cloud.freqX1 + cloud.phaseX) * cloud.ampX * 0.68 +
-    Math.cos(timeSeconds * cloud.freqX2 - cloud.phaseY * 0.7) * cloud.ampX * 0.32
+    Math.sin(timeSeconds * seed.freqA + seed.phaseA) * 0.09 +
+    Math.cos(timeSeconds * seed.freqB - seed.phaseB) * 0.05
   const driftY =
-    Math.cos(timeSeconds * cloud.freqY1 + cloud.phaseY) * cloud.ampY * 0.68 +
-    Math.sin(timeSeconds * cloud.freqY2 + cloud.phaseX * 0.5) * cloud.ampY * 0.32
+    Math.cos(timeSeconds * seed.freqA * 0.85 + seed.phaseB) * 0.08 +
+    Math.sin(timeSeconds * seed.freqB * 1.15 + seed.phaseA) * 0.04
 
-  let x = cloud.baseX + driftX
-  let y = cloud.baseY + driftY
-  let radiusScale = 1 + Math.sin(timeSeconds * cloud.freqX2 + cloud.phaseX) * 0.06
+  // Centered cursor vector in [-0.5, 0.5], scaled by presence strength
+  const cx = (cursor.x - 0.5) * cursor.strength
+  const cy = (cursor.y - 0.5) * cursor.strength
+  const velocityBoost = Math.min(0.22, cursor.speed * 0.16) * cursor.strength
 
-  // Smooth magnetic pull toward active cursor
-  if (cursor.strength > 0.001) {
-    const dx = cursor.x - x
-    const dy = cursor.y - y
-    const dist = Math.hypot(dx, dy)
-    // Gentle distance falloff so nearby clouds respond more noticeably
-    const proximity = Math.exp(-dist * 1.45)
-    const pull = cursor.strength * cloud.cursorAffinity * (0.45 + 0.55 * proximity)
+  const primaryOffsetX = clamp(driftX + cx * 0.42, -0.42, 0.42)
+  const primaryOffsetY = clamp(driftY - cy * 0.36, -0.42, 0.42)
+  const primaryRotation =
+    (seed.baseRotation +
+      Math.sin(timeSeconds * seed.freqB + seed.phaseA) * 14 +
+      cx * 26 -
+      cy * 16 +
+      360) %
+    360
+  const primarySwirl = clamp(
+    0.32 +
+      Math.sin(timeSeconds * seed.freqA + seed.phaseB) * 0.06 +
+      cursor.strength * 0.14 +
+      velocityBoost,
+    0.18,
+    0.72
+  )
+  const primaryDistortion = clamp(
+    0.84 + Math.cos(timeSeconds * seed.freqB + seed.phaseA) * 0.06 + velocityBoost * 0.4,
+    0.72,
+    1.0
+  )
 
-    x += dx * pull
-    y += dy * pull
-    radiusScale += proximity * cursor.strength * 0.08
+  // Secondary layer counter-drifts for atmospheric parallax depth
+  const secondaryOffsetX = clamp(-driftX * 0.8 - cx * 0.28, -0.42, 0.42)
+  const secondaryOffsetY = clamp(-driftY * 0.8 + cy * 0.24, -0.42, 0.42)
+  const secondaryRotation =
+    (seed.baseRotation +
+      42 -
+      Math.cos(timeSeconds * seed.freqA + seed.phaseB) * 16 -
+      cx * 20 +
+      360) %
+    360
+  const secondarySwirl = clamp(
+    0.44 +
+      Math.cos(timeSeconds * seed.freqB + seed.phaseA) * 0.08 +
+      cursor.strength * 0.12 +
+      velocityBoost * 0.8,
+    0.22,
+    0.78
+  )
+  const secondaryDistortion = clamp(
+    0.9 - Math.sin(timeSeconds * seed.freqA + seed.phaseB) * 0.05 + velocityBoost * 0.3,
+    0.74,
+    1.0
+  )
+
+  return {
+    primary: {
+      u_offsetX: primaryOffsetX,
+      u_offsetY: primaryOffsetY,
+      u_rotation: primaryRotation,
+      u_swirl: primarySwirl,
+      u_distortion: primaryDistortion,
+    },
+    secondary: {
+      u_offsetX: secondaryOffsetX,
+      u_offsetY: secondaryOffsetY,
+      u_rotation: secondaryRotation,
+      u_swirl: secondarySwirl,
+      u_distortion: secondaryDistortion,
+    },
   }
-
-  return { x, y, radiusScale }
 }

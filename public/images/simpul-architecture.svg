@@ -1,101 +1,174 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="100%" height="100%" fill="none">
-  <rect width="1200" height="675" fill="currentColor" class="text-surface" rx="8"/>
-  <rect x="0.5" y="0.5" width="1199" height="674" stroke="currentColor" class="text-line" rx="7.5"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675" fill="none">
   <defs>
-    <pattern id="grid-simpul" width="40" height="40" patternUnits="userSpaceOnUse">
-      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" class="text-line" stroke-width="0.5" opacity="0.4"/>
+    <pattern id="grid-s" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" fill="none" stroke="#E2E8F0" stroke-width="0.75"/>
     </pattern>
-    <marker id="arrow-simpul" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M 0 1 L 8 5 L 0 9 z" fill="#4A90E2"/>
+    <marker id="arr-s" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#2563EB"/>
     </marker>
+    <marker id="arr-sg" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#059669"/>
+    </marker>
+    <filter id="sh-s" x="-4%" y="-4%" width="108%" height="112%">
+      <feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="#021024" flood-opacity="0.05"/>
+    </filter>
   </defs>
-  <rect width="1200" height="675" fill="url(#grid-simpul)" opacity="0.6"/>
 
-  <text x="60" y="70" font-family="ui-monospace, monospace" font-size="12" fill="#4A90E2" letter-spacing="0.1em" font-weight="600">PLATFORM ARCHITECTURE // SIMPUL 2025</text>
-  <text x="60" y="105" font-family="system-ui, sans-serif" font-size="24" fill="currentColor" class="text-ink" font-weight="600">Multi-Sided Marketplace with Contextual LLM Assistant</text>
-  <text x="60" y="130" font-family="system-ui, sans-serif" font-size="14" fill="currentColor" class="text-ink-muted">Express.js API Gateway, Supabase PostgreSQL, Midtrans Escrow, and Token-Optimized NLP</text>
+  <rect width="1200" height="675" fill="#F8FAFC"/>
+  <rect width="1200" height="675" fill="url(#grid-s)"/>
+  <rect x="16" y="16" width="1168" height="643" rx="12" fill="none" stroke="#E2E8F0"/>
 
-  <!-- Box 1: Clients -->
-  <g transform="translate(60, 200)">
-    <rect width="210" height="340" rx="4" fill="currentColor" class="text-bg" stroke="currentColor" class="text-line" stroke-width="1.5"/>
-    <text x="20" y="35" font-family="ui-monospace, monospace" font-size="11" fill="#4A90E2" font-weight="600">01 // CLIENT APPS</text>
-    <text x="20" y="70" font-family="system-ui, sans-serif" font-size="16" fill="currentColor" class="text-ink" font-weight="600">Flutter Applications</text>
-    <text x="20" y="95" font-family="system-ui, sans-serif" font-size="13" fill="currentColor" class="text-ink-muted">Multi-role Interfaces</text>
-    <line x1="20" y1="120" x2="190" y2="120" stroke="currentColor" class="text-line" stroke-width="1"/>
+  <!-- Header -->
+  <text x="48" y="56" font-family="ui-monospace, monospace" font-size="12" font-weight="600" fill="#2563EB" letter-spacing="1.4">03 // PLATFORM ARCHITECTURE · SIMPUL MARKETPLACE 2025</text>
+  <text x="48" y="88" font-family="system-ui, -apple-system, sans-serif" font-size="26" font-weight="700" fill="#021024">Multi-Sided Marketplace, Escrow Ledger &amp; Context-Constrained RAG</text>
+  <text x="48" y="112" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#475569">Express.js + Prisma ORM + Supabase PostgreSQL (pgvector) + Midtrans SHA-512 Idempotent Webhooks</text>
 
-    <rect x="15" y="140" width="180" height="50" rx="3" fill="currentColor" class="text-surface" stroke="currentColor" class="text-line"/>
-    <text x="25" y="162" font-family="system-ui, sans-serif" font-size="12" fill="currentColor" class="text-ink" font-weight="600">Consumer App</text>
-    <text x="25" y="178" font-family="ui-monospace, monospace" font-size="10" fill="currentColor" class="text-ink-muted">Browse, book &amp; chat</text>
+  <!-- Spec Badge -->
+  <rect x="936" y="42" width="216" height="58" rx="8" fill="#FFFFFF" stroke="#CBD5E1"/>
+  <text x="952" y="65" font-family="ui-monospace, monospace" font-size="11" font-weight="600" fill="#2563EB">BENCHMARK TARGETS</text>
+  <text x="952" y="86" font-family="ui-monospace, monospace" font-size="12.5" font-weight="700" fill="#021024">&lt; 180ms P95 · -60% Tokens</text>
 
-    <rect x="15" y="200" width="180" height="50" rx="3" fill="currentColor" class="text-surface" stroke="currentColor" class="text-line"/>
-    <text x="25" y="222" font-family="system-ui, sans-serif" font-size="12" fill="currentColor" class="text-ink" font-weight="600">Vendor Portal (KYB)</text>
-    <text x="25" y="238" font-family="ui-monospace, monospace" font-size="10" fill="currentColor" class="text-ink-muted">Verification &amp; catalog</text>
+  <!-- 01: CLIENT SURFACES -->
+  <g transform="translate(48, 148)" filter="url(#sh-s)">
+    <rect width="212" height="444" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.25"/>
+    <rect width="212" height="36" rx="10" fill="#EFF6FF"/>
+    <rect y="26" width="212" height="10" fill="#EFF6FF"/>
+    <text x="16" y="23" font-family="ui-monospace, monospace" font-size="11" font-weight="700" fill="#2563EB">01 // MULTI-ROLE APPS</text>
 
-    <rect x="15" y="260" width="180" height="50" rx="3" fill="currentColor" class="text-surface" stroke="currentColor" class="text-line"/>
-    <text x="25" y="282" font-family="system-ui, sans-serif" font-size="12" fill="currentColor" class="text-ink" font-weight="600">Admin Console</text>
-    <text x="25" y="298" font-family="ui-monospace, monospace" font-size="10" fill="currentColor" class="text-ink-muted">Dispute &amp; settlement</text>
+    <text x="16" y="62" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#021024">Flutter Clients</text>
+    <text x="16" y="82" font-family="system-ui, sans-serif" font-size="12" fill="#475569">3 Role-Scoped Surfaces</text>
+
+    <rect x="16" y="102" width="180" height="86" rx="6" fill="#F8FAFC" stroke="#CBD5E1"/>
+    <text x="26" y="124" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#021024">Consumer App</text>
+    <text x="26" y="143" font-family="ui-monospace, monospace" font-size="9.5" fill="#2563EB">Discovery &amp; Booking</text>
+    <text x="26" y="160" font-family="system-ui, sans-serif" font-size="11" fill="#475569">• Milestone escrow pay</text>
+    <text x="26" y="176" font-family="system-ui, sans-serif" font-size="11" fill="#475569">• Budget LLM advisor</text>
+
+    <rect x="16" y="204" width="180" height="86" rx="6" fill="#F8FAFC" stroke="#CBD5E1"/>
+    <text x="26" y="226" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#021024">Vendor KYB Portal</text>
+    <text x="26" y="245" font-family="ui-monospace, monospace" font-size="9.5" fill="#2563EB">Verification Workflow</text>
+    <text x="26" y="262" font-family="system-ui, sans-serif" font-size="11" fill="#475569">• Entity &amp; bank checks</text>
+    <text x="26" y="278" font-family="system-ui, sans-serif" font-size="11" fill="#475569">• Calendar &amp; packages</text>
+
+    <rect x="16" y="306" width="180" height="86" rx="6" fill="#F8FAFC" stroke="#CBD5E1"/>
+    <text x="26" y="328" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#021024">Admin Console</text>
+    <text x="26" y="347" font-family="ui-monospace, monospace" font-size="9.5" fill="#2563EB">Governance &amp; Audit</text>
+    <text x="26" y="364" font-family="system-ui, sans-serif" font-size="11" fill="#475569">• KYB approval queue</text>
+    <text x="26" y="380" font-family="system-ui, sans-serif" font-size="11" fill="#475569">• Dispute resolution</text>
+
+    <text x="16" y="424" font-family="ui-monospace, monospace" font-size="10" fill="#64748B">HTTPS · Bearer JWT</text>
   </g>
 
-  <path d="M 270 370 L 330 370" stroke="#4A90E2" stroke-width="2" marker-end="url(#arrow-simpul)"/>
+  <path d="M 262 368 L 296 368" stroke="#2563EB" stroke-width="2.2" marker-end="url(#arr-s)"/>
 
-  <!-- Box 2: API Gateway & Services -->
-  <g transform="translate(340, 200)">
-    <rect width="250" height="340" rx="4" fill="currentColor" class="text-bg" stroke="currentColor" class="text-line" stroke-width="1.5"/>
-    <text x="20" y="35" font-family="ui-monospace, monospace" font-size="11" fill="#4A90E2" font-weight="600">02 // BACKEND CORE</text>
-    <text x="20" y="70" font-family="system-ui, sans-serif" font-size="16" fill="currentColor" class="text-ink" font-weight="600">Express.js + Prisma</text>
-    <text x="20" y="95" font-family="system-ui, sans-serif" font-size="13" fill="currentColor" class="text-ink-muted">REST API &amp; Auth Guard</text>
-    <line x1="20" y1="120" x2="230" y2="120" stroke="currentColor" class="text-line" stroke-width="1"/>
+  <!-- 02: EXPRESS API + MIDTRANS ESCROW -->
+  <g transform="translate(302, 148)" filter="url(#sh-s)">
+    <rect width="290" height="444" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.25"/>
+    <rect width="290" height="36" rx="10" fill="#EFF6FF"/>
+    <rect y="26" width="290" height="10" fill="#EFF6FF"/>
+    <text x="16" y="23" font-family="ui-monospace, monospace" font-size="11" font-weight="700" fill="#2563EB">02 // BACKEND CORE &amp; ESCROW</text>
 
-    <rect x="15" y="140" width="220" height="75" rx="3" fill="currentColor" class="text-surface" stroke="currentColor" class="text-line"/>
-    <text x="25" y="165" font-family="system-ui, sans-serif" font-size="12" fill="currentColor" class="text-ink" font-weight="600">Role-Based Access Control</text>
-    <text x="25" y="185" font-family="ui-monospace, monospace" font-size="10" fill="currentColor" class="text-ink-muted">JWT verification &amp; vendor state</text>
-    <text x="25" y="200" font-family="ui-monospace, monospace" font-size="10" fill="currentColor" class="text-ink-muted">Order lifecycle state machine</text>
+    <text x="16" y="62" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#021024">Express.js API Gateway</text>
+    <text x="16" y="82" font-family="system-ui, sans-serif" font-size="12" fill="#475569">RBAC, Booking State Machine &amp; Webhooks</text>
 
-    <rect x="15" y="225" width="220" height="85" rx="3" fill="currentColor" class="text-surface" stroke="currentColor" class="text-line"/>
-    <text x="25" y="250" font-family="system-ui, sans-serif" font-size="12" fill="currentColor" class="text-ink" font-weight="600">Escrow &amp; Midtrans Webhook</text>
-    <text x="25" y="270" font-family="ui-monospace, monospace" font-size="10" fill="currentColor" class="text-ink-muted">Idempotent payment handler</text>
-    <text x="25" y="285" font-family="ui-monospace, monospace" font-size="10" fill="currentColor" class="text-ink-muted">Automated payment capture</text>
+    <rect x="16" y="102" width="258" height="92" rx="6" fill="#F8FAFC" stroke="#E2E8F0"/>
+    <text x="26" y="122" font-family="ui-monospace, monospace" font-size="10.5" font-weight="700" fill="#021024">ORDER LIFECYCLE ENGINE</text>
+    <rect x="26" y="134" width="66" height="24" rx="4" fill="#FFFFFF" stroke="#94A3B8"/>
+    <text x="34" y="150" font-family="ui-monospace, monospace" font-size="9" font-weight="700" fill="#475569">PENDING</text>
+    <text x="97" y="150" font-family="ui-monospace, monospace" font-size="10" fill="#2563EB">→</text>
+    <rect x="112" y="134" width="68" height="24" rx="4" fill="#EFF6FF" stroke="#2563EB"/>
+    <text x="122" y="150" font-family="ui-monospace, monospace" font-size="9" font-weight="700" fill="#2563EB">ESCROW</text>
+    <text x="185" y="150" font-family="ui-monospace, monospace" font-size="10" fill="#059669">→</text>
+    <rect x="200" y="134" width="64" height="24" rx="4" fill="#ECFDF5" stroke="#059669"/>
+    <text x="206" y="150" font-family="ui-monospace, monospace" font-size="9" font-weight="700" fill="#047857">SETTLED</text>
+    <text x="26" y="180" font-family="ui-monospace, monospace" font-size="9.5" fill="#64748B">Zero double-booking via DB locks</text>
+
+    <!-- Midtrans SHA-512 + Redis Idempotency -->
+    <rect x="16" y="210" width="258" height="148" rx="6" fill="#0F172A"/>
+    <text x="28" y="232" font-family="ui-monospace, monospace" font-size="10.5" font-weight="700" fill="#38BDF8">MIDTRANS WEBHOOK GUARD</text>
+    <text x="28" y="254" font-family="ui-monospace, monospace" font-size="9.5" fill="#E2E8F0">1. Redis Lock: SET lock:order NX EX 10</text>
+    <text x="28" y="274" font-family="ui-monospace, monospace" font-size="9.5" fill="#E2E8F0">2. SHA-512 Signature Verification:</text>
+    <rect x="28" y="284" width="234" height="28" rx="4" fill="#1E293B"/>
+    <text x="36" y="302" font-family="ui-monospace, monospace" font-size="9" fill="#93C5FD">hash(order_id+code+amount+Key)</text>
+    <text x="28" y="330" font-family="ui-monospace, monospace" font-size="9.5" fill="#34D399">3. Atomic Prisma $transaction</text>
+    <text x="28" y="348" font-family="ui-monospace, monospace" font-size="9.5" fill="#94A3B8">→ 100% Idempotent Payouts</text>
+
+    <rect x="16" y="372" width="258" height="54" rx="6" fill="#ECFDF5" stroke="#6EE7B7"/>
+    <text x="26" y="394" font-family="ui-monospace, monospace" font-size="10" font-weight="700" fill="#047857">MILESTONE ESCROW SPLIT</text>
+    <text x="26" y="412" font-family="ui-monospace, monospace" font-size="9.5" fill="#065F46">DP → Progress Check → Event Done</text>
   </g>
 
-  <path d="M 590 370 L 650 370" stroke="#4A90E2" stroke-width="2" marker-end="url(#arrow-simpul)"/>
+  <path d="M 594 368 L 628 368" stroke="#2563EB" stroke-width="2.2" marker-end="url(#arr-s)"/>
 
-  <!-- Box 3: LLM Optimization Layer -->
-  <g transform="translate(660, 200)">
-    <rect width="250" height="340" rx="4" fill="currentColor" class="text-bg" stroke="currentColor" class="text-line" stroke-width="1.5"/>
-    <text x="20" y="35" font-family="ui-monospace, monospace" font-size="11" fill="#4A90E2" font-weight="600">03 // AI ASSISTANT</text>
-    <text x="20" y="70" font-family="system-ui, sans-serif" font-size="16" fill="currentColor" class="text-ink" font-weight="600">Token-Optimized NLP</text>
-    <text x="20" y="95" font-family="system-ui, sans-serif" font-size="13" fill="currentColor" class="text-ink-muted">Context Compression</text>
-    <line x1="20" y1="120" x2="230" y2="120" stroke="currentColor" class="text-line" stroke-width="1"/>
+  <!-- 03: CONTEXT-CONSTRAINED LLM RAG -->
+  <g transform="translate(634, 148)" filter="url(#sh-s)">
+    <rect width="268" height="444" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.25"/>
+    <rect width="268" height="36" rx="10" fill="#EFF6FF"/>
+    <rect y="26" width="268" height="10" fill="#EFF6FF"/>
+    <text x="16" y="23" font-family="ui-monospace, monospace" font-size="11" font-weight="700" fill="#2563EB">03 // TOKEN-OPTIMIZED RAG</text>
 
-    <rect x="15" y="140" width="220" height="75" rx="3" fill="currentColor" class="text-surface" stroke="currentColor" class="text-line"/>
-    <text x="25" y="165" font-family="system-ui, sans-serif" font-size="12" fill="currentColor" class="text-ink" font-weight="600">Intent &amp; Entity Extraction</text>
-    <text x="25" y="185" font-family="ui-monospace, monospace" font-size="10" fill="currentColor" class="text-ink-muted">Budget, dates, guest counts</text>
-    <text x="25" y="200" font-family="ui-monospace, monospace" font-size="10" fill="currentColor" class="text-ink-muted">Prunes conversational filler</text>
+    <text x="16" y="62" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#021024">Contextual LLM Layer</text>
+    <text x="16" y="82" font-family="system-ui, sans-serif" font-size="12" fill="#475569">Pre-Filtered Vendor Matching</text>
 
-    <rect x="15" y="225" width="220" height="85" rx="3" fill="currentColor" class="text-surface" stroke="currentColor" class="text-line"/>
-    <text x="25" y="250" font-family="system-ui, sans-serif" font-size="12" fill="currentColor" class="text-ink" font-weight="600">Cached Prompt Embeddings</text>
-    <text x="25" y="270" font-family="ui-monospace, monospace" font-size="10" fill="currentColor" class="text-ink-muted">Reduces round-trip token cost</text>
-    <text x="25" y="285" font-family="ui-monospace, monospace" font-size="10" fill="currentColor" class="text-ink-muted">Structured JSON output schema</text>
+    <!-- Funnel Steps -->
+    <rect x="16" y="102" width="236" height="72" rx="6" fill="#F8FAFC" stroke="#E2E8F0"/>
+    <text x="26" y="122" font-family="ui-monospace, monospace" font-size="10" font-weight="700" fill="#021024">1. Intent &amp; Constraint Parse</text>
+    <text x="26" y="140" font-family="ui-monospace, monospace" font-size="9.5" fill="#475569">budget_max · guest_count · date</text>
+    <text x="26" y="158" font-family="ui-monospace, monospace" font-size="9.5" fill="#2563EB">Prunes conversational filler</text>
+
+    <rect x="16" y="188" width="236" height="82" rx="6" fill="#EFF6FF" stroke="#93C5FD"/>
+    <text x="26" y="208" font-family="ui-monospace, monospace" font-size="10" font-weight="700" fill="#1D4ED8">2. SQL + pgvector Pre-Filter</text>
+    <text x="26" y="226" font-family="ui-monospace, monospace" font-size="9.5" fill="#1E3A8A">WHERE price &lt;= budget</text>
+    <text x="26" y="242" font-family="ui-monospace, monospace" font-size="9.5" fill="#1E3A8A">ORDER BY embedding &lt;=&gt; q</text>
+    <text x="26" y="258" font-family="ui-monospace, monospace" font-size="9.5" fill="#1E3A8A">LIMIT Top-K verified vendors</text>
+
+    <rect x="16" y="284" width="236" height="74" rx="6" fill="#F8FAFC" stroke="#E2E8F0"/>
+    <text x="26" y="304" font-family="ui-monospace, monospace" font-size="10" font-weight="700" fill="#021024">3. Grounded JSON Generation</text>
+    <text x="26" y="322" font-family="system-ui, sans-serif" font-size="11" fill="#475569">Strict candidate context injection</text>
+    <text x="26" y="340" font-family="system-ui, sans-serif" font-size="11" fill="#475569">Zero out-of-budget hallucinations</text>
+
+    <!-- Token savings bar -->
+    <rect x="16" y="372" width="236" height="54" rx="6" fill="#EFF6FF" stroke="#BFDBFE"/>
+    <text x="26" y="393" font-family="ui-monospace, monospace" font-size="10" font-weight="700" fill="#2563EB">PROMPT TOKEN REDUCTION</text>
+    <rect x="26" y="403" width="214" height="10" rx="5" fill="#DBEAFE"/>
+    <rect x="26" y="403" width="84" height="10" rx="5" fill="#2563EB"/>
+    <text x="120" y="412" font-family="ui-monospace, monospace" font-size="9" font-weight="700" fill="#1D4ED8">-60% COST</text>
   </g>
 
-  <path d="M 910 370 L 970 370" stroke="#4A90E2" stroke-width="2" marker-end="url(#arrow-simpul)"/>
+  <path d="M 904 368 L 938 368" stroke="#059669" stroke-width="2.2" marker-end="url(#arr-sg)"/>
 
-  <!-- Box 4: Persistence -->
-  <g transform="translate(980, 200)">
-    <rect width="160" height="340" rx="4" fill="currentColor" class="text-bg" stroke="currentColor" class="text-line" stroke-width="1.5"/>
-    <text x="15" y="35" font-family="ui-monospace, monospace" font-size="11" fill="#4A90E2" font-weight="600">04 // PERSISTENCE</text>
-    <text x="15" y="70" font-family="system-ui, sans-serif" font-size="16" fill="currentColor" class="text-ink" font-weight="600">Database</text>
-    <text x="15" y="95" font-family="system-ui, sans-serif" font-size="13" fill="currentColor" class="text-ink-muted">Supabase Postgres</text>
-    <line x1="15" y1="120" x2="145" y2="120" stroke="currentColor" class="text-line" stroke-width="1"/>
+  <!-- 04: SUPABASE POSTGRES + REDIS -->
+  <g transform="translate(944, 148)" filter="url(#sh-s)">
+    <rect width="208" height="444" rx="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.25"/>
+    <rect width="208" height="36" rx="10" fill="#ECFDF5"/>
+    <rect y="26" width="208" height="10" fill="#ECFDF5"/>
+    <text x="16" y="23" font-family="ui-monospace, monospace" font-size="11" font-weight="700" fill="#047857">04 // PERSISTENCE</text>
 
-    <rect x="15" y="140" width="130" height="70" rx="3" fill="currentColor" class="text-surface" stroke="currentColor" class="text-line"/>
-    <text x="23" y="165" font-family="system-ui, sans-serif" font-size="11" fill="currentColor" class="text-ink" font-weight="600">Relational Schema</text>
-    <text x="23" y="183" font-family="ui-monospace, monospace" font-size="10" fill="currentColor" class="text-ink-muted">Prisma Migrations</text>
-    <text x="23" y="198" font-family="ui-monospace, monospace" font-size="10" fill="currentColor" class="text-ink-muted">Strict foreign keys</text>
+    <text x="16" y="62" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#021024">Data &amp; Ledger</text>
+    <text x="16" y="82" font-family="system-ui, sans-serif" font-size="12" fill="#475569">Supabase PostgreSQL</text>
 
-    <rect x="15" y="225" width="130" height="70" rx="3" fill="#4A90E2" fill-opacity="0.1" stroke="#4A90E2"/>
-    <text x="23" y="250" font-family="system-ui, sans-serif" font-size="11" fill="#4A90E2" font-weight="600">Audit Logs</text>
-    <text x="23" y="268" font-family="ui-monospace, monospace" font-size="10" fill="currentColor" class="text-ink-muted">Booking transitions</text>
-    <text x="23" y="283" font-family="ui-monospace, monospace" font-size="10" fill="currentColor" class="text-ink-muted">Dispute records</text>
+    <rect x="16" y="102" width="176" height="96" rx="6" fill="#F8FAFC" stroke="#CBD5E1"/>
+    <text x="26" y="122" font-family="ui-monospace, monospace" font-size="10" font-weight="700" fill="#021024">Relational Ledger</text>
+    <text x="26" y="140" font-family="ui-monospace, monospace" font-size="9.5" fill="#475569">• Vendors (KYB status)</text>
+    <text x="26" y="156" font-family="ui-monospace, monospace" font-size="9.5" fill="#475569">• Bookings &amp; Calendars</text>
+    <text x="26" y="172" font-family="ui-monospace, monospace" font-size="9.5" fill="#475569">• Escrow Transactions</text>
+    <text x="26" y="188" font-family="ui-monospace, monospace" font-size="9.5" fill="#2563EB">Prisma ORM Migrations</text>
+
+    <rect x="16" y="212" width="176" height="84" rx="6" fill="#EFF6FF" stroke="#93C5FD"/>
+    <text x="26" y="232" font-family="ui-monospace, monospace" font-size="10" font-weight="700" fill="#1D4ED8">Hybrid Extensions</text>
+    <text x="26" y="250" font-family="ui-monospace, monospace" font-size="9.5" fill="#1E3A8A">• JSONB pkg attributes</text>
+    <text x="26" y="266" font-family="ui-monospace, monospace" font-size="9.5" fill="#1E3A8A">• pgvector embeddings</text>
+    <text x="26" y="282" font-family="ui-monospace, monospace" font-size="9.5" fill="#1E3A8A">• Indexed P95 &lt; 180ms</text>
+
+    <rect x="16" y="310" width="176" height="116" rx="6" fill="#F8FAFC" stroke="#CBD5E1"/>
+    <text x="26" y="330" font-family="ui-monospace, monospace" font-size="10" font-weight="700" fill="#021024">Redis &amp; Audit Trail</text>
+    <text x="26" y="349" font-family="ui-monospace, monospace" font-size="9.5" fill="#475569">• Idempotency key TTL</text>
+    <text x="26" y="366" font-family="ui-monospace, monospace" font-size="9.5" fill="#475569">• Immutable state logs</text>
+    <text x="26" y="383" font-family="ui-monospace, monospace" font-size="9.5" fill="#475569">• Dispute evidence</text>
+    <text x="26" y="404" font-family="ui-monospace, monospace" font-size="9.5" font-weight="700" fill="#047857">ACID + Audit Verified</text>
   </g>
+
+  <!-- Footer -->
+  <text x="48" y="636" font-family="ui-monospace, monospace" font-size="11" fill="#64748B">FIG 03 // SIMPUL MARKETPLACE BACKEND · TRANSACTIONAL INTEGRITY + SEMANTIC PRE-FILTERING</text>
+  <text x="988" y="636" font-family="ui-monospace, monospace" font-size="11" fill="#64748B">POSTGRES + REDIS + RAG</text>
 </svg>

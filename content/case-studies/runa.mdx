@@ -21,9 +21,9 @@ Most commercial reproductive health applications transmit sensitive personal tel
 I built Runa as a strictly zero-network Android application designed from the operating system layer up to make data exfiltration technically impossible.
 
 <Figure
-  src="/images/runa-security-flow.svg"
-  alt="Runa zero-network cryptographic and local storage architecture"
-  caption="Cryptographic boundary and local statistical inference pipeline"
+  src="/images/runa-median-mad.svg"
+  alt="Android Keystore biometric unseal and RAM zeroize lifecycle alongside Median/MAD vs naive mean cycle outlier resilience"
+  caption="Hardware-backed biometric key unseal and pause zeroization lifecycle (left) and Median/MAD outlier resilience over naive mean (right)"
 />
 
 ## How It Works

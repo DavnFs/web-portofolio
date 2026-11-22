@@ -77,14 +77,15 @@ export default function WorkIndexPage() {
                   <Link
                     href={`/work/${project.slug}`}
                     aria-label={`View ${project.title}`}
-                    className="block relative aspect-[16/9] w-full bg-surface border border-line rounded-media overflow-hidden"
+                    className="block relative aspect-[16/9] w-full bg-[#F8FAFC] border border-line rounded-media overflow-hidden"
                   >
                     <Image
                       src={project.heroMedia.src}
                       alt={project.heroMedia.alt}
                       fill
-                      sizes="(max-width: 1024px) 100vw, 400px"
-                      className="object-cover group-hover:scale-[1.02] transition-transform duration-300"
+                      priority={project.index === "01"}
+                      sizes="(max-width: 1024px) 100vw, 440px"
+                      className="object-contain group-hover:scale-[1.02] transition-transform duration-300"
                     />
                   </Link>
                 </div>
@@ -107,59 +108,63 @@ export default function WorkIndexPage() {
             </p>
           </div>
 
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse font-sans text-sm">
-              <thead>
-                <tr className="border-b border-line font-mono text-meta uppercase text-ink-muted">
-                  <th className="py-4 pr-6 font-normal">Year</th>
-                  <th className="py-4 pr-6 font-normal">Project</th>
-                  <th className="py-4 pr-6 font-normal hidden sm:table-cell">Category</th>
-                  <th className="py-4 pr-6 font-normal hidden md:table-cell">Stack</th>
-                  <th className="py-4 text-right font-normal">Link</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-line/70">
-                {archiveProjects.map((row) => (
-                  <tr
-                    key={row.title}
-                    className="group hover:bg-surface/50 transition-colors"
-                  >
-                    <td className="py-4 pr-6 font-mono text-xs text-ink-muted whitespace-nowrap">
-                      {row.year}
-                    </td>
-                    <td className="py-4 pr-6">
-                      <div className="font-medium text-ink group-hover:text-accent transition-colors">
-                        {row.title}
-                      </div>
-                      <div className="text-xs text-ink-muted line-clamp-1 sm:hidden mt-0.5">
-                        {row.category}
-                      </div>
-                    </td>
-                    <td className="py-4 pr-6 text-ink-muted hidden sm:table-cell whitespace-nowrap">
-                      {row.category}
-                    </td>
-                    <td className="py-4 pr-6 font-mono text-xs text-ink-muted hidden md:table-cell">
-                      {row.stack.join(" · ")}
-                    </td>
-                    <td className="py-4 text-right font-mono text-xs whitespace-nowrap">
-                      {row.url ? (
-                        <a
-                          href={row.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-ink-muted hover:text-accent transition-colors inline-flex items-center gap-1"
-                        >
-                          <span>Repository</span>
-                          <span>↗</span>
-                        </a>
-                      ) : (
-                        <span className="text-ink-muted/50">—</span>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {archiveProjects.map((row) => (
+              <article
+                key={row.title}
+                className="group flex flex-col justify-between bg-white border border-line rounded-media overflow-hidden hover:border-accent transition-colors"
+              >
+                <div>
+                  <div className="relative aspect-[16/9] w-full bg-[#F8FAFC] border-b border-line overflow-hidden">
+                    <Image
+                      src={row.diagramSrc}
+                      alt={row.diagramAlt}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className="object-contain group-hover:scale-[1.02] transition-transform duration-300"
+                    />
+                  </div>
+                  <div className="p-5 space-y-3">
+                    <div className="flex items-center justify-between font-mono text-[11px] uppercase tracking-wider text-ink-muted">
+                      <span>{row.category}</span>
+                      <span>{row.year}</span>
+                    </div>
+                    <h3 className="text-lg font-sans font-medium text-ink group-hover:text-accent transition-colors">
+                      {row.title}
+                    </h3>
+                    <p className="text-sm text-ink-muted leading-relaxed">
+                      {row.description}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="px-5 pb-5 pt-3 border-t border-line/60 flex items-center justify-between gap-3">
+                  <div className="flex flex-wrap gap-1.5">
+                    {row.stack.slice(0, 3).map((tech) => (
+                      <span
+                        key={tech}
+                        className="font-mono text-[10px] px-2 py-0.5 bg-surface border border-line text-ink-muted"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                  {row.url ? (
+                    <a
+                      href={row.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-mono text-xs text-ink-muted hover:text-accent transition-colors inline-flex items-center gap-1 shrink-0"
+                    >
+                      <span>Repo</span>
+                      <span>↗</span>
+                    </a>
+                  ) : (
+                    <span className="font-mono text-xs text-ink-muted/50">—</span>
+                  )}
+                </div>
+              </article>
+            ))}
           </div>
         </section>
       </div>
